@@ -1,7 +1,16 @@
+import { ThemeProvider } from "@emotion/react";
+import { GlobalStyles } from "./styles/GlobalStyles";
+import theme from "./styles/theme";
+
 function App() {
   return (
     <>
-      <p>App.tsx</p>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <p css={(theme) => ({ color: theme.colors.purple, fontSize: "10rem" })}>
+          App.tsx
+        </p>
+      </ThemeProvider>
     </>
   );
 }
