@@ -1,9 +1,7 @@
+import { COLORS } from "../../styles/constants";
+
 const MainPage = () => {
-  return (
-    <div css={(theme) => ({ color: theme.colors.purple, fontSize: "10rem" })}>
-      main
-    </div>
-  );
+  return <div css={{ color: COLORS.purple, fontSize: "10rem" }}>main</div>;
 };
 
 export default MainPage;

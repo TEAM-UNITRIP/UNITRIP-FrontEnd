@@ -1,8 +1,7 @@
-import { css, Theme } from "@emotion/react";
+import { css } from "@emotion/react";
 
-const colors = {
+export const COLORS = {
   // 우리 디자인 시스템으로 교체
-  // Primary
   blue: "#1DA1F2",
   purple: "#794BC4",
   green: "#17BF63",
@@ -11,7 +10,7 @@ const colors = {
   red: "#E0245E",
 };
 
-const fonts = {
+export const FONTS = {
   // 우리 디자인 시스템으로 교체
   Button_medium: css`
     letter-spacing: -0.003125em;
@@ -21,9 +20,3 @@ const fonts = {
     font-style: normal;
   `,
 };
-
-const theme: Theme = {
-  colors,
-  fonts,
-};
-export default theme;
