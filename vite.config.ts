@@ -10,4 +10,12 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  build: {
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+      },
+    },
+  },
 });
