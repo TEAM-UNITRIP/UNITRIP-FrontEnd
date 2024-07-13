@@ -1,5 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-pnpm run lint
-pnpm run format
+echo "husky is running"
+pnpm run lint --fix
+echo "Done!"
