@@ -65,14 +65,7 @@
           "margin-top",
           "margin-right",
           "margin-bottom",
-          "margin-left"
-        ]
-      },
-      {
-        "groupName": "Background",
-        "emptyLineBefore": "always",
-        "noEmptyLineBetween": true,
-        "properties": [
+          "margin-left",
           "border",
           "border-radius",
           "border-top",
@@ -81,11 +74,21 @@
           "border-left",
           "border-color",
           "border-width",
-          "border-style",
+          "border-style"
+        ]
+      },
+      {
+        "groupName": "Background",
+        "emptyLineBefore": "always",
+        "noEmptyLineBetween": true,
+        "properties": [
           "background",
           "background-color",
           "background-position",
-          "background-size"
+          "background-size",
+          "background-image",
+          "background-repeat",
+          "box-shadow"
         ]
       },
       {
@@ -93,31 +96,28 @@
         "emptyLineBefore": "always",
         "noEmptyLineBetween": true,
         "properties": [
+          "font",
+          "color",
+          "font-family",
+          "font-style",
+          "font-size",
+          "font-weight",
           "text-decoration",
           "text-align",
-          "vertical-align",
-          "color",
-          "font-style",
-          "font-weight",
-          "font-size",
-          "line-height",
-          "letter-spacing",
           "text-align",
           "text-indent",
-          "vertical-align"
+          "vertical-align",
+          "vertical-align",
+          "line-height",
+          "letter-spacing",
+          "white-space"
         ]
       },
       {
         "groupName": "ETC",
         "emptyLineBefore": "always",
         "noEmptyLineBetween": true,
-        "properties": [
-          "white-space",
-          "cursor",
-          "opacity",
-          "animation",
-          "transition"
-        ]
+        "properties": ["cursor", "opacity", "animation", "transition"]
       }
     ]
   }
