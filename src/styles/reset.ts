@@ -1,34 +1,39 @@
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 
 export const reset = css`
   * {
-    margin: 0;
     padding: 0;
-    font: inherit;
+    margin: 0;
+
     color: inherit;
+    font: inherit;
   }
+
   *,
-  :after,
-  :before {
+  ::after,
+  ::before {
     box-sizing: border-box;
   }
+
   :root {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    cursor: default;
     line-height: 1.5;
+
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
     overflow-wrap: break-word;
-    -moz-tab-size: 4;
     tab-size: 4;
   }
+
   html {
     font-size: 62.5%;
   }
+
   html,
   body {
     height: 100%;
   }
+
   img,
   picture,
   video,
@@ -37,14 +42,18 @@ export const reset = css`
     display: block;
     max-width: 100%;
   }
+
   button {
-    background: none;
     border: 0;
+    background: none;
+
     cursor: pointer;
   }
+
   a {
     text-decoration: none;
   }
+
   table {
     border-collapse: collapse;
     border-spacing: 0;
