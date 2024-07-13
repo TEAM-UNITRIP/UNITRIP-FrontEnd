@@ -1,5 +1,6 @@
-import { COLORS } from '@/styles/constants';
 import { css } from '@emotion/react';
+
+import { COLORS } from '@/styles/constants';
 
 const myCss1 = css`
   display: flex;
