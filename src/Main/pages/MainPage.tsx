@@ -7,7 +7,6 @@ const myCss1 = css`
 
   width: 100%;
   padding: 1rem;
-
   border: solid 1px black;
 
   color: ${COLORS.blue};

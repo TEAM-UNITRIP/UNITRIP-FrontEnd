@@ -14,8 +14,8 @@ export const FONTS = {
   // 우리 디자인 시스템으로 교체
   Button_medium: css`
     font-style: normal;
-    font-weight: 700;
     font-size: 1.6rem;
+    font-weight: 700;
     letter-spacing: -0.0031em;
 
     /* font-family: Pretendard; */

@@ -5,8 +5,8 @@ export const reset = css`
     padding: 0;
     margin: 0;
 
-    color: inherit;
     font: inherit;
+    color: inherit;
   }
 
   *,
@@ -45,6 +45,7 @@ export const reset = css`
 
   button {
     border: 0;
+
     background: none;
 
     cursor: pointer;
