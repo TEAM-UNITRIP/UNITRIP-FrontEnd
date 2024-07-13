@@ -2,10 +2,10 @@
   "arrowParens": "always",
   "singleQuote": true,
   "bracketSpacing": true,
-  "bracketSameLite": true,
+  "bracketSameLine": true,
   "trailingComma": "all",
   "semi": true,
-  "printWidth": 120,
+  "printWidth": 80,
   "tabWidth": 2,
   "endOfLine": "auto"
 }
