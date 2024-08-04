@@ -8,8 +8,6 @@ const globalCss = css`
   ${reset}
 
   #root, body, html {
-    margin: 0 auto;
-
     background-color: #f5f5f5;
     max-width: 90rem;
     -ms-overflow-style: none; /* 인터넷 익스플로러 */
@@ -22,7 +20,6 @@ const globalCss = css`
 
   * {
     max-width: 90rem;
-    box-sizing: border-box;
   }
 
   html {
@@ -39,28 +36,18 @@ const globalCss = css`
 
   ul,
   li {
-    padding-left: 0;
     list-style: none;
   }
 
   a {
     color: inherit;
-    text-decoration: none;
   }
 
   input,
   button {
     outline: none;
 
-    border: none;
-
     background-color: transparent;
-  }
-
-  button {
-    padding: 0;
-
-    cursor: pointer;
   }
 
   input {
