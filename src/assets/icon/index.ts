@@ -1,3 +1,5 @@
+/// <reference types="vite-plugin-svgr/client" />
+// export { default as LogoIcon } from "./btn_logo.svg?react";
 export { default as ArrowDownIcon } from './icon_arrow_down.svg';
 export { default as ArrowLeftIcon } from './icon_arrow_left.svg';
 export { default as CallIcon } from './icon_call_mono.svg';
