@@ -11,4 +11,5 @@ export { default as Sample10Image } from './img10.jpeg';
 export { default as Sample11Image } from './img11.jpeg';
 export { default as Sample12Image } from './img12.jpeg';
 export { default as BackgroundImage } from './img_background.png';
+export { default as MapImage } from './img_map.png';
 export { default as RequestImage } from './img_request_outline.png';
