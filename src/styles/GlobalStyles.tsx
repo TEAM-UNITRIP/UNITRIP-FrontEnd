@@ -7,14 +7,6 @@ const globalCss = css`
   /* font-face 추가 필요 */
   ${reset}
 
-  html {
-    background-color: #f5f5f5;
-  }
-
-  body {
-    background-color: white;
-  }
-
   #root,
   body,
   html {
@@ -43,6 +35,12 @@ const globalCss = css`
 
     display: flex;
     justify-content: center;
+
+    background-color: #f5f5f5;
+  }
+
+  body {
+    background-color: white;
   }
 
   ul,
