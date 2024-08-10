@@ -11,6 +11,7 @@ const RecommendedTravel = () => {
       css={css`
         ${whiteBg}
         padding-top: 3.2rem;
+        margin-bottom: 14.6rem;
       `}>
       <h3 css={subTitle}>믿고 보는 유니트립 리뷰</h3>
       <h2 css={title}>유니트립 추천 여행지 🏖️</h2>

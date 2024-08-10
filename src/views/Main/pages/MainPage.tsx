@@ -8,7 +8,7 @@ import RecommendedTravel from '../components/RecommendedTravel';
 import { whiteBg } from '../styles/main';
 
 const MainPage = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
   return (
     <>
       <Header />
@@ -25,6 +25,7 @@ const MainPage = () => {
           </h1>
           <NearbyTravel />
         </div>
+        <div css={graySpacing} />
         <RecommendedTravel />
       </main>
     </>
@@ -43,4 +44,11 @@ const mainText = css`
   margin-left: 2rem;
 
   color: ${COLORS.gray9};
+`;
+
+const graySpacing = css`
+  width: 100vw;
+  height: 1.2rem;
+
+  background-color: ${COLORS.gray0};
 `;
