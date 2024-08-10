@@ -7,20 +7,46 @@ import { cardContainer, scrollContainer } from '../styles/main';
 import TravelCard from './TravelCard';
 
 const NearbyTravel = () => {
+  const isLoggedIn = false;
   return (
     <section css={container}>
-      <h2 css={title}>서울 주변 갈 만한 여행지 🗺️</h2>
-      <div css={scrollContainer}>
-        <li css={cardContainer}>
-          <TravelCard name="대전 오월드" address="대전 중구 사정공원로 70" />
-          <TravelCard name="대전 오월드" address="대전 중구 사정공원로 70" />
-          <TravelCard name="대전 오월드" address="대전 중구 사정공원로 70" />
-          <TravelCard name="대전 오월드" address="대전 중구 사정공원로 70" />
-        </li>
-      </div>
-      <Link to="" css={link}>
-        서울 여행지 둘러보기
-      </Link>
+      <h2 css={title}>{isLoggedIn && '서울'} 주변 갈 만한 여행지 🗺️</h2>
+      {isLoggedIn ? (
+        <>
+          <div css={scrollContainer}>
+            <li css={cardContainer}>
+              <TravelCard
+                name="대전 오월드"
+                address="대전 중구 사정공원로 70"
+              />
+              <TravelCard
+                name="대전 오월드"
+                address="대전 중구 사정공원로 70"
+              />
+              <TravelCard
+                name="대전 오월드"
+                address="대전 중구 사정공원로 70"
+              />
+              <TravelCard
+                name="대전 오월드"
+                address="대전 중구 사정공원로 70"
+              />
+            </li>
+          </div>
+          <Link to="" css={link}>
+            서울 여행지 둘러보기
+          </Link>
+        </>
+      ) : (
+        <div css={infoBox}>
+          <p css={infoMessage}>
+            지역 기반 인기 여행지 추천받고 싶다면
+            <br />
+            카카오톡 로그인이 필요해요!
+          </p>
+          <button css={button}>여행지 추천받기</button>
+        </div>
+      )}
     </section>
   );
 };
@@ -39,7 +65,6 @@ const container = css`
 
 const title = css`
   ${FONTS.H4};
-
   margin-left: 2rem;
 
   color: ${COLORS.gray9};
@@ -47,7 +72,6 @@ const title = css`
 
 const link = css`
   ${FONTS.Body2};
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,4 +84,42 @@ const link = css`
   border-radius: 1.2rem;
 
   color: ${COLORS.gray9};
+`;
+
+const infoBox = css`
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  width: calc(100% - 4rem);
+  padding: 3.2rem 0;
+  margin: 1.6rem 0 0 2rem;
+  border-radius: 1.2rem;
+
+  background-color: ${COLORS.gray0};
+`;
+
+const infoMessage = css`
+  ${FONTS.Body3};
+  color: ${COLORS.gray6};
+  text-align: center;
+`;
+
+const button = css`
+  ${FONTS.Body3};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 12.7rem;
+  height: 3.9rem;
+  border-radius: 1rem;
+
+  background-color: ${COLORS.brand1};
+
+  color: ${COLORS.white};
+
+  cursor: pointer;
 `;

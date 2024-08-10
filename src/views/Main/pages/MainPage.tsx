@@ -8,14 +8,19 @@ import RecommendedTravel from '../components/RecommendedTravel';
 import { whiteBg } from '../styles/main';
 
 const MainPage = () => {
+  const isLoggedIn = true;
   return (
     <>
       <Header />
       <main css={container}>
         <div css={whiteBg}>
           <h1 css={mainText}>
-            서현님,
-            <br />
+            {isLoggedIn && (
+              <>
+                서현님,
+                <br />
+              </>
+            )}
             오늘 어디로 떠날까요?
           </h1>
           <NearbyTravel />
@@ -34,7 +39,6 @@ const container = css`
 
 const mainText = css`
   ${FONTS.H3};
-
   padding-top: 2rem;
   margin-left: 2rem;
 
