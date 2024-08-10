@@ -60,7 +60,7 @@ const container = css`
 
   width: 100%;
   padding-bottom: 3.2rem;
-  margin: 2.4rem 0 1.2rem;
+  margin: 2.4rem 0 0;
 `;
 
 const title = css`
