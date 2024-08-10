@@ -5,26 +5,24 @@ import { COLORS, FONTS } from '@/styles/constants';
 import Header from '../components/Header';
 import NearbyTravel from '../components/NearbyTravel';
 import RecommendedTravel from '../components/RecommendedTravel';
-import { whiteBg } from '../styles/main';
 
 const MainPage = () => {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   return (
     <>
       <Header />
       <main css={container}>
-        <div css={whiteBg}>
-          <h1 css={mainText}>
-            {isLoggedIn && (
-              <>
-                서현님,
-                <br />
-              </>
-            )}
-            오늘 어디로 떠날까요?
-          </h1>
-          <NearbyTravel />
-        </div>
+        <h1 css={mainText}>
+          {isLoggedIn && (
+            <>
+              서현님,
+              <br />
+            </>
+          )}
+          오늘 어디로 떠날까요?
+        </h1>
+        <NearbyTravel />
+
         <div css={graySpacing} />
         <RecommendedTravel />
       </main>

@@ -1,10 +1,5 @@
 import { css } from '@emotion/react';
 
-import { COLORS } from '@/styles/constants';
-
-export const whiteBg = css`
-  background-color: ${COLORS.white};
-`;
 export const scrollContainer = css`
   width: 100%;
   overflow-x: scroll;

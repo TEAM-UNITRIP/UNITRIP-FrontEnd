@@ -7,7 +7,7 @@ import { cardContainer, scrollContainer } from '../styles/main';
 import TravelCard from './TravelCard';
 
 const NearbyTravel = () => {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   return (
     <section css={container}>
       <h2 css={title}>{isLoggedIn && '서울'} 주변 갈 만한 여행지 🗺️</h2>

@@ -7,10 +7,18 @@ const globalCss = css`
   /* font-face 추가 필요 */
   ${reset}
 
-  #root, body, html {
-    margin: 0 auto;
-
+  html {
     background-color: #f5f5f5;
+  }
+
+  body {
+    background-color: white;
+  }
+
+  #root,
+  body,
+  html {
+    margin: 0 auto;
 
     max-width: 90rem;
     -ms-overflow-style: none; /* 인터넷 익스플로러 */

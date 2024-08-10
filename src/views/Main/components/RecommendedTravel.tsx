@@ -2,14 +2,13 @@ import { css } from '@emotion/react';
 
 import { COLORS, FONTS } from '@/styles/constants';
 
-import { cardContainer, scrollContainer, whiteBg } from '../styles/main';
+import { cardContainer, scrollContainer } from '../styles/main';
 import ReviewCard from './ReviewCard';
 
 const RecommendedTravel = () => {
   return (
     <section
       css={css`
-        ${whiteBg}
         padding-top: 3.2rem;
         margin-bottom: 14.6rem;
       `}>
