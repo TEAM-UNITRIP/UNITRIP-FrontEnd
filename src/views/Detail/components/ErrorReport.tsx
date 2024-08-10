@@ -6,7 +6,6 @@ import { COLORS, FONTS } from '@/styles/constants';
 const ErrorReportContainer = css`
   width: 100%;
   padding: 2rem 2rem 3.4rem;
-  margin-top: 1.3rem;
 
   background-color: ${COLORS.white};
 `;

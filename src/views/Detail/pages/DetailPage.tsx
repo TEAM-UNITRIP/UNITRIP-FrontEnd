@@ -11,7 +11,6 @@ import Tab from '../components/Tab';
 
 const DetailContainer = css`
   width: 100dvw;
-  height: 100dvh;
 `;
 
 const BackgroundImg = css`
@@ -37,7 +36,13 @@ const Title = css`
 
 const TabContainer = css`
   width: 100%;
-  margin-top: 1.3rem;
+`;
+
+const GapLine = css`
+  width: 100%;
+  height: 1.3rem;
+
+  background-color: ${COLORS.gray1};
 `;
 
 function DetailPage() {
@@ -52,9 +57,11 @@ function DetailPage() {
         <span css={Title}>대전시립미술관</span>
       </div>
       <PlaceInfo />
+      <div css={GapLine}></div>
       <div css={TabContainer}>
         <Tab selectedTab={selectedTab} setSelectedTab={handleTabChange} />
       </div>
+      <div css={GapLine}></div>
 
       {selectedTab === '상세정보' ||
       selectedTab === '유니버설' ||

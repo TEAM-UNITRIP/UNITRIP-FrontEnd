@@ -10,7 +10,6 @@ const globalCss = css`
   #root, body, html {
     margin: 0 auto;
 
-    background-color: #f5f5f5;
     max-width: 90rem;
     -ms-overflow-style: none; /* 인터넷 익스플로러 */
     scrollbar-width: none; /* 파이어폭스 */
@@ -34,6 +33,12 @@ const globalCss = css`
 
     display: flex;
     justify-content: center;
+
+    background-color: #f5f5f5;
+  }
+
+  body {
+    background-color: white;
   }
 
   ul,
