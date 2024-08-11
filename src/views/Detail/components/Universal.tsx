@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 
+import { ArrowToggleClosed, ArrowToggleOpen } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
-import { ArrowToggleClosed, ArrowToggleOpen } from '@/assets/icon';
 import {
   BaiscFacilities,
   HearingFacilities,
@@ -19,72 +19,12 @@ interface Facility {
   none: JSX.Element;
 }
 
-type toggleType = {
+type ToggleType = {
   [key: string]: boolean;
 };
 
-const universalContainer = css`
-  width: 100%;
-  padding: 1.7rem 2rem 3rem;
-`;
-
-const iconListContainer = css`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const listWrapper = css`
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-`;
-
-const titleText = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  color: ${COLORS.brand1};
-
-  ${FONTS.H5};
-`;
-
-const iconList = css`
-  display: flex;
-  gap: 1.2rem;
-  flex-wrap: wrap;
-
-  padding-top: 1.2rem;
-`;
-
-const iconWrapper = css`
-  display: flex;
-  gap: 0.4rem;
-  align-items: center;
-  flex-direction: column;
-
-  max-width: 7rem;
-`;
-
-const iconName = css`
-  word-break: keep-all;
-
-  color: ${COLORS.gray5};
-  text-align: center;
-
-  ${FONTS.Small2};
-`;
-
-const borderLine = css`
-  width: 100%;
-  margin: 1.2rem 0;
-  border: 1px solid ${COLORS.gray1};
-`;
-
 function Universal() {
-  const [toggles, setToggles] = useState<toggleType>({
+  const [toggles, setToggles] = useState<ToggleType>({
     basic: true,
     physical: false,
     visual: false,
@@ -152,3 +92,63 @@ function Universal() {
   );
 }
 export default Universal;
+
+const universalContainer = css`
+  width: 100%;
+  padding: 1.7rem 2rem 3rem;
+`;
+
+const iconListContainer = css`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const listWrapper = css`
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+`;
+
+const titleText = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: ${COLORS.brand1};
+
+  ${FONTS.H5};
+`;
+
+const iconList = css`
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+
+  padding-top: 1.2rem;
+`;
+
+const iconWrapper = css`
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  flex-direction: column;
+
+  max-width: 7rem;
+`;
+
+const iconName = css`
+  word-break: keep-all;
+
+  color: ${COLORS.gray5};
+  text-align: center;
+
+  ${FONTS.Small2};
+`;
+
+const borderLine = css`
+  width: 100%;
+  margin: 1.2rem 0;
+  border: 1px solid ${COLORS.gray1};
+`;

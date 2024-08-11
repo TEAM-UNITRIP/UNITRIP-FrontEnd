@@ -14,33 +14,6 @@ interface TabProps {
   setSelectedTab: (tab: string) => void;
 }
 
-const tabContainer = css`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-
-  width: 100%;
-`;
-
-const tabList = css`
-  display: flex;
-  justify-content: space-around;
-
-  padding: 1.5rem 2.4rem 0 2.5rem;
-  border-bottom: 0.1rem solid ${COLORS.gray2};
-
-  color: ${FONTS.H5};
-`;
-
-const listItem = (isActive: boolean) => css`
-  height: 3.9rem;
-  border-bottom: ${isActive ? `0.2rem solid ${COLORS.gray8}` : 'none'};
-
-  color: ${isActive ? COLORS.gray6 : COLORS.gray4};
-
-  cursor: pointer;
-`;
-
 function Tab(props: TabProps) {
   const { selectedTab, setSelectedTab } = props;
 
@@ -69,3 +42,30 @@ function Tab(props: TabProps) {
 }
 
 export default Tab;
+
+const tabContainer = css`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  width: 100%;
+`;
+
+const tabList = css`
+  display: flex;
+  justify-content: space-around;
+
+  padding: 1.5rem 2.4rem 0 2.5rem;
+  border-bottom: 0.1rem solid ${COLORS.gray2};
+
+  color: ${FONTS.H5};
+`;
+
+const listItem = (isActive: boolean) => css`
+  height: 3.9rem;
+  border-bottom: ${isActive ? `0.2rem solid ${COLORS.gray8}` : 'none'};
+
+  color: ${isActive ? COLORS.gray6 : COLORS.gray4};
+
+  cursor: pointer;
+`;

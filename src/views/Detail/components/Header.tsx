@@ -3,18 +3,6 @@ import { useState } from 'react';
 
 import { ArrowLeftIcon, HeartFilledIcon, HeartGrayIcon } from '@/assets/icon';
 
-const HeaderContainer = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  width: 100%;
-  height: 4.8rem;
-  padding: 1.2rem 2rem;
-
-  background-color: transparent;
-`;
-
 function Header() {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
@@ -23,7 +11,7 @@ function Header() {
   };
 
   return (
-    <div css={HeaderContainer}>
+    <div css={headerContainer}>
       <button type="button">
         <ArrowLeftIcon />
       </button>
@@ -35,3 +23,15 @@ function Header() {
 }
 
 export default Header;
+
+const headerContainer = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: 4.8rem;
+  padding: 1.2rem 2rem;
+
+  background-color: transparent;
+`;

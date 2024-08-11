@@ -17,7 +17,22 @@ const InfoContents = [
   },
 ];
 
-const DetailInfoContainer = css`
+function DetailInfo() {
+  return (
+    <section css={detailInfoContainer}>
+      {InfoContents.map((item) => (
+        <div css={infoItem} key={item.title}>
+          <span css={title}>{item.title}</span>
+          <p css={content}>{item.content}</p>
+        </div>
+      ))}
+    </section>
+  );
+}
+
+export default DetailInfo;
+
+const detailInfoContainer = css`
   display: flex;
   gap: 2.4rem;
   flex-direction: column;
@@ -26,33 +41,20 @@ const DetailInfoContainer = css`
   padding: 1.7rem 2rem 2.9rem;
 `;
 
-const InfoItem = css`
+const infoItem = css`
   display: flex;
   gap: 1.2rem;
   flex-direction: column;
 `;
 
-const Title = css`
+const title = css`
   color: ${COLORS.brand1};
+
   ${FONTS.H4};
 `;
 
-const Content = css`
+const content = css`
   color: ${COLORS.gray8};
+
   ${FONTS.Body5};
 `;
-
-function DetailInfo() {
-  return (
-    <section css={DetailInfoContainer}>
-      {InfoContents.map((item) => (
-        <div css={InfoItem} key={item.title}>
-          <span css={Title}>{item.title}</span>
-          <p css={Content}>{item.content}</p>
-        </div>
-      ))}
-    </section>
-  );
-}
-
-export default DetailInfo;

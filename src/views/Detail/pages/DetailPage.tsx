@@ -9,11 +9,11 @@ import Header from '../components/Header';
 import PlaceInfo from '../components/PlaceInfo';
 import Tab from '../components/Tab';
 
-const DetailContainer = css`
+const detailContainer = css`
   width: 100dvw;
 `;
 
-const BackgroundImg = css`
+const backgroundImg = css`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -26,7 +26,7 @@ const BackgroundImg = css`
   background-repeat: no-repeat;
 `;
 
-const Title = css`
+const title = css`
   padding: 1.2rem 2rem;
 
   color: ${COLORS.white};
@@ -34,11 +34,7 @@ const Title = css`
   ${FONTS.H2};
 `;
 
-const TabContainer = css`
-  width: 100%;
-`;
-
-const GapLine = css`
+const gapLine = css`
   width: 100%;
   height: 1.3rem;
 
@@ -51,17 +47,17 @@ function DetailPage() {
     setSelectedTab(tab);
   };
   return (
-    <div css={DetailContainer}>
-      <div css={BackgroundImg}>
+    <div css={detailContainer}>
+      <div css={backgroundImg}>
         <Header />
-        <span css={Title}>대전시립미술관</span>
+        <span css={title}>대전시립미술관</span>
       </div>
       <PlaceInfo />
-      <div css={GapLine}></div>
-      <div css={TabContainer}>
+      <div css={gapLine}></div>
+      <div>
         <Tab selectedTab={selectedTab} setSelectedTab={handleTabChange} />
       </div>
-      <div css={GapLine}></div>
+      <div css={gapLine}></div>
 
       {selectedTab === '상세정보' ||
       selectedTab === '유니버설' ||
