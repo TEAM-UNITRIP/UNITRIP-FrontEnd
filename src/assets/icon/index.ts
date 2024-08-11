@@ -9,6 +9,8 @@ export { default as LocationPinIcon } from './icon_location_pin.svg?react';
 export { default as MapPinIcon } from './icon_map_pin.svg?react';
 export { default as StarIcon } from './icon_star_filled.svg?react';
 
+export { default as ArrowToggleClosed } from './icon_arrow_toggle_closed.svg?react';
+export { default as ArrowToggleOpen } from './icon_arrow_toggle_open.svg?react';
 export { default as AudioGuideDefaultIcon } from './icon_audio_guide_default.svg?react';
 export { default as AudioGuideNoneIcon } from './icon_audio_guide_none.svg?react';
 export { default as BabyCarriageDefaultIcon } from './icon_baby_carriage_default.svg?react';

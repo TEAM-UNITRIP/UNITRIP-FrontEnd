@@ -3,26 +3,26 @@ import { css } from '@emotion/react';
 import { COLORS, FONTS } from '@/styles/constants';
 
 import DetailInfo from './DetailInfo';
+import Map from './Map';
 import Photos from './Photos';
+import Universal from './Universal';
 
 const TabMenu = ['상세정보', '유니버설', '지도', '사진', '리뷰'];
 
-interface tabState {
+interface TabProps {
   selectedTab: string;
   setSelectedTab: (tab: string) => void;
 }
 
-const TabContainer = css`
+const tabContainer = css`
   display: flex;
   justify-content: center;
   flex-direction: column;
 
   width: 100%;
-
-  background-color: ${COLORS.white};
 `;
 
-const TabList = css`
+const tabList = css`
   display: flex;
   justify-content: space-around;
 
@@ -32,7 +32,7 @@ const TabList = css`
   color: ${FONTS.H5};
 `;
 
-const ListItem = (isActive: boolean) => css`
+const listItem = (isActive: boolean) => css`
   height: 3.9rem;
   border-bottom: ${isActive ? `0.2rem solid ${COLORS.gray8}` : 'none'};
 
@@ -41,7 +41,7 @@ const ListItem = (isActive: boolean) => css`
   cursor: pointer;
 `;
 
-function Tab(props: tabState) {
+function Tab(props: TabProps) {
   const { selectedTab, setSelectedTab } = props;
 
   const tabOnClick = (item: string) => {
@@ -49,12 +49,12 @@ function Tab(props: tabState) {
   };
 
   return (
-    <div css={TabContainer}>
-      <ul css={TabList}>
+    <div css={tabContainer}>
+      <ul css={tabList}>
         {TabMenu.map((item) => (
           <li
             key={item}
-            css={ListItem(item === selectedTab)}
+            css={listItem(item === selectedTab)}
             onClick={() => tabOnClick(item)}>
             {item}
           </li>
@@ -62,6 +62,8 @@ function Tab(props: tabState) {
       </ul>
       {selectedTab === '상세정보' && <DetailInfo />}
       {selectedTab === '사진' && <Photos />}
+      {selectedTab === '지도' && <Map />}
+      {selectedTab === '유니버설' && <Universal />}
     </div>
   );
 }
