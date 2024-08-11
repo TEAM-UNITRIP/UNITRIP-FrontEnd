@@ -52,6 +52,7 @@ const textContainer = css`
 
 const text = (variant: string) => css`
   color: ${variant === 'main' ? COLORS.gray9 : COLORS.brand1};
-  ${variant === 'main' ? FONTS.Body2 : FONTS.Small1};
   text-align: left;
+
+  ${variant === 'main' ? FONTS.Body2 : FONTS.Small1};
 `;
