@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 
 import { SearchMonoIcon, UnitripIcon } from '@/assets/icon';
-import { COLORS } from '@/styles/constants';
 
 const Header = () => {
   return (
@@ -24,6 +23,4 @@ const header = css`
   width: 100vw;
   height: 4.8rem;
   padding: 0 2rem;
-
-  background-color: ${COLORS.white};
 `;
