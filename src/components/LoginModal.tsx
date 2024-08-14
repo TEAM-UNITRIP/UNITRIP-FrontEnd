@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { KakaoTalkIcon, XMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
-interface LoginPopup {
+interface LoginModalProps {
   onClick: () => void;
 }
 
@@ -13,12 +13,12 @@ interface LoginPopup {
  * a와 b를 더한 결과를 반환
  * @param {()=>void} props.onClick X(닫기) 버튼 클릭시 실행 함수
  */
-const LoginPopup = (props: LoginPopup) => {
+const LoginModal = (props: LoginModalProps) => {
   const { onClick } = props;
 
   const portalContent = (
     <div css={backgroundCss}>
-      <div css={popupContainer}>
+      <div css={container}>
         <p css={titleCss}>카카오톡 로그인</p>
         <p css={descriptionCss}>서비스 이용을 위해 로그인이 필요해요.</p>
         <Link to="/login" css={linkCss}>
@@ -35,7 +35,7 @@ const LoginPopup = (props: LoginPopup) => {
   return createPortal(portalContent, document.body);
 };
 
-export default LoginPopup;
+export default LoginModal;
 
 const backgroundCss = css`
   display: flex;
@@ -52,7 +52,7 @@ const backgroundCss = css`
   background-color: rgb(82 82 82 / 72%);
 `;
 
-const popupContainer = css`
+const container = css`
   display: flex;
   flex-direction: column;
   position: relative;
