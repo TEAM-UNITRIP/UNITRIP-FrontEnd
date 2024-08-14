@@ -1,20 +1,31 @@
 import { css } from '@emotion/react';
 import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
 
 import { KakaoTalkIcon, XMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
-const LoginPopup = () => {
+interface LoginPopup {
+  onClick: () => void;
+}
+
+/**
+ * a와 b를 더한 결과를 반환
+ * @param {()=>void} props.onClick X(닫기) 버튼 클릭시 실행 함수
+ */
+const LoginPopup = (props: LoginPopup) => {
+  const { onClick } = props;
+
   const portalContent = (
     <div css={backgroundCss}>
       <div css={popupContainer}>
         <p css={titleCss}>카카오톡 로그인</p>
         <p css={descriptionCss}>서비스 이용을 위해 로그인이 필요해요.</p>
-        <button type="button" css={buttonCss}>
+        <Link to="/login" css={linkCss}>
           <KakaoTalkIcon />
           카카오톡 로그인
-        </button>
-        <button type="button" css={closeButtonCss}>
+        </Link>
+        <button type="button" css={closeButtonCss} onClick={onClick}>
           <XMonoIcon />
         </button>
       </div>
@@ -66,7 +77,7 @@ const descriptionCss = css`
   ${FONTS.Body3};
 `;
 
-const buttonCss = css`
+const linkCss = css`
   display: flex;
   gap: 0.8rem;
   justify-content: center;
