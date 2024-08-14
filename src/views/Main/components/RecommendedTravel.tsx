@@ -7,11 +7,7 @@ import ReviewCard from './ReviewCard';
 
 const RecommendedTravel = () => {
   return (
-    <section
-      css={css`
-        padding-top: 3.2rem;
-        margin-bottom: 14.6rem;
-      `}>
+    <section css={sectionCss}>
       <h3 css={subTitle}>믿고 보는 유니트립 리뷰</h3>
       <h2 css={title}>유니트립 추천 여행지 🏖️</h2>
 
@@ -42,6 +38,11 @@ const RecommendedTravel = () => {
 };
 
 export default RecommendedTravel;
+
+const sectionCss = css`
+  padding-top: 3.2rem;
+  margin-bottom: 14.6rem;
+`;
 
 const subTitle = css`
   margin: 0 0 0 2rem;

@@ -14,19 +14,11 @@ const ReviewCard = (props: ReviewCardProps) => {
   const { name, score, content, reviewCount } = props;
   return (
     <ul css={card}>
-      <div
-        css={css`
-          position: relative;
-        `}>
+      <div css={imgContainerCss}>
         <img css={placeImg} src="" alt={`${name} 장소 사진`} />
         <div css={placeName}>
           <ShieldCheckMonoIcon />
-          <p
-            css={css`
-              padding-top: 0.2rem;
-            `}>
-            {name}
-          </p>
+          <p css={placeNameCss}>{name}</p>
         </div>
       </div>
 
@@ -43,6 +35,14 @@ const ReviewCard = (props: ReviewCardProps) => {
 };
 
 export default ReviewCard;
+
+const imgContainerCss = css`
+  position: relative;
+`;
+
+const placeNameCss = css`
+  padding-top: 0.2rem;
+`;
 
 const card = css`
   display: flex;
