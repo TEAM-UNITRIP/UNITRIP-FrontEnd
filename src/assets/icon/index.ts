@@ -1,4 +1,8 @@
 /// <reference types="vite-plugin-svgr/client" />
+export { default as HeartMonoIcon } from './icon-heart-mono.svg?react';
+export { default as PinLocationMonoIcon } from './icon-pin-location-mono.svg?react';
+export { default as SearchMonoIcon } from './icon-search-mono.svg?react';
+export { default as ShieldCheckMonoIcon } from './icon-shield-check-mono.svg?react';
 export { default as ArrowDownIcon } from './icon_arrow_down.svg?react';
 export { default as ArrowLeftIcon } from './icon_arrow_left.svg?react';
 export { default as CallIcon } from './icon_call_mono.svg?react';
@@ -8,6 +12,8 @@ export { default as HeartGrayIcon } from './icon_heart_gray.svg?react';
 export { default as LocationPinIcon } from './icon_location_pin.svg?react';
 export { default as MapPinIcon } from './icon_map_pin.svg?react';
 export { default as StarIcon } from './icon_star_filled.svg?react';
+export { default as Star1Icon } from './Star 1.svg?react';
+export { default as UnitripIcon } from './UNITRIP.svg?react';
 
 export { default as ArrowToggleClosed } from './icon_arrow_toggle_closed.svg?react';
 export { default as ArrowToggleOpen } from './icon_arrow_toggle_open.svg?react';

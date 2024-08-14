@@ -7,7 +7,9 @@ const globalCss = css`
   /* font-face 추가 필요 */
   ${reset}
 
-  #root, body, html {
+  #root,
+  body,
+  html {
     margin: 0 auto;
 
     max-width: 90rem;
