@@ -43,17 +43,15 @@ const heart = css`
 `;
 
 const nameCss = css`
-  ${FONTS.H4};
-
   margin-top: auto;
 
   color: ${COLORS.white};
+  ${FONTS.H4};
 `;
 
 const locationCss = css`
-  ${FONTS.Small2};
-
   color: ${COLORS.white};
+  ${FONTS.Small2};
 `;
 
 const addressContainer = css`

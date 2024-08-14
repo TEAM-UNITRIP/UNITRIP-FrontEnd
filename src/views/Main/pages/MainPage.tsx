@@ -37,11 +37,11 @@ const container = css`
 `;
 
 const mainText = css`
-  ${FONTS.H3};
   padding-top: 2rem;
   margin-left: 2rem;
 
   color: ${COLORS.gray9};
+  ${FONTS.H3};
 `;
 
 const graySpacing = css`

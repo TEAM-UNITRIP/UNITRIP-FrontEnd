@@ -44,14 +44,14 @@ const RecommendedTravel = () => {
 export default RecommendedTravel;
 
 const subTitle = css`
-  ${FONTS.Body2};
   margin: 0 0 0 2rem;
 
   color: ${COLORS.gray7};
+  ${FONTS.Body2};
 `;
 const title = css`
-  ${FONTS.H4};
   margin-left: 2rem;
 
   color: ${COLORS.gray9};
+  ${FONTS.H4};
 `;

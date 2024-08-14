@@ -65,7 +65,6 @@ const placeImg = css`
 `;
 
 const placeName = css`
-  ${FONTS.Small2};
   display: flex;
   gap: 0.4rem;
   align-items: center;
@@ -79,6 +78,7 @@ const placeName = css`
   background-color: rgb(23 23 23 / 56%);
 
   color: ${COLORS.white};
+  ${FONTS.Small2};
 `;
 
 const reviewBox = css`
@@ -88,17 +88,16 @@ const reviewBox = css`
 `;
 
 const scoreText = css`
-  ${FONTS.Body1};
   display: flex;
   gap: 0.4rem;
 
   margin-top: 1.2rem;
 
   color: ${COLORS.gray9};
+  ${FONTS.Body1};
 `;
 
 const contentText = css`
-  ${FONTS.Body3};
   display: -webkit-box;
   overflow: hidden;
 
@@ -110,11 +109,12 @@ const contentText = css`
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  ${FONTS.Body3};
 `;
 
 const reviewCountText = css`
-  ${FONTS.Small1};
   margin-top: 0.6rem;
 
   color: ${COLORS.gray4};
+  ${FONTS.Small1};
 `;

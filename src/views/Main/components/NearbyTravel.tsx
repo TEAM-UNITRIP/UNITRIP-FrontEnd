@@ -64,14 +64,13 @@ const container = css`
 `;
 
 const title = css`
-  ${FONTS.H4};
   margin-left: 2rem;
 
   color: ${COLORS.gray9};
+  ${FONTS.H4};
 `;
 
 const link = css`
-  ${FONTS.Body2};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,6 +83,7 @@ const link = css`
   border-radius: 1.2rem;
 
   color: ${COLORS.gray9};
+  ${FONTS.Body2};
 `;
 
 const infoBox = css`
@@ -102,13 +102,12 @@ const infoBox = css`
 `;
 
 const infoMessage = css`
-  ${FONTS.Body3};
   color: ${COLORS.gray6};
   text-align: center;
+  ${FONTS.Body3};
 `;
 
 const button = css`
-  ${FONTS.Body3};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -122,4 +121,5 @@ const button = css`
   color: ${COLORS.white};
 
   cursor: pointer;
+  ${FONTS.Body3};
 `;
