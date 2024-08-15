@@ -31,6 +31,7 @@ export const reset = css`
 
   html,
   body {
+    min-width: 100vw;
     min-height: 100%;
   }
 
