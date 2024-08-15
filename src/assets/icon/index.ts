@@ -11,3 +11,4 @@ export { default as PinLocationMonoIcon } from './icon-pin-location-mono.svg?rea
 export { default as ShieldCheckMonoIcon } from './icon-shield-check-mono.svg?react';
 export { default as Star1Icon } from './Star 1.svg?react';
 export { default as ChevronLeftIcon } from './Chevron_Left.svg?react';
+export { default as ToggleXIcon } from './toggle-x.svg?react';

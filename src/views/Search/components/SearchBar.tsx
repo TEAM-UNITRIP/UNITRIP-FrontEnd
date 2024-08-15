@@ -38,9 +38,6 @@ const inputCss = css`
 
   &::placeholder {
     color: ${COLORS.gray4};
-    font-family: 'Apple SD Gothic Neo', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 400;
-    line-height: 140%;
+    ${FONTS.Body2};
   }
 `;
