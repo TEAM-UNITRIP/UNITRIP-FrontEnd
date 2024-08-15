@@ -1,92 +1,56 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
 
-import { ArrowToggleClosed, ArrowToggleOpen } from '@/assets/icon';
-import { COLORS, FONTS } from '@/styles/constants';
+import { COLORS } from '@/styles/constants';
 
 import {
-  BaiscFacilities,
-  HearingFacilities,
-  InfantFacilities,
-  OthersFacilities,
-  PhysicalFacilities,
-  VisualFacilities,
+  BASIC_FACILITIES,
+  HEARING_FACILITIES,
+  INFANT_FACILITIES,
+  OTHERS_FACILITIES,
+  PHYSICAL_FACILITIES,
+  VISUAL_FACILITIES,
 } from '../constants/constants';
-
-interface Facility {
-  name: string;
-  default: JSX.Element;
-  none: JSX.Element;
-}
-
-type ToggleType = {
-  [key: string]: boolean;
-};
+import FacilityIconList from './FacilityIconList';
 
 function Universal() {
-  const [toggles, setToggles] = useState<ToggleType>({
-    basic: true,
-    physical: false,
-    visual: false,
-    hearing: false,
-    infantFamily: false,
-    others: false,
-  });
-
-  const handleSetToggles = (clicked: keyof typeof toggles) => {
-    setToggles((prev) => {
-      return {
-        ...prev,
-        [clicked]: !prev[clicked],
-      };
-    });
-  };
-
-  const renderFacilityIconList = (
-    title: string,
-    facilities: Facility[],
-    key: keyof typeof toggles,
-  ) => (
-    <div css={listWrapper}>
-      <div css={titleText}>
-        <span>{title}</span>
-        {toggles[key] ? (
-          <ArrowToggleOpen onClick={() => handleSetToggles(key)} />
-        ) : (
-          <ArrowToggleClosed onClick={() => handleSetToggles(key)} />
-        )}
-      </div>
-      {toggles[key] && (
-        <ul css={iconList}>
-          {facilities.map((item: Facility) => (
-            <li key={item.name} css={iconWrapper}>
-              {item.default}
-              <span css={iconName}>{item.name}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-
   return (
     <section css={universalContainer}>
       <div css={iconListContainer}>
-        {renderFacilityIconList('기본 편의시설', BaiscFacilities, 'basic')}
+        <FacilityIconList
+          title="기본 편의시설"
+          facilities={BASIC_FACILITIES}
+          toggleKey="basic"
+        />
         <div css={borderLine} />
-        {renderFacilityIconList('지체장애', PhysicalFacilities, 'physical')}
+        <FacilityIconList
+          title="지체장애"
+          facilities={PHYSICAL_FACILITIES}
+          toggleKey="physical"
+        />
         <div css={borderLine} />
-        {renderFacilityIconList('시각장애', VisualFacilities, 'visual')}
+        <FacilityIconList
+          title="시각장애"
+          facilities={VISUAL_FACILITIES}
+          toggleKey="visual"
+        />
         <div css={borderLine} />
-        {renderFacilityIconList('청각장애', HearingFacilities, 'hearing')}
+        <FacilityIconList
+          title="청각장애"
+          facilities={HEARING_FACILITIES}
+          toggleKey="hearing"
+        />
         <div css={borderLine} />
-        {renderFacilityIconList(
-          '영유아 가족',
-          InfantFacilities,
-          'infantFamily',
-        )}
+        <FacilityIconList
+          title="영유아 가족"
+          facilities={INFANT_FACILITIES}
+          toggleKey="infantFamily"
+        />
         <div css={borderLine} />
-        {renderFacilityIconList('기타', OthersFacilities, 'others')}
+        <FacilityIconList
+          title="기타"
+          facilities={OTHERS_FACILITIES}
+          toggleKey="others"
+        />
       </div>
     </section>
   );
@@ -102,49 +66,6 @@ const iconListContainer = css`
   display: flex;
   align-items: center;
   flex-direction: column;
-`;
-
-const listWrapper = css`
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-`;
-
-const titleText = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  color: ${COLORS.brand1};
-
-  ${FONTS.H5};
-`;
-
-const iconList = css`
-  display: flex;
-  gap: 1.2rem;
-  flex-wrap: wrap;
-
-  padding-top: 1.2rem;
-`;
-
-const iconWrapper = css`
-  display: flex;
-  gap: 0.4rem;
-  align-items: center;
-  flex-direction: column;
-
-  max-width: 7rem;
-`;
-
-const iconName = css`
-  word-break: keep-all;
-
-  color: ${COLORS.gray5};
-  text-align: center;
-
-  ${FONTS.Small2};
 `;
 
 const borderLine = css`

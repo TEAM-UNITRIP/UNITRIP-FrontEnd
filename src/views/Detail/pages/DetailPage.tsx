@@ -9,6 +9,33 @@ import Header from '../components/Header';
 import PlaceInfo from '../components/PlaceInfo';
 import Tab from '../components/Tab';
 
+function DetailPage() {
+  const [selectedTab, setSelectedTab] = useState('상세정보');
+  const handleTabChange = (tab: string) => {
+    setSelectedTab(tab);
+  };
+  return (
+    <div css={detailContainer}>
+      <div css={backgroundImg}>
+        <Header />
+        <span css={title}>대전시립미술관</span>
+      </div>
+      <PlaceInfo />
+      <div css={gapLine}></div>
+      <Tab selectedTab={selectedTab} setSelectedTab={handleTabChange} />
+      <div css={gapLine}></div>
+
+      {selectedTab === '상세정보' ||
+      selectedTab === '유니버설' ||
+      selectedTab === '지도' ? (
+        <ErrorReport />
+      ) : null}
+    </div>
+  );
+}
+
+export default DetailPage;
+
 const detailContainer = css`
   width: 100dvw;
 `;
@@ -40,32 +67,3 @@ const gapLine = css`
 
   background-color: ${COLORS.gray1};
 `;
-
-function DetailPage() {
-  const [selectedTab, setSelectedTab] = useState<string>('상세정보');
-  const handleTabChange = (tab: string) => {
-    setSelectedTab(tab);
-  };
-  return (
-    <div css={detailContainer}>
-      <div css={backgroundImg}>
-        <Header />
-        <span css={title}>대전시립미술관</span>
-      </div>
-      <PlaceInfo />
-      <div css={gapLine}></div>
-      <div>
-        <Tab selectedTab={selectedTab} setSelectedTab={handleTabChange} />
-      </div>
-      <div css={gapLine}></div>
-
-      {selectedTab === '상세정보' ||
-      selectedTab === '유니버설' ||
-      selectedTab === '지도' ? (
-        <ErrorReport />
-      ) : null}
-    </div>
-  );
-}
-
-export default DetailPage;

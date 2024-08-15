@@ -55,7 +55,7 @@ interface Facility {
   none: JSX.Element;
 }
 
-export const BaiscFacilities: Facility[] = [
+export const BASIC_FACILITIES: Facility[] = [
   {
     name: '안내데스크',
     default: <InformationDefaultIcon />,
@@ -93,7 +93,7 @@ export const BaiscFacilities: Facility[] = [
   },
 ];
 
-export const PhysicalFacilities: Facility[] = [
+export const PHYSICAL_FACILITIES: Facility[] = [
   {
     name: '휠체어 매표소',
     default: <WheelchairTicketOfficeDefaultIcon />,
@@ -106,7 +106,7 @@ export const PhysicalFacilities: Facility[] = [
   },
 ];
 
-export const VisualFacilities: Facility[] = [
+export const VISUAL_FACILITIES: Facility[] = [
   {
     name: '점형/선형 블록',
     default: <BrailleBlocksDefaultIcon />,
@@ -144,7 +144,7 @@ export const VisualFacilities: Facility[] = [
   },
 ];
 
-export const HearingFacilities: Facility[] = [
+export const HEARING_FACILITIES: Facility[] = [
   {
     name: '수어 안내',
     default: <SignLanguageDefaultIcon />,
@@ -157,7 +157,7 @@ export const HearingFacilities: Facility[] = [
   },
 ];
 
-export const InfantFacilities: Facility[] = [
+export const INFANT_FACILITIES: Facility[] = [
   {
     name: '유모차',
     default: <BabyCarriageDefaultIcon />,
@@ -175,7 +175,7 @@ export const InfantFacilities: Facility[] = [
   },
 ];
 
-export const OthersFacilities: Facility[] = [
+export const OTHERS_FACILITIES: Facility[] = [
   {
     name: '대중교통',
     default: <PublicTransportDefaultIcon />,

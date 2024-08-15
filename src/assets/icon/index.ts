@@ -4,10 +4,7 @@ export { default as HomeMonoIcon } from './icon-home-mono.svg?react';
 export { default as KakaoTalkIcon } from './icon-kakaotalk.svg?react';
 export { default as MapMonoIcon } from './icon-map-mono.svg?react';
 export { default as PinLocationMonoIcon } from './icon-pin-location-mono.svg?react';
-export {
-  default as SearchMonoIcon,
-  default as SearchMonoIcon,
-} from './icon-search-mono.svg?react';
+export { default as SearchMonoIcon } from './icon-search-mono.svg?react';
 export { default as ShieldCheckMonoIcon } from './icon-shield-check-mono.svg?react';
 export { default as UserMonoIcon } from './icon-user-mono.svg?react';
 export { default as XMonoIcon } from './icon-x-mono.svg?react';
@@ -21,10 +18,7 @@ export { default as LocationPinIcon } from './icon_location_pin.svg?react';
 export { default as MapPinIcon } from './icon_map_pin.svg?react';
 export { default as StarIcon } from './icon_star_filled.svg?react';
 export { default as Star1Icon } from './Star 1.svg?react';
-export {
-  default as UnitripIcon,
-  default as UnitripIcon,
-} from './UNITRIP.svg?react';
+export { default as UnitripIcon } from './UNITRIP.svg?react';
 
 export { default as ArrowToggleClosed } from './icon_arrow_toggle_closed.svg?react';
 export { default as ArrowToggleOpen } from './icon_arrow_toggle_open.svg?react';

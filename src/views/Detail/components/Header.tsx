@@ -11,14 +11,14 @@ function Header() {
   };
 
   return (
-    <div css={headerContainer}>
+    <header css={headerContainer}>
       <button type="button">
         <ArrowLeftIcon />
       </button>
       <button type="button" onClick={favoriteOnClick}>
         {isFavorite ? <HeartFilledIcon /> : <HeartGrayIcon />}
       </button>
-    </div>
+    </header>
   );
 }
 

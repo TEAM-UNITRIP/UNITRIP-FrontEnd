@@ -7,7 +7,7 @@ import Map from './Map';
 import Photos from './Photos';
 import Universal from './Universal';
 
-const TabMenu = ['상세정보', '유니버설', '지도', '사진', '리뷰'];
+const TAB_MENU = ['상세정보', '유니버설', '지도', '사진', '리뷰'];
 
 interface TabProps {
   selectedTab: string;
@@ -24,7 +24,7 @@ function Tab(props: TabProps) {
   return (
     <div css={tabContainer}>
       <ul css={tabList}>
-        {TabMenu.map((item) => (
+        {TAB_MENU.map((item) => (
           <li
             key={item}
             css={listItem(item === selectedTab)}
@@ -55,10 +55,10 @@ const tabList = css`
   display: flex;
   justify-content: space-around;
 
-  padding: 1.5rem 2.4rem 0 2.5rem;
+  padding: 1rem 2.4rem 0 2.5rem;
   border-bottom: 0.1rem solid ${COLORS.gray2};
 
-  color: ${FONTS.H5};
+  ${FONTS.H5};
 `;
 
 const listItem = (isActive: boolean) => css`
