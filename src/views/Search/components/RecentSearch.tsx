@@ -6,19 +6,21 @@ import { COLORS, FONTS } from '@/styles/constants';
 const RecentSearch = () => {
   const wordList = ['미술관', '수목원', '음악분수'].map((item) => {
     return (
-      <button key={item} css={word} type="button">
-        <span css={wordText}>{item}</span>
-        <button type="button">
-          <ToggleXIcon />
+      <li key={item}>
+        <button css={word} type="button">
+          <span css={wordText}>{item}</span>
+          <button type="button">
+            <ToggleXIcon />
+          </button>
         </button>
-      </button>
+      </li>
     );
   });
 
   return (
     <div css={container}>
       <p css={title}>최근 검색어</p>
-      <div css={wordContainer}>{wordList}</div>
+      <ul css={wordContainer}>{wordList}</ul>
     </div>
   );
 };
