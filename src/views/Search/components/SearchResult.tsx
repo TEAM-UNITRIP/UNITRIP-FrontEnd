@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import React from 'react';
 
 import { HeartMonoIcon, PinLocationMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';

@@ -6,6 +6,7 @@ import { SearchSetIcon } from '@/assets/icon';
 import MenuBar from '@/components/MenuBar';
 import { COLORS, FONTS } from '@/styles/constants';
 
+import Guide from '../components/Guide';
 import SearchBar from '../components/SearchBar';
 import SearchResult from '../components/SearchResult';
 
@@ -23,6 +24,7 @@ const SearchResultPage = () => {
       <button type="button" css={buttonCss}>
         <SearchSetIcon /> 기본 편의시설, 지체장애
       </button>
+      <Guide />
       <SearchResult />
       <MenuBar />
     </>

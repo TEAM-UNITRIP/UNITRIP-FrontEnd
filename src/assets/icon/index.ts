@@ -14,3 +14,4 @@ export { default as ChevronLeftIcon } from './Chevron_Left.svg?react';
 export { default as ToggleXIcon } from './toggle-x.svg?react';
 export { default as ResetXIcon } from './reset-x.svg?react';
 export { default as SearchSetIcon } from './icon-search-set.svg?react';
+export { default as CheckFillIcon } from './icon-check-fill.svg?react';
