@@ -13,3 +13,4 @@ export { default as Star1Icon } from './Star 1.svg?react';
 export { default as ChevronLeftIcon } from './Chevron_Left.svg?react';
 export { default as ToggleXIcon } from './toggle-x.svg?react';
 export { default as ResetXIcon } from './reset-x.svg?react';
+export { default as SearchSetIcon } from './icon-search-set.svg?react';

@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import MainPage from './views/Main/pages/MainPage';
 import SearchPage from './views/Search/pages/SearchPage';
+import SearchResultPage from './views/Search/pages/SearchResultPage';
 
 const router = createBrowserRouter([
   {
@@ -11,6 +12,11 @@ const router = createBrowserRouter([
   {
     path: '/search',
     element: <SearchPage />,
+    children: [{}],
+  },
+  {
+    path: '/search/:word',
+    element: <SearchResultPage />,
   },
   // {
   //   path: "*",
