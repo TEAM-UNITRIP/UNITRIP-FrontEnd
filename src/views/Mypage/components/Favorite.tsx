@@ -1,11 +1,12 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
-import { MypageBackIcon, MypageHeartIcon } from '@/assets/icon';
+import { MypageHeartIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
 import { currentTabType } from '../pages/Mypage';
 import FavoritePlaceList from './FavoritePlaceList';
+import Header from './Header';
 
 const favoriteList = [];
 
@@ -18,10 +19,8 @@ function Favorite(props: FavoriteProps) {
 
   return (
     <>
-      <header css={header}>
-        <MypageBackIcon onClick={() => handleSetCurrentTab('main')} />
-        <span>찜한 여행지 목록</span>
-      </header>
+      <Header handleSetCurrentTab={handleSetCurrentTab} page={'favorite'} />
+
       {favoriteList.length === 0 ? (
         <div css={emptyContainer}>
           <MypageHeartIcon />
@@ -42,20 +41,6 @@ function Favorite(props: FavoriteProps) {
 }
 
 export default Favorite;
-
-const header = css`
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-
-  width: 100%;
-  height: 5rem;
-  padding: 1.2rem 0;
-
-  color: ${COLORS.brand1};
-
-  ${FONTS.H4};
-`;
 
 const emptyContainer = css`
   display: flex;

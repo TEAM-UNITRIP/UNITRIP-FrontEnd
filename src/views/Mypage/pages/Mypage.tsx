@@ -23,11 +23,15 @@ function Mypage() {
       {currentTab === 'main' && (
         <Main handleSetCurrentTab={handleSetCurrentTab} />
       )}
-      {currentTab === 'personalInfo' && <PersonalInfo />}
+      {currentTab === 'personalInfo' && (
+        <PersonalInfo handleSetCurrentTab={handleSetCurrentTab} />
+      )}
       {currentTab === 'favoritePlace' && (
         <Favorite handleSetCurrentTab={handleSetCurrentTab} />
       )}
-      {currentTab === 'travelerType' && <TravelerType />}
+      {currentTab === 'travelerType' && (
+        <TravelerType handleSetCurrentTab={handleSetCurrentTab} />
+      )}
     </div>
   );
 }
