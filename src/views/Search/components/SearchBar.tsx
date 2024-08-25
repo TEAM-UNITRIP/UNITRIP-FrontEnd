@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ChevronLeftIcon, ResetXIcon } from '@/assets/icon';
@@ -23,6 +23,12 @@ const SearchBar = (props: SearchBarProps) => {
     handleSearchWord('');
   };
 
+  const handleOnKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      navigate(searchWord);
+    }
+  };
+
   return (
     <div css={containerCss}>
       <button type="button" onClick={() => navigate(-1)}>
@@ -33,6 +39,7 @@ const SearchBar = (props: SearchBarProps) => {
         placeholder="어디로, 어떤 여행을 떠날까요?"
         value={searchWord}
         onChange={handleOnChange}
+        onKeyDown={handleOnKeyDown}
       />
       <button type="button" onClick={handleOnClick}>
         <ResetXIcon css={deleteButtonCss} />

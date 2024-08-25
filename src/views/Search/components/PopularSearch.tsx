@@ -1,8 +1,11 @@
 import { css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 import { COLORS, FONTS } from '@/styles/constants';
 
 const PopularSearch = () => {
+  const navigate = useNavigate();
+
   const wordList = [
     '비대면 관광',
     '대전시립미술관',
@@ -12,7 +15,7 @@ const PopularSearch = () => {
   ].map((item, idx) => {
     return (
       <li key={item}>
-        <button css={word}>
+        <button css={word} onClick={() => navigate(item)}>
           <p css={idxCss}>{idx + 1}</p>
           <p>{item}</p>
         </button>

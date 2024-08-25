@@ -1,13 +1,16 @@
 import { css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 import { ToggleXIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
 const RecentSearch = () => {
+  const navigate = useNavigate();
+
   const wordList = ['미술관', '수목원', '음악분수'].map((item) => {
     return (
       <li key={item}>
-        <button css={word} type="button">
+        <button css={word} type="button" onClick={() => navigate(item)}>
           <span css={wordText}>{item}</span>
           <button type="button">
             <ToggleXIcon />
