@@ -74,3 +74,12 @@ export { default as WheelchairTicketOfficeNoneIcon } from './icon_wheelchair_tic
 export { default as ArrowRightIcon } from './icon-arrow-right.svg?react';
 export { default as MypageBackIcon } from './icon_mypage_back.svg?react';
 export { default as MypageHeartIcon } from './icon_mypage_heart.svg?react';
+
+export { default as CheckEmptyIcon } from './icon-check-empty.svg?react';
+export { default as CheckFilledIcon } from './icon-check-filled.svg?react';
+export { default as MapMonoGrayIcon } from './icon-map-mono-gray.svg?react';
+export { default as BlindTypeIcon } from './icon_blind_type.svg?react';
+export { default as HearingTypeIcon } from './icon_hearing_type.svg?react';
+export { default as InfantTypeIcon } from './icon_infant_type.svg?react';
+export { default as NoneTypeIcon } from './icon_none_type.svg?react';
+export { default as PhysicalTypeIcon } from './icon_physical_type.svg?react';
