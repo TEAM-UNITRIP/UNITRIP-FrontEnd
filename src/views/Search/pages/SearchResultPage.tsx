@@ -6,26 +6,40 @@ import { SearchSetIcon } from '@/assets/icon';
 import MenuBar from '@/components/MenuBar';
 import { COLORS, FONTS } from '@/styles/constants';
 
-import Guide from '../components/Guide';
+import RelatedWordList from '../components/RelatedWordList';
+import Guide from '../components/Result/Guide';
+import SearchResult from '../components/Result/SearchResult';
 import SearchBar from '../components/SearchBar';
-import SearchResult from '../components/SearchResult';
 
 const SearchResultPage = () => {
-  const { word } = useParams();
-  const [searchWord, setSearchWord] = useState(word || '');
+  const { word: initialWord } = useParams();
+  const [searchWord, setSearchWord] = useState(initialWord || '');
+
+  const [showGuide, setShowGuide] = useState(true);
 
   const handleSearchWord = (word: string) => {
     setSearchWord(word);
   };
 
+  const handleSetShowGuide = (value: boolean) => {
+    setShowGuide(value);
+  };
+
   return (
     <>
       <SearchBar searchWord={searchWord} handleSearchWord={handleSearchWord} />
-      <button type="button" css={buttonCss}>
-        <SearchSetIcon /> 기본 편의시설, 지체장애
-      </button>
-      <Guide />
-      <SearchResult />
+      {searchWord !== '' && searchWord !== initialWord ? (
+        <RelatedWordList searchWord={searchWord} />
+      ) : (
+        <>
+          <button type="button" css={buttonCss}>
+            <SearchSetIcon /> 기본 편의시설, 지체장애
+          </button>
+          <SearchResult />
+        </>
+      )}
+
+      {showGuide && <Guide handleSetShowGuide={handleSetShowGuide} />}
       <MenuBar />
     </>
   );

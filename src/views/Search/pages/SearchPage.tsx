@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import MenuBar from '@/components/MenuBar';
 
-import PopularSearch from '../components/PopularSearch';
-import RecentSearch from '../components/RecentSearch';
 import RelatedWordList from '../components/RelatedWordList';
+import PopularSearch from '../components/Search/PopularSearch';
+import RecentSearch from '../components/Search/RecentSearch';
 import SearchBar from '../components/SearchBar';
 
 const SearchPage = () => {
