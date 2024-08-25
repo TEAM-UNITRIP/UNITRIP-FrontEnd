@@ -3,11 +3,20 @@ import { css } from '@emotion/react';
 import { CheckFillIcon, XMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
-const Guide = () => {
+interface GuideProps {
+  handleSetShowGuide: (value: boolean) => void;
+}
+
+const Guide = (props: GuideProps) => {
+  const { handleSetShowGuide } = props;
+
   return (
     <div css={containerCss}>
       <div css={section1Css}>
-        <button type="button" css={buttonCss}>
+        <button
+          type="button"
+          css={buttonCss}
+          onClick={() => handleSetShowGuide(false)}>
           <XMonoIcon />
         </button>
       </div>
