@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { useCookies } from 'react-cookie';
 
 import { CheckFillIcon, XMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -9,6 +10,20 @@ interface GuideProps {
 
 const Guide = (props: GuideProps) => {
   const { handleSetShowGuide } = props;
+  const [, setCookies] = useCookies(['showSearchGuide']);
+
+  const hideGuideForADay = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + 1);
+
+    setCookies('showSearchGuide', 'hide', {
+      path: '/search/',
+      expires: date,
+      maxAge: 86400,
+    });
+
+    handleSetShowGuide(false);
+  };
 
   return (
     <div css={containerCss}>
@@ -26,7 +41,7 @@ const Guide = (props: GuideProps) => {
           <br />
           필터에 반영되었어요!
         </p>
-        <button type="button" css={buttonTextCss}>
+        <button type="button" css={buttonTextCss} onClick={hideGuideForADay}>
           <CheckFillIcon /> 하루동안 보지 않기
         </button>
       </div>

@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useParams } from 'react-router-dom';
 
 import { SearchSetIcon } from '@/assets/icon';
@@ -15,7 +16,8 @@ const SearchResultPage = () => {
   const { word: initialWord } = useParams();
   const [searchWord, setSearchWord] = useState(initialWord || '');
 
-  const [showGuide, setShowGuide] = useState(true);
+  const [cookies] = useCookies(['showSearchGuide']);
+  const [showGuide, setShowGuide] = useState(!cookies.showSearchGuide);
 
   const handleSearchWord = (word: string) => {
     setSearchWord(word);
