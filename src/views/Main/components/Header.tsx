@@ -7,7 +7,9 @@ const Header = () => {
   const handleLogin = () => {
     if (window.Kakao && window.Kakao.Auth) {
       window.Kakao.Auth.authorize({
-        redirectUri: import.meta.env.VITE_REDIRECT_URI,
+        redirectUri:
+          import.meta.env.VITE_LOCAL_REDIRECT_URI ||
+          import.meta.env.VITE_REDIRECT_URI,
       });
     }
   };
