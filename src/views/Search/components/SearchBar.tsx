@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ChevronLeftIcon, ResetXIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
+import { setStorageSearchWord } from '@/utils/storageSearchWord';
 
 interface SearchBarProps {
   searchWord: string;
@@ -25,6 +26,7 @@ const SearchBar = (props: SearchBarProps) => {
 
   const handleOnKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      setStorageSearchWord(searchWord);
       navigate(searchWord);
     }
   };

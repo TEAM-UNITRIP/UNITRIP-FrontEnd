@@ -2,9 +2,15 @@ import { css } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
 
 import { COLORS, FONTS } from '@/styles/constants';
+import { setStorageSearchWord } from '@/utils/storageSearchWord';
 
 const PopularSearch = () => {
   const navigate = useNavigate();
+
+  const handleOnClick = (searchWord: string) => {
+    setStorageSearchWord(searchWord);
+    navigate(searchWord);
+  };
 
   const wordList = [
     '비대면 관광',
@@ -15,7 +21,7 @@ const PopularSearch = () => {
   ].map((item, idx) => {
     return (
       <li key={item}>
-        <button css={word} onClick={() => navigate(item)}>
+        <button css={word} onClick={() => handleOnClick(item)}>
           <p css={idxCss}>{idx + 1}</p>
           <p>{item}</p>
         </button>
