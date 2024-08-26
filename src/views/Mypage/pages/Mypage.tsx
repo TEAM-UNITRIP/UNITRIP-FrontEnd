@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 
+import MenuBar from '@/components/MenuBar';
+
 import Favorite from '../components/Favorite';
 import Main from '../components/Main';
 import PersonalInfo from '../components/PersonalInfo';
@@ -12,6 +14,12 @@ export type currentTabType =
   | 'favoritePlace'
   | 'travelerType';
 
+const COMPONENT_LIST = [
+  { tab: 'personalInfo', component: PersonalInfo },
+  { tab: 'favoritePlace', component: Favorite },
+  { tab: 'travelerType', component: TravelerType },
+];
+
 function Mypage() {
   const [currentTab, setCurrentTab] = useState<currentTabType>('main');
 
@@ -19,20 +27,25 @@ function Mypage() {
     setCurrentTab(clicked);
   };
   return (
-    <div css={mypageContainer}>
+    <>
       {currentTab === 'main' && (
-        <Main handleSetCurrentTab={handleSetCurrentTab} />
+        <div css={mypageContainer}>
+          <Main handleSetCurrentTab={handleSetCurrentTab} />
+          <footer css={footer}>
+            <MenuBar />
+          </footer>
+        </div>
       )}
-      {currentTab === 'personalInfo' && (
-        <PersonalInfo handleSetCurrentTab={handleSetCurrentTab} />
+
+      {COMPONENT_LIST.map(
+        ({ tab, component: Component }) =>
+          currentTab === tab && (
+            <div css={mypageContainer} key={tab}>
+              <Component handleSetCurrentTab={handleSetCurrentTab} />
+            </div>
+          ),
       )}
-      {currentTab === 'favoritePlace' && (
-        <Favorite handleSetCurrentTab={handleSetCurrentTab} />
-      )}
-      {currentTab === 'travelerType' && (
-        <TravelerType handleSetCurrentTab={handleSetCurrentTab} />
-      )}
-    </div>
+    </>
   );
 }
 
@@ -47,4 +60,8 @@ const mypageContainer = css`
   padding: 0 2rem;
 
   background-color: white;
+`;
+
+const footer = css`
+  margin-left: -2rem;
 `;
