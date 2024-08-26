@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-import { MypageBackIcon } from '@/assets/icon';
+import { HeaderBackIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
 import { currentTabType } from '../pages/Mypage';
@@ -23,7 +23,7 @@ function Header(props: HeaderProps) {
 
   return (
     <header css={header}>
-      <MypageBackIcon onClick={() => handleSetCurrentTab('main')} />
+      <HeaderBackIcon onClick={() => handleSetCurrentTab('main')} />
       <span>{content}</span>
     </header>
   );

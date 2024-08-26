@@ -72,7 +72,7 @@ export { default as WheelchairTicketOfficeDefaultIcon } from './icon_wheelchair_
 export { default as WheelchairTicketOfficeNoneIcon } from './icon_wheelchair_ticket_office_none.svg?react';
 
 export { default as ArrowRightIcon } from './icon-arrow-right.svg?react';
-export { default as MypageBackIcon } from './icon_mypage_back.svg?react';
+export { default as HeaderBackIcon } from './icon_header_back.svg?react';
 export { default as MypageHeartIcon } from './icon_mypage_heart.svg?react';
 
 export { default as CheckEmptyIcon } from './icon-check-empty.svg?react';
