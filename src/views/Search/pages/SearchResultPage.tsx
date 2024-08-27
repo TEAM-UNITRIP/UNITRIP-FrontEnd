@@ -1,11 +1,11 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { useParams } from 'react-router-dom';
 
 import { SearchSetIcon } from '@/assets/icon';
 import MenuBar from '@/components/MenuBar';
 import { COLORS, FONTS } from '@/styles/constants';
+import { isGuideShown } from '@/utils/storageHideGuide';
 
 import RelatedWordList from '../components/RelatedWordList';
 import Guide from '../components/Result/Guide';
@@ -16,8 +16,7 @@ const SearchResultPage = () => {
   const { word: initialWord } = useParams();
   const [searchWord, setSearchWord] = useState(initialWord || '');
 
-  const [cookies] = useCookies(['showSearchGuide']);
-  const [showGuide, setShowGuide] = useState(!cookies.showSearchGuide);
+  const [showGuide, setShowGuide] = useState(() => isGuideShown());
 
   const handleSearchWord = (word: string) => {
     setSearchWord(word);

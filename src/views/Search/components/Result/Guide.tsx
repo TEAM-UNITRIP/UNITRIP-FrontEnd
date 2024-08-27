@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
-import { useCookies } from 'react-cookie';
 
 import { CheckFillIcon, XMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
+import { setStorageHideGuide } from '@/utils/storageHideGuide';
 
 interface GuideProps {
   handleSetShowGuide: (value: boolean) => void;
@@ -10,18 +10,9 @@ interface GuideProps {
 
 const Guide = (props: GuideProps) => {
   const { handleSetShowGuide } = props;
-  const [, setCookies] = useCookies(['showSearchGuide']);
 
   const hideGuideForADay = () => {
-    const date = new Date();
-    date.setDate(date.getDate() + 1);
-
-    setCookies('showSearchGuide', 'hide', {
-      path: '/search/',
-      expires: date,
-      maxAge: 86400,
-    });
-
+    setStorageHideGuide();
     handleSetShowGuide(false);
   };
 
