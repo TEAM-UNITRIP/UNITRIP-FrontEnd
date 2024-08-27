@@ -19,7 +19,6 @@ export { default as MapPinIcon } from './icon_map_pin.svg?react';
 export { default as StarIcon } from './icon_star_filled.svg?react';
 export { default as Star1Icon } from './Star 1.svg?react';
 export { default as UnitripIcon } from './UNITRIP.svg?react';
-
 export { default as ArrowToggleClosed } from './icon_arrow_toggle_closed.svg?react';
 export { default as ArrowToggleOpen } from './icon_arrow_toggle_open.svg?react';
 export { default as AudioGuideDefaultIcon } from './icon_audio_guide_default.svg?react';
