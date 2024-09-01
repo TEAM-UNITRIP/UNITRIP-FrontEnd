@@ -14,38 +14,38 @@ export type currentTabType =
   | 'favoritePlace'
   | 'travelerType';
 
-const COMPONENT_LIST = [
-  { tab: 'personalInfo', component: PersonalInfo },
-  { tab: 'favoritePlace', component: Favorite },
-  { tab: 'travelerType', component: TravelerType },
-];
-
 function Mypage() {
   const [currentTab, setCurrentTab] = useState<currentTabType>('main');
 
   const handleSetCurrentTab = (clicked: currentTabType) => {
     setCurrentTab(clicked);
   };
-  return (
-    <>
-      {currentTab === 'main' && (
-        <div css={mypageContainer}>
-          <Main handleSetCurrentTab={handleSetCurrentTab} />
-          <footer css={footer}>
-            <MenuBar />
-          </footer>
-        </div>
-      )}
 
-      {COMPONENT_LIST.map(
-        ({ tab, component: Component }) =>
-          currentTab === tab && (
-            <div css={mypageContainer} key={tab}>
-              <Component handleSetCurrentTab={handleSetCurrentTab} />
-            </div>
-          ),
+  const renderComponent = (state: currentTabType) => {
+    switch (state) {
+      case 'main':
+        return <Main handleSetCurrentTab={handleSetCurrentTab} />;
+      case 'personalInfo':
+        return <PersonalInfo handleSetCurrentTab={handleSetCurrentTab} />;
+      case 'favoritePlace':
+        return <Favorite handleSetCurrentTab={handleSetCurrentTab} />;
+      case 'travelerType':
+        return <TravelerType handleSetCurrentTab={handleSetCurrentTab} />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div css={mypageContainer}>
+      {renderComponent(currentTab)}
+
+      {currentTab === 'main' && (
+        <footer css={footer}>
+          <MenuBar />
+        </footer>
       )}
-    </>
+    </div>
   );
 }
 
