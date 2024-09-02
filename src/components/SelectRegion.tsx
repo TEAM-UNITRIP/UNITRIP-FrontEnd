@@ -6,10 +6,29 @@ import { COLORS, FONTS } from '@/styles/constants';
 
 const SelectRegion = () => {
   const [locationList, setLocationList] = useState<string[]>([]);
+  const [inputState, setInputState] = useState({ city: false, town: false });
 
   const onChangeRegion = (selected: string) => {
     const town = REGION_LIST.find((item) => item.city === selected)?.town || [];
     setLocationList(town);
+  };
+
+  const onChangeInput = (input: string) => {
+    if (input === 'city') {
+      setInputState((prev) => {
+        return {
+          ...prev,
+          city: true,
+        };
+      });
+    } else if (input === 'town') {
+      setInputState((prev) => {
+        return {
+          ...prev,
+          town: true,
+        };
+      });
+    }
   };
 
   return (
@@ -21,8 +40,11 @@ const SelectRegion = () => {
           <select
             name="city"
             defaultValue="default"
-            css={selectTab}
-            onChange={(e) => onChangeRegion(e.target.value)}>
+            css={inputState.city ? selectTab : beforeSelectTab}
+            onChange={(e) => {
+              onChangeRegion(e.target.value);
+              onChangeInput('city');
+            }}>
             <option value="default" disabled>
               지역
             </option>
@@ -35,7 +57,11 @@ const SelectRegion = () => {
         </div>
 
         <div css={region}>
-          <select name="town" defaultValue="default" css={selectTab}>
+          <select
+            name="town"
+            defaultValue="default"
+            css={inputState.town ? selectTab : beforeSelectTab}
+            onChange={() => onChangeInput('town')}>
             <option value="default">시/군/구</option>
             {locationList.map((item) => (
               <option value={item} key={item}>
@@ -87,4 +113,9 @@ const selectTab = css`
   width: 100%;
   border: none;
   outline: none;
+`;
+
+const beforeSelectTab = css`
+  ${selectTab};
+  color: ${COLORS.gray4};
 `;
