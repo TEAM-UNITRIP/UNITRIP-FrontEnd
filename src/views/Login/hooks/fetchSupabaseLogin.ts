@@ -1,9 +1,9 @@
-import { supabaseClient } from '@/utils/supabaseClient';
+import { unitripSupabase } from '@/utils/supabaseClient';
 
 const fetchSupabaseLogin = async (token: string) => {
   const {
     data: { session },
-  } = await supabaseClient.auth.signInWithIdToken({
+  } = await unitripSupabase.auth.signInWithIdToken({
     provider: 'kakao',
     token,
   });
