@@ -12,39 +12,52 @@ import {
   PhysicalTypeIcon,
 } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
+import MypageHeader from '@/views/Mypage/components/MypageHeader';
+import { currentTabType } from '@/views/Mypage/pages/Mypage';
 
-import { currentTabType } from '../pages/Mypage';
-import Header from './Header';
-
-interface TravelerTypeProps {
-  handleSetCurrentTab: (clicked: currentTabType) => void;
+interface SelectTravelerTypeProps {
+  handleSetCurrentTab?: (clicked: currentTabType) => void;
+  page: string;
+  children: string;
 }
 
 const TYPE_LIST = [
-  { id: 'physical', icon: <PhysicalTypeIcon />, text: '지체장애인' },
-  { id: 'blind', icon: <BlindTypeIcon />, text: '시각장애인' },
-  { id: 'hearing', icon: <HearingTypeIcon />, text: '청각장애인' },
-  { id: 'infant', icon: <InfantTypeIcon />, text: '영유아가족' },
-  { id: 'none', icon: <NoneTypeIcon />, text: '해당되지 않아요' },
+  { icon: <PhysicalTypeIcon />, text: '지체장애인' },
+  { icon: <BlindTypeIcon />, text: '시각장애인' },
+  { icon: <HearingTypeIcon />, text: '청각장애인' },
+  { icon: <InfantTypeIcon />, text: '영유아가족' },
+  { icon: <NoneTypeIcon />, text: '해당되지 않아요' },
 ];
 
-function TravelerType(props: TravelerTypeProps) {
-  const { handleSetCurrentTab } = props;
+const SelectTravelerType = (props: SelectTravelerTypeProps) => {
+  const { handleSetCurrentTab, page, children } = props;
   const [seletedType, setSelectedType] = useState<string[]>([]);
 
-  const handleSetSelectedType = (id: string) => {
+  const handleSetSelectedType = (text: string) => {
     setSelectedType((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((type) => type !== id);
+      if (text === '해당되지 않아요') {
+        return prev.includes(text) ? [] : [text];
       } else {
-        return [...prev, id];
+        if (prev.includes('해당되지 않아요')) {
+          return [text];
+        } else {
+          return prev.includes(text)
+            ? prev.filter((type) => type !== text)
+            : [...prev, text];
+        }
       }
     });
   };
 
   return (
     <>
-      <Header handleSetCurrentTab={handleSetCurrentTab} page={'travelerType'} />
+      {page === 'mypage' ? (
+        <MypageHeader
+          handleSetCurrentTab={handleSetCurrentTab}
+          state={'travelerType'}
+        />
+      ) : null}
+      ;
       <div css={contentContainer}>
         <div>
           <p css={mainText}>
@@ -59,13 +72,13 @@ function TravelerType(props: TravelerTypeProps) {
               <li
                 key={item.text}
                 css={listItem}
-                onClick={() => handleSetSelectedType(item.id)}>
+                onClick={() => handleSetSelectedType(item.text)}>
                 <div css={itemText}>
                   {item.icon}
                   {item.text}
                 </div>
 
-                {seletedType.includes(item.id) ? (
+                {seletedType.includes(item.text) ? (
                   <CheckFilledIcon />
                 ) : (
                   <CheckEmptyIcon />
@@ -82,15 +95,15 @@ function TravelerType(props: TravelerTypeProps) {
           </div>
 
           <button type="button" css={submitBtn}>
-            저장
+            {children}
           </button>
         </div>
       </div>
     </>
   );
-}
+};
 
-export default TravelerType;
+export default SelectTravelerType;
 
 const contentContainer = css`
   display: flex;

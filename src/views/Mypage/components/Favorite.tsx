@@ -6,7 +6,7 @@ import { COLORS, FONTS } from '@/styles/constants';
 
 import { currentTabType } from '../pages/Mypage';
 import FavoritePlaceList from './FavoritePlaceList';
-import Header from './Header';
+import MypageHeader from './MypageHeader';
 
 const favoriteList = [];
 
@@ -14,12 +14,15 @@ interface FavoriteProps {
   handleSetCurrentTab: (clicked: currentTabType) => void;
 }
 
-function Favorite(props: FavoriteProps) {
+const Favorite = (props: FavoriteProps) => {
   const { handleSetCurrentTab } = props;
 
   return (
     <>
-      <Header handleSetCurrentTab={handleSetCurrentTab} page={'favorite'} />
+      <MypageHeader
+        handleSetCurrentTab={handleSetCurrentTab}
+        state={'favorite'}
+      />
 
       {favoriteList.length === 0 ? (
         <div css={emptyContainer}>
@@ -38,7 +41,7 @@ function Favorite(props: FavoriteProps) {
       )}
     </>
   );
-}
+};
 
 export default Favorite;
 

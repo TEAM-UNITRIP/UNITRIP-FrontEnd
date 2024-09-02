@@ -2,11 +2,11 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 
 import MenuBar from '@/components/MenuBar';
+import SelectTravelerType from '@/components/SelectTravelerType';
 
 import Favorite from '../components/Favorite';
 import Main from '../components/Main';
 import PersonalInfo from '../components/PersonalInfo';
-import TravelerType from '../components/TravelerType';
 
 export type currentTabType =
   | 'main'
@@ -14,7 +14,7 @@ export type currentTabType =
   | 'favoritePlace'
   | 'travelerType';
 
-function Mypage() {
+const Mypage = () => {
   const [currentTab, setCurrentTab] = useState<currentTabType>('main');
 
   const handleSetCurrentTab = (clicked: currentTabType) => {
@@ -30,7 +30,13 @@ function Mypage() {
       case 'favoritePlace':
         return <Favorite handleSetCurrentTab={handleSetCurrentTab} />;
       case 'travelerType':
-        return <TravelerType handleSetCurrentTab={handleSetCurrentTab} />;
+        return (
+          <SelectTravelerType
+            handleSetCurrentTab={handleSetCurrentTab}
+            page="mypage">
+            저장
+          </SelectTravelerType>
+        );
       default:
         return null;
     }
@@ -47,7 +53,7 @@ function Mypage() {
       )}
     </div>
   );
-}
+};
 
 export default Mypage;
 

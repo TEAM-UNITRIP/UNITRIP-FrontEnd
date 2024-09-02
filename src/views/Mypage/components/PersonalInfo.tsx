@@ -1,29 +1,24 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
 
+import SelectRegion from '@/components/SelectRegion';
 import { COLORS, FONTS } from '@/styles/constants';
 
-import { REGION_LIST } from '../constants/region';
 import { currentTabType } from '../pages/Mypage';
-import Header from './Header';
+import MypageHeader from './MypageHeader';
 
 interface PersonalInfoProps {
   handleSetCurrentTab: (clicked: currentTabType) => void;
 }
 
-function PersonalInfo(props: PersonalInfoProps) {
+const PersonalInfo = (props: PersonalInfoProps) => {
   const { handleSetCurrentTab } = props;
 
-  const [locationList, setLocationList] = useState<string[]>([]);
-
-  const onChangeRegion = (selected: string) => {
-    const town = REGION_LIST.find((item) => item.city === selected)?.town || [];
-    setLocationList(town);
-  };
-
   return (
-    <div>
-      <Header handleSetCurrentTab={handleSetCurrentTab} page={'personalInfo'} />
+    <>
+      <MypageHeader
+        handleSetCurrentTab={handleSetCurrentTab}
+        state={'personalInfo'}
+      />
 
       <form action="submit" css={PersonalInfoContainter}>
         <ul css={itemList}>
@@ -63,47 +58,15 @@ function PersonalInfo(props: PersonalInfoProps) {
             <input type="text" css={input} placeholder="선택안함" disabled />
           </li>
 
-          <li css={formItem}>
-            <span css={title}>지역*</span>
-
-            <div css={multiInputSection}>
-              <div css={region}>
-                <select
-                  name="city"
-                  defaultValue="default"
-                  css={selectTab}
-                  onChange={(e) => onChangeRegion(e.target.value)}>
-                  <option value="default" disabled>
-                    지역
-                  </option>
-                  {REGION_LIST.map((item, idx) => (
-                    <option value={item.city} key={idx}>
-                      {item.city}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div css={region}>
-                <select name="town" defaultValue="default" css={selectTab}>
-                  <option value="default">시/군/구</option>
-                  {locationList.map((item) => (
-                    <option value={item} key={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </li>
+          <SelectRegion />
         </ul>
         <button type="submit" css={submitBtn}>
           저장
         </button>
       </form>
-    </div>
+    </>
   );
-}
+};
 
 export default PersonalInfo;
 
@@ -164,17 +127,6 @@ const multiInputSection = css`
 const birth = (variant: string) => css`
   ${inputDefault};
   width: ${variant === 'year' ? '38%' : '28%'};
-`;
-
-const region = css`
-  ${inputDefault};
-  width: 48%;
-`;
-
-const selectTab = css`
-  width: 100%;
-  border: none;
-  outline: none;
 `;
 
 const submitBtn = css`
