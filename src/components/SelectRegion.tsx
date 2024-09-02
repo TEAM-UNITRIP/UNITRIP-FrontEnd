@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 
+import { REGION_LIST } from '@/constants/REGION_LIST';
 import { COLORS, FONTS } from '@/styles/constants';
-import { REGION_LIST } from '@/views/Mypage/constants/region';
 
 const SelectRegion = () => {
   const [locationList, setLocationList] = useState<string[]>([]);
