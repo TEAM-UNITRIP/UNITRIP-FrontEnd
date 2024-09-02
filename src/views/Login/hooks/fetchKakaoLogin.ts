@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { supabaseClient } from '@/utils/supabaseClient';
+import fetchSupabaseLogin from './fetchSupabaseLogin';
 
 const fetchKakaoLogin = async () => {
   /* 인가 코드 받기 */
@@ -29,16 +29,7 @@ const fetchKakaoLogin = async () => {
     const { id_token } = tokenData;
 
     /* id 토큰으로 회원 가입 */
-    const {
-      data: { session },
-    } = await supabaseClient.auth.signInWithIdToken({
-      provider: 'kakao',
-      token: id_token,
-    });
-
-    if (!tokenResponse || !session) {
-      console.log('로그인 실패');
-    }
+    id_token && fetchSupabaseLogin(id_token);
   } else {
     console.log('카카오 코드가 존재하지 않습니다.');
   }
