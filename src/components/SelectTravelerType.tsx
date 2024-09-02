@@ -35,12 +35,15 @@ const SelectTravelerType = (props: SelectTravelerTypeProps) => {
 
   const handleSetSelectedType = (text: string) => {
     setSelectedType((prev) => {
+      // 해당되지 않아요 선택 시, 다른 옵션 해제 or 재선택 시, 해당되지 않아요 또한 선택 해제
       if (text === '해당되지 않아요') {
         return prev.includes(text) ? [] : [text];
       } else {
+        // 해당되지 않아요 선택 후 다른 옵션 선택 -> 해당되지 않아요 해제
         if (prev.includes('해당되지 않아요')) {
           return [text];
         } else {
+          // 해당되지 않아요 외 옵션들 다중 선택 가능
           return prev.includes(text)
             ? prev.filter((type) => type !== text)
             : [...prev, text];
