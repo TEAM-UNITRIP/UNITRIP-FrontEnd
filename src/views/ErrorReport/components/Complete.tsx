@@ -86,7 +86,6 @@ const contentContainer = css`
 const image = css`
   width: 11.8rem;
   height: 11.8rem;
-  margin-right: 2rem;
   margin-bottom: 3.2rem;
 `;
 
