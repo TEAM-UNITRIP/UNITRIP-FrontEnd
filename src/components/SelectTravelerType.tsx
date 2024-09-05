@@ -17,8 +17,6 @@ import { currentTabType } from '@/views/Mypage/pages/Mypage';
 
 interface SelectTravelerTypeProps {
   handleSetCurrentTab?: (clicked: currentTabType) => void;
-  page: string;
-  children: string;
 }
 
 const TYPE_LIST = [
@@ -30,7 +28,7 @@ const TYPE_LIST = [
 ];
 
 const SelectTravelerType = (props: SelectTravelerTypeProps) => {
-  const { handleSetCurrentTab, page, children } = props;
+  const { handleSetCurrentTab } = props;
   const [seletedType, setSelectedType] = useState<string[]>([]);
 
   const handleSetSelectedType = (text: string) => {
@@ -54,12 +52,10 @@ const SelectTravelerType = (props: SelectTravelerTypeProps) => {
 
   return (
     <>
-      {page === 'mypage' ? (
-        <MypageHeader
-          handleSetCurrentTab={handleSetCurrentTab}
-          state={'travelerType'}
-        />
-      ) : null}
+      <MypageHeader
+        handleSetCurrentTab={handleSetCurrentTab}
+        state={'travelerType'}
+      />
       ;
       <div css={contentContainer}>
         <div>
@@ -98,7 +94,7 @@ const SelectTravelerType = (props: SelectTravelerTypeProps) => {
           </div>
 
           <button type="button" css={submitBtn}>
-            {children}
+            저장
           </button>
         </div>
       </div>

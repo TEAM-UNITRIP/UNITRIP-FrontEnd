@@ -30,13 +30,7 @@ const Mypage = () => {
       case 'favoritePlace':
         return <Favorite handleSetCurrentTab={handleSetCurrentTab} />;
       case 'travelerType':
-        return (
-          <SelectTravelerType
-            handleSetCurrentTab={handleSetCurrentTab}
-            page="mypage">
-            저장
-          </SelectTravelerType>
-        );
+        return <SelectTravelerType handleSetCurrentTab={handleSetCurrentTab} />;
       default:
         return null;
     }
