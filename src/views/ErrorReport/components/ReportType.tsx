@@ -30,14 +30,10 @@ const ReportType = (props: ReportTypeProps) => {
     handleSetErrorType(checkedType);
   };
 
-  const onClickBack = () => {
-    navigate(-1);
-  };
-
   return (
     <div css={ReportTypeContainer}>
       <header css={header}>
-        <HeaderBackIcon onClick={onClickBack} />
+        <HeaderBackIcon onClick={() => navigate(-1)} />
       </header>
 
       <section css={mainContainer}>
