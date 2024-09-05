@@ -24,7 +24,7 @@ const Explanation = (props: ExplanationProps) => {
   const onChangeInput = _.debounce(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       handleSetErrorContent(e.target.value);
-      handleSetIsActive(e.target.value.length);
+      handleSetIsActive(e.target.value.trim().length);
     },
     300,
   );
