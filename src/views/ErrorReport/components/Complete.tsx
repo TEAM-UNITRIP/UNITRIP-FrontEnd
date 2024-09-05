@@ -1,17 +1,20 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { HeaderBackIcon } from '@/assets/icon';
+import { XMonoIcon } from '@/assets/icon';
 import { ErrorReportCompleteImage } from '@/assets/image';
+import ToastMessage from '@/components/ToastMessage';
 import { COLORS, FONTS } from '@/styles/constants';
 
 const Complete = () => {
   const navigate = useNavigate();
+  const [toast, setToast] = useState(true);
 
   return (
     <div css={completeContainer}>
       <header css={header}>
-        <HeaderBackIcon onClick={() => {}} />
+        <XMonoIcon onClick={() => navigate(-1)} />
       </header>
 
       <div css={mainContainer}>
@@ -24,9 +27,17 @@ const Complete = () => {
           <p css={text('sub')}>문의해주신 내용은 확인 후</p>
           <p css={text('sub')}>반영 여부가 결정돼요</p>
         </section>
-        <button type="button" css={button} onClick={() => navigate(-1)}>
-          확인
-        </button>
+
+        <div css={bottomContainer}>
+          {toast && (
+            <ToastMessage setToast={setToast}>
+              등록이 완료되었습니다.
+            </ToastMessage>
+          )}
+          <button type="button" css={button} onClick={() => navigate(-1)}>
+            확인
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -43,6 +54,7 @@ const completeContainer = css`
 
 const header = css`
   display: flex;
+  justify-content: flex-end;
   align-items: center;
 
   width: 100%;
@@ -82,6 +94,14 @@ const text = (variant: string) => css`
   text-align: center;
 
   ${variant === 'main' ? FONTS.H3 : FONTS.Body5};
+`;
+
+const bottomContainer = css`
+  display: flex;
+  gap: 0.8rem;
+  flex-direction: column;
+
+  width: 100%;
 `;
 
 const button = css`
