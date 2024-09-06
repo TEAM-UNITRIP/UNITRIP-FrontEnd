@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import BottomButton from '@/components/BottomButton';
 import MenuBar from '@/components/MenuBar';
-import SelectTravelerType from '@/components/SelectTravelerType';
+import TravelerType from '@/views/Mypage/components/TravelerType';
 
 import Favorite from '../components/Favorite';
 import Main from '../components/Main';
@@ -33,7 +33,7 @@ const Mypage = () => {
       case 'favoritePlace':
         return <Favorite handleSetCurrentTab={handleSetCurrentTab} />;
       case 'travelerType':
-        return <SelectTravelerType handleSetCurrentTab={handleSetCurrentTab} />;
+        return <TravelerType handleSetCurrentTab={handleSetCurrentTab} />;
       default:
         return null;
     }

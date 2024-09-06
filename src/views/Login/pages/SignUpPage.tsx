@@ -6,7 +6,7 @@ import { HeaderBackIcon } from '@/assets/icon';
 import BottomButton from '@/components/BottomButton';
 import Header from '@/components/Header';
 import SelectRegion from '@/components/SelectRegion';
-import SelectTravelerType from '@/components/SelectTravelerType';
+import TravelerType from '@/views/Mypage/components/TravelerType';
 
 const SignUpPage = () => {
   const [step, setStep] = useState('여행자 유형 설정');
@@ -27,7 +27,7 @@ const SignUpPage = () => {
       return <SelectRegion />;
     }
     if (step === '여행자 유형 설정') {
-      return <SelectTravelerType handleSetCurrentTab={setStep} />;
+      return <TravelerType handleSetCurrentTab={setStep} />;
     }
   };
 
