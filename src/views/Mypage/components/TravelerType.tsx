@@ -14,9 +14,7 @@ interface TravelerTypeProps {
 const TravelerType = (props: TravelerTypeProps) => {
   const { handleSetCurrentTab } = props;
 
-  const [selectedTravelerTypes, setSelectedTravelerTypes] = useState<string[]>(
-    [],
-  );
+  const [travelerTypes, setTravelerTypes] = useState<string[]>([]);
 
   return (
     <>
@@ -34,8 +32,8 @@ const TravelerType = (props: TravelerTypeProps) => {
           <p css={subText}>다중선택 가능</p>
         </div>
         <SelectTravelerType
-          currentTravelerType={selectedTravelerTypes}
-          setTravelerType={setSelectedTravelerTypes}
+          currentTravelerType={travelerTypes}
+          setTravelerType={setTravelerTypes}
         />
 
         <div>
