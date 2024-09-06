@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { HeaderBackIcon } from '@/assets/icon';
 import BottomButton from '@/components/BottomButton';
@@ -8,9 +9,18 @@ import SelectRegion from '@/components/SelectRegion';
 import SelectTravelerType from '@/components/SelectTravelerType';
 
 const SignUpPage = () => {
-  const [step, setStep] = useState('지역 설정');
+  const [step, setStep] = useState('여행자 유형 설정');
 
-  const moveBack = () => {};
+  const navigate = useNavigate();
+
+  const moveBack = () => {
+    if (step === '지역 설정') {
+      navigate(`/`);
+    }
+    if (step === '여행자 유형 설정') {
+      setStep('지역 설정');
+    }
+  };
 
   const renderItem = () => {
     if (step === '지역 설정') {
