@@ -60,9 +60,6 @@ const PersonalInfo = (props: PersonalInfoProps) => {
 
           <SelectRegion />
         </ul>
-        <button type="submit" css={submitBtn}>
-          저장
-        </button>
       </form>
     </>
   );
@@ -127,17 +124,4 @@ const multiInputSection = css`
 const birth = (variant: string) => css`
   ${inputDefault};
   width: ${variant === 'year' ? '38%' : '28%'};
-`;
-
-const submitBtn = css`
-  width: 100%;
-  padding: 1.7rem 0;
-  border-radius: 1.2rem;
-
-  background-color: ${COLORS.brand1};
-
-  color: ${COLORS.white};
-  text-align: center;
-
-  ${FONTS.Body2};
 `;

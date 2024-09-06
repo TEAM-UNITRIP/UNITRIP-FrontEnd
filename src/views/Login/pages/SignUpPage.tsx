@@ -19,10 +19,8 @@ const SignUpPage = () => {
 
   return (
     <>
-      <main css={SignUpPageLayout}>
-        {renderItem()}
-        <BottomButton text="테스트" clickedFn={setStep} />
-      </main>
+      <main css={SignUpPageLayout}>{renderItem()}</main>
+      <BottomButton text="테스트" clickedFn={setStep} />
     </>
   );
 };
@@ -31,4 +29,5 @@ export default SignUpPage;
 
 const SignUpPageLayout = css`
   width: 100%;
+  padding: 2rem;
 `;

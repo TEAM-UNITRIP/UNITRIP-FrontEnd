@@ -56,7 +56,6 @@ const SelectTravelerType = (props: SelectTravelerTypeProps) => {
         handleSetCurrentTab={handleSetCurrentTab}
         state={'travelerType'}
       />
-      ;
       <div css={contentContainer}>
         <div>
           <p css={mainText}>
@@ -92,10 +91,6 @@ const SelectTravelerType = (props: SelectTravelerTypeProps) => {
             <MapMonoGrayIcon />
             <p>여행자 유형은 장소 추천과 리뷰 필터링에 반영돼요!</p>
           </div>
-
-          <button type="button" css={submitBtn}>
-            저장
-          </button>
         </div>
       </div>
     </>
@@ -170,17 +165,4 @@ const explaination = css`
   color: ${COLORS.gray9};
   ${FONTS.Body3};
   font-weight: 400;
-`;
-
-const submitBtn = css`
-  width: 100%;
-  padding: 1.7rem 15.35rem;
-  margin: 1.2rem 0;
-  border-radius: 1.2rem;
-
-  background-color: ${COLORS.brand1};
-
-  color: ${COLORS.white};
-
-  ${FONTS.Body2};
 `;

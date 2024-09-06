@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 
+import BottomButton from '@/components/BottomButton';
 import MenuBar from '@/components/MenuBar';
 import SelectTravelerType from '@/components/SelectTravelerType';
 
@@ -21,6 +22,8 @@ const Mypage = () => {
     setCurrentTab(clicked);
   };
 
+  const handleData = () => {};
+
   const renderComponent = (state: currentTabType) => {
     switch (state) {
       case 'main':
@@ -37,15 +40,14 @@ const Mypage = () => {
   };
 
   return (
-    <div css={mypageContainer}>
-      {renderComponent(currentTab)}
-
-      {currentTab === 'main' && (
-        <footer css={footer}>
-          <MenuBar />
-        </footer>
+    <>
+      <div css={mypageContainer}>{renderComponent(currentTab)}</div>
+      {currentTab === 'main' ? (
+        <MenuBar />
+      ) : (
+        <BottomButton text="저장" clickedFn={handleData} />
       )}
-    </div>
+    </>
   );
 };
 
@@ -60,8 +62,4 @@ const mypageContainer = css`
   padding: 0 2rem;
 
   background-color: white;
-`;
-
-const footer = css`
-  margin-left: -2rem;
 `;
