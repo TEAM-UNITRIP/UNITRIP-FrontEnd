@@ -1,39 +1,40 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 
+import { HeaderBackIcon } from '@/assets/icon';
 import BottomButton from '@/components/BottomButton';
+import Header from '@/components/Header';
 import MenuBar from '@/components/MenuBar';
 import TravelerType from '@/views/Mypage/components/TravelerType';
 
 import Favorite from '../components/Favorite';
 import Main from '../components/Main';
 import PersonalInfo from '../components/PersonalInfo';
-
-export type currentTabType =
-  | 'main'
-  | 'personalInfo'
-  | 'favoritePlace'
-  | 'travelerType';
+import { MYPAGE_TAB_CONTENTS } from '../constants/text';
 
 const Mypage = () => {
-  const [currentTab, setCurrentTab] = useState<currentTabType>('main');
+  const [currentTab, setCurrentTab] = useState<string>('main');
 
-  const handleSetCurrentTab = (clicked: currentTabType) => {
-    setCurrentTab(clicked);
+  const backToMainTab = () => {
+    setCurrentTab('main');
+  };
+
+  const handleSetCurrentTab = (clickedTab: string) => {
+    setCurrentTab(clickedTab);
   };
 
   const handleData = () => {};
 
-  const renderComponent = (state: currentTabType) => {
+  const renderComponent = (state: string) => {
     switch (state) {
       case 'main':
         return <Main handleSetCurrentTab={handleSetCurrentTab} />;
-      case 'personalInfo':
-        return <PersonalInfo handleSetCurrentTab={handleSetCurrentTab} />;
-      case 'favoritePlace':
-        return <Favorite handleSetCurrentTab={handleSetCurrentTab} />;
-      case 'travelerType':
-        return <TravelerType handleSetCurrentTab={handleSetCurrentTab} />;
+      case MYPAGE_TAB_CONTENTS.PERSONAL_INFO:
+        return <PersonalInfo />;
+      case MYPAGE_TAB_CONTENTS.FAVORITE_TRAVEL_LIST:
+        return <Favorite />;
+      case MYPAGE_TAB_CONTENTS.TRAVELER_TYPE:
+        return <TravelerType />;
       default:
         return null;
     }
@@ -41,6 +42,15 @@ const Mypage = () => {
 
   return (
     <>
+      {currentTab === 'main' ? (
+        <Header title="마이페이지" />
+      ) : (
+        <Header
+          title={currentTab}
+          leftIcon={HeaderBackIcon}
+          leftFn={backToMainTab}
+        />
+      )}
       <div css={mypageContainer}>{renderComponent(currentTab)}</div>
       {currentTab === 'main' ? (
         <MenuBar />

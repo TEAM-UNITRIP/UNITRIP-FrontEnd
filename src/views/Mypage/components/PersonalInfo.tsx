@@ -3,23 +3,9 @@ import { css } from '@emotion/react';
 import SelectRegion from '@/components/SelectRegion';
 import { COLORS, FONTS } from '@/styles/constants';
 
-import { currentTabType } from '../pages/Mypage';
-import MypageHeader from './MypageHeader';
-
-interface PersonalInfoProps {
-  handleSetCurrentTab: (clicked: currentTabType) => void;
-}
-
-const PersonalInfo = (props: PersonalInfoProps) => {
-  const { handleSetCurrentTab } = props;
-
+const PersonalInfo = () => {
   return (
     <>
-      <MypageHeader
-        handleSetCurrentTab={handleSetCurrentTab}
-        state={'personalInfo'}
-      />
-
       <form action="submit" css={PersonalInfoContainter}>
         <ul css={itemList}>
           <li css={formItem}>

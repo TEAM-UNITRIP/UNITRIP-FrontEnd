@@ -27,7 +27,7 @@ const SignUpPage = () => {
       return <SelectRegion />;
     }
     if (step === '여행자 유형 설정') {
-      return <TravelerType handleSetCurrentTab={setStep} />;
+      return <TravelerType />;
     }
   };
 
