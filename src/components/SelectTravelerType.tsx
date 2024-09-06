@@ -29,7 +29,7 @@ const TYPE_LIST = [
 
 const SelectTravelerType = (props: SelectTravelerTypeProps) => {
   const { handleSetCurrentTab } = props;
-  const [seletedType, setSelectedType] = useState<string[]>([]);
+  const [selectedType, setSelectedType] = useState<string[]>([]);
 
   const handleSetSelectedType = (text: string) => {
     setSelectedType((prev) => {
@@ -76,7 +76,7 @@ const SelectTravelerType = (props: SelectTravelerTypeProps) => {
                   {item.text}
                 </div>
 
-                {seletedType.includes(item.text) ? (
+                {selectedType.includes(item.text) ? (
                   <CheckFilledIcon />
                 ) : (
                   <CheckEmptyIcon />
