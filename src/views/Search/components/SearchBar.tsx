@@ -27,7 +27,7 @@ const SearchBar = (props: SearchBarProps) => {
   const handleOnKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       setStorageSearchWord(searchWord);
-      navigate(searchWord);
+      navigate(`/search/${searchWord}`);
     }
   };
 
