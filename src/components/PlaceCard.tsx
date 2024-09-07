@@ -22,7 +22,7 @@ const PlaceCard = (props: PlaceCardProps) => {
         <HeartMonoIcon css={iconCss} />
       </button>
       <p css={titleCss}>{placeName}</p>
-      <p css={addressCSs}>
+      <p css={addressCss}>
         <PinLocationMonoIcon /> <span>{address}</span>
       </p>
     </Link>
@@ -52,7 +52,7 @@ const titleCss = css`
   text-align: left;
 `;
 
-const addressCSs = css`
+const addressCss = css`
   display: flex;
   gap: 0.5rem;
   align-items: center;
