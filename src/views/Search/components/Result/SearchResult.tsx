@@ -14,7 +14,7 @@ const SearchResult = (props: SearchResultProps) => {
     if (placeList.length === 0) {
       return <span>검색 결과가 없습니다.</span>;
     } else {
-      placeList.map(
+      return placeList.map(
         ({ contentid, title, addr1, addr2, firstimage, firstimage2 }) => {
           return (
             <li key={contentid}>
