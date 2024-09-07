@@ -70,3 +70,4 @@ export { default as VideoGuideSubtitleDefaultIcon } from './icon_vedio_guide_sub
 export { default as VideoGuideSubtitleNoneIcon } from './icon_video_guide_subtitle_none.svg?react';
 export { default as WheelchairTicketOfficeDefaultIcon } from './icon_wheelchair_ticket_office_default.svg?react';
 export { default as WheelchairTicketOfficeNoneIcon } from './icon_wheelchair_ticket_office_none.svg?react';
+export { default as PencilMonoIcon } from './icon-pencil-mono.svg?react';
