@@ -7,17 +7,20 @@ import { COLORS, FONTS } from '@/styles/constants';
 interface PlaceCardProps {
   placeName: string;
   address: string;
+  imgSrc: string;
 }
 
 /**
  * @param placeName 장소 이름
  * @param address 주소
+ * @param imgSrc 대표 사진
  */
 
 const PlaceCard = (props: PlaceCardProps) => {
-  const { placeName, address } = props;
+  const { placeName, address, imgSrc } = props;
+
   return (
-    <Link to="" css={cardContainerCss}>
+    <Link to="" css={cardContainerCss(imgSrc)}>
       <button type="button">
         <HeartMonoIcon css={iconCss} />
       </button>
@@ -31,7 +34,7 @@ const PlaceCard = (props: PlaceCardProps) => {
 
 export default PlaceCard;
 
-const cardContainerCss = css`
+const cardContainerCss = (imgSrc: string) => css`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -40,9 +43,12 @@ const cardContainerCss = css`
   height: 16.8rem;
   border-radius: 1.2rem;
 
-  background-color: gray;
-
   color: ${COLORS.white};
+
+  background-image: url(${imgSrc});
+  background-size: cover;
+  background-position: center center;
+  background-color: gray;
 `;
 
 const titleCss = css`

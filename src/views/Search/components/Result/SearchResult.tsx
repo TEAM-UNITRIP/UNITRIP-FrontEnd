@@ -1,36 +1,36 @@
 import { css } from '@emotion/react';
 
 import PlaceCard from '@/components/PlaceCard';
+import { SearchResItem } from '@/types/search';
 
-const SearchResult = () => {
-  return (
-    <ul css={containerCss}>
-      <li>
-        <PlaceCard
-          placeName="대전시립미술관"
-          address="대전 서구 둔산대로 155"
-        />
-      </li>
-      <li>
-        <PlaceCard
-          placeName="대전시립미술관"
-          address="대전 서구 둔산대로 155"
-        />
-      </li>
-      <li>
-        <PlaceCard
-          placeName="대전시립미술관"
-          address="대전 서구 둔산대로 155"
-        />
-      </li>
-      <li>
-        <PlaceCard
-          placeName="대전시립미술관"
-          address="대전 서구 둔산대로 155"
-        />
-      </li>
-    </ul>
-  );
+interface SearchResultProps {
+  placeList: SearchResItem[];
+}
+
+const SearchResult = (props: SearchResultProps) => {
+  const { placeList } = props;
+
+  const renderPlaceList = () => {
+    if (placeList.length === 0) {
+      return <span>검색 결과가 없습니다.</span>;
+    } else {
+      placeList.map(
+        ({ contentid, title, addr1, addr2, firstimage, firstimage2 }) => {
+          return (
+            <li key={contentid}>
+              <PlaceCard
+                placeName={title}
+                address={addr1 + addr2}
+                imgSrc={firstimage || firstimage2 || ''}
+              />
+            </li>
+          );
+        },
+      );
+    }
+  };
+
+  return <ul css={containerCss}>{renderPlaceList()}</ul>;
 };
 
 export default SearchResult;

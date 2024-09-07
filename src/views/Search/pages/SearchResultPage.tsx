@@ -1,10 +1,13 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
+import { getSearchKeyword } from '@/apis/public/search';
 import { SearchSetIcon } from '@/assets/icon';
 import MenuBar from '@/components/MenuBar';
+import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { COLORS, FONTS } from '@/styles/constants';
+import { SearchResItem } from '@/types/search';
 import { isGuideShown } from '@/utils/storageHideGuide';
 
 import RelatedWordList from '../components/RelatedWordList';
@@ -14,9 +17,22 @@ import SearchBar from '../components/SearchBar';
 
 const SearchResultPage = () => {
   const { word: initialWord } = useParams();
+  const { pathname } = useLocation();
+
   const [searchWord, setSearchWord] = useState(initialWord || '');
+  const [placeList, setPlaceList] = useState<SearchResItem[]>([]);
 
   const [showGuide, setShowGuide] = useState(() => isGuideShown());
+
+  useAsyncEffect(async () => {
+    const items = await getSearchKeyword({
+      pageNo: 1,
+      numOfRows: 10,
+      MobileOS: 'IOS',
+      keyword: pathname.split('/')[2],
+    });
+    setPlaceList(items === '' ? [] : items.item);
+  }, [pathname]);
 
   const handleSearchWord = (word: string) => {
     setSearchWord(word);
@@ -32,6 +48,7 @@ const SearchResultPage = () => {
         position: relative;
       `}>
       <SearchBar searchWord={searchWord} handleSearchWord={handleSearchWord} />
+
       {searchWord !== '' && searchWord !== initialWord ? (
         <RelatedWordList searchWord={searchWord} />
       ) : (
@@ -39,7 +56,7 @@ const SearchResultPage = () => {
           <button type="button" css={buttonCss}>
             <SearchSetIcon /> 기본 편의시설, 지체장애
           </button>
-          <SearchResult />
+          <SearchResult placeList={placeList} />
         </>
       )}
 
