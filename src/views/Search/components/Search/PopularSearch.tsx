@@ -4,6 +4,21 @@ import { useNavigate } from 'react-router-dom';
 import { COLORS, FONTS } from '@/styles/constants';
 import { setStorageSearchWord } from '@/utils/storageSearchWord';
 
+const WORD_LIST_DATA = [
+  '비대면 관광',
+  '대전시립미술관',
+  '대전 휴양림',
+  '장미꽃 명소',
+  '가족과 함께',
+  '미술관',
+  '수목원',
+  '음악 분수',
+];
+
+const pickRandomWord = (array: string[]) => {
+  return array.sort(() => Math.random() - 0.5).slice(0, 5);
+};
+
 const PopularSearch = () => {
   const navigate = useNavigate();
 
@@ -12,13 +27,7 @@ const PopularSearch = () => {
     navigate(searchWord);
   };
 
-  const wordList = [
-    '비대면 관광',
-    '대전시립미술관',
-    '대전 휴양림',
-    '장미꽃 명소',
-    '가족과 함께',
-  ].map((item, idx) => {
+  const wordList = pickRandomWord(WORD_LIST_DATA).map((item, idx) => {
     return (
       <li key={item}>
         <button css={word} onClick={() => handleOnClick(item)}>
