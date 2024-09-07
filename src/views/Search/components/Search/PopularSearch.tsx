@@ -38,6 +38,7 @@ const PopularSearch = () => {
 };
 
 export default PopularSearch;
+
 const container = css`
   margin-top: 3.6rem;
 `;

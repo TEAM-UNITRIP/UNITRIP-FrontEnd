@@ -43,7 +43,7 @@ const Guide = (props: GuideProps) => {
 export default Guide;
 
 const containerCss = css`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 999;

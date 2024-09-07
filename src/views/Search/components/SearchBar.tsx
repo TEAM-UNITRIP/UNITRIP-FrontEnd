@@ -43,9 +43,11 @@ const SearchBar = (props: SearchBarProps) => {
         onChange={handleOnChange}
         onKeyDown={handleOnKeyDown}
       />
-      <button type="button" onClick={handleOnClick}>
-        <ResetXIcon css={deleteButtonCss} />
-      </button>
+      {searchWord && (
+        <button type="button" onClick={handleOnClick}>
+          <ResetXIcon css={deleteButtonCss} />
+        </button>
+      )}
     </div>
   );
 };

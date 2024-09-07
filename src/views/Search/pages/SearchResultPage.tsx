@@ -27,7 +27,10 @@ const SearchResultPage = () => {
   };
 
   return (
-    <>
+    <div
+      css={css`
+        position: relative;
+      `}>
       <SearchBar searchWord={searchWord} handleSearchWord={handleSearchWord} />
       {searchWord !== '' && searchWord !== initialWord ? (
         <RelatedWordList searchWord={searchWord} />
@@ -42,7 +45,7 @@ const SearchResultPage = () => {
 
       {showGuide && <Guide handleSetShowGuide={handleSetShowGuide} />}
       <MenuBar />
-    </>
+    </div>
   );
 };
 
