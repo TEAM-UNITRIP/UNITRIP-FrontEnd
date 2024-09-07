@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { ChangeEvent, KeyboardEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ChevronLeftIcon, ResetXIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -15,6 +15,15 @@ const SearchBar = (props: SearchBarProps) => {
   const { searchWord, handleSearchWord } = props;
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const handleOnClickPrevButton = () => {
+    if (pathname === '/search') {
+      navigate(-1);
+    } else {
+      navigate('/search');
+    }
+  };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleSearchWord(e.currentTarget.value);
@@ -33,7 +42,7 @@ const SearchBar = (props: SearchBarProps) => {
 
   return (
     <div css={containerCss}>
-      <button type="button" onClick={() => navigate(-1)}>
+      <button type="button" onClick={handleOnClickPrevButton}>
         <ChevronLeftIcon />
       </button>
       <input
