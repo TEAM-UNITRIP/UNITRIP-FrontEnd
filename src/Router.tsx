@@ -4,6 +4,7 @@ import Settings from './components/Settings';
 import DetailPage from './views/Detail/pages/DetailPage';
 import LoginCallBack from './views/Login/components/LoginCallBack';
 import MainPage from './views/Main/pages/MainPage';
+import MapPage from './views/Map/pages/MapPage';
 import Mypage from './views/Mypage/pages/Mypage';
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/mypage',
     element: <Mypage />,
+  },
+  {
+    path: '/map',
+    element: <MapPage />,
   },
   // {
   //   path: "*",
