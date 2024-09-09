@@ -1,18 +1,30 @@
 import { css } from '@emotion/react';
 
+import BottomButton from '@/components/BottomButton';
 import SelectRegion from '@/components/SelectRegion';
 import { COLORS, FONTS } from '@/styles/constants';
 
-const Region = () => {
+interface RegionProps {
+  setStep: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Region = ({ setStep }: RegionProps) => {
+  const moveNext = () => {
+    setStep('여행자 유형 설정');
+  };
+
   return (
-    <section css={regionLayout}>
-      <p css={mainText}>
-        <span css={highlight}>지역</span>을
-        <br />
-        선택해주세요
-      </p>
-      <SelectRegion />
-    </section>
+    <>
+      <section css={regionLayout}>
+        <p css={mainText}>
+          <span css={highlight}>지역</span>을
+          <br />
+          선택해주세요
+        </p>
+        <SelectRegion />
+      </section>
+      <BottomButton text="다음" clickedFn={moveNext} />
+    </>
   );
 };
 
@@ -25,6 +37,7 @@ const regionLayout = css`
   flex-direction: column;
 
   height: 100%;
+  padding: 2rem;
 `;
 
 const mainText = css`
