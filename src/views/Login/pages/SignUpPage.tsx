@@ -23,6 +23,15 @@ const SignUpPage = () => {
     }
   };
 
+  const moveNext = () => {
+    if (step === '지역 설정') {
+      setStep('여행자 유형 설정');
+    }
+    if (step === '여행자 유형 설정') {
+      navigate(`/`);
+    }
+  };
+
   const renderItem = () => {
     if (step === '지역 설정') {
       return <Region />;
@@ -36,7 +45,7 @@ const SignUpPage = () => {
     <>
       <Header leftIcon={HeaderBackIcon} leftFn={moveBack} />
       <main css={SignUpPageLayout}>{renderItem()}</main>
-      <BottomButton text="테스트" clickedFn={setStep} />
+      <BottomButton text="테스트" clickedFn={moveNext} />
     </>
   );
 };
