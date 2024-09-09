@@ -68,7 +68,7 @@ const mypageContainer = css`
   flex-direction: column;
 
   width: 100dvw;
-  height: 100dvh;
+  height: calc(100dvh - 8rem - 4.8rem);
   padding: 0 2rem;
 
   background-color: white;

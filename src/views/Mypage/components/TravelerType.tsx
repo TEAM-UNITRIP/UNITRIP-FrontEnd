@@ -33,7 +33,7 @@ const contentContainer = css`
   justify-content: space-between;
   flex-direction: column;
 
-  height: calc(100dvh - 4.8rem);
+  flex: 1;
 `;
 
 const subText = css`
@@ -51,7 +51,6 @@ const explanation = css`
 
   width: calc(100% + 4rem);
   padding: 1.2rem 2rem;
-  margin-bottom: 8rem;
   margin-left: -2rem;
 
   background-color: ${COLORS.gray0};
