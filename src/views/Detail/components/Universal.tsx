@@ -16,41 +16,17 @@ function Universal() {
   return (
     <section css={universalContainer}>
       <div css={iconListContainer}>
-        <FacilityIconList
-          title="기본 편의시설"
-          facilities={BASIC_FACILITIES}
-          toggleKey="basic"
-        />
+        <FacilityIconList title="기본 편의시설" facilities={BASIC_FACILITIES} />
         <div css={borderLine} />
-        <FacilityIconList
-          title="지체장애"
-          facilities={PHYSICAL_FACILITIES}
-          toggleKey="physical"
-        />
+        <FacilityIconList title="지체장애" facilities={PHYSICAL_FACILITIES} />
         <div css={borderLine} />
-        <FacilityIconList
-          title="시각장애"
-          facilities={VISUAL_FACILITIES}
-          toggleKey="visual"
-        />
+        <FacilityIconList title="시각장애" facilities={VISUAL_FACILITIES} />
         <div css={borderLine} />
-        <FacilityIconList
-          title="청각장애"
-          facilities={HEARING_FACILITIES}
-          toggleKey="hearing"
-        />
+        <FacilityIconList title="청각장애" facilities={HEARING_FACILITIES} />
         <div css={borderLine} />
-        <FacilityIconList
-          title="영유아 가족"
-          facilities={INFANT_FACILITIES}
-          toggleKey="infantFamily"
-        />
+        <FacilityIconList title="영유아 가족" facilities={INFANT_FACILITIES} />
         <div css={borderLine} />
-        <FacilityIconList
-          title="기타"
-          facilities={OTHERS_FACILITIES}
-          toggleKey="others"
-        />
+        <FacilityIconList title="기타" facilities={OTHERS_FACILITIES} />
       </div>
     </section>
   );
@@ -59,7 +35,7 @@ export default Universal;
 
 const universalContainer = css`
   width: 100%;
-  padding: 1.7rem 2rem 3rem;
+  padding: 1.7rem 2rem 2.4rem;
 `;
 
 const iconListContainer = css`
