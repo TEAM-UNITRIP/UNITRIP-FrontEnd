@@ -1,11 +1,11 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { MutableRefObject, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { getSearchKeyword } from '@/apis/public/search';
 import { SearchSetIcon } from '@/assets/icon';
 import MenuBar from '@/components/MenuBar';
-import { useAsyncEffect } from '@/hooks/use-async-effect';
+import { useInfiniteScroll } from '@/hooks/use-infinite-scroll';
 import { COLORS, FONTS } from '@/styles/constants';
 import { SearchResItem } from '@/types/search';
 import { isGuideShown } from '@/utils/storageHideGuide';
@@ -24,15 +24,39 @@ const SearchResultPage = () => {
 
   const [showGuide, setShowGuide] = useState(() => isGuideShown());
 
-  useAsyncEffect(async () => {
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0,
+  };
+
+  const handleObserver = async (
+    observer: IntersectionObserver,
+    target: MutableRefObject<HTMLElement | null>,
+    page: MutableRefObject<number>,
+  ) => {
+    const pageNo = page.current;
     const items = await getSearchKeyword({
-      pageNo: 1,
+      pageNo,
       numOfRows: 10,
       MobileOS: 'IOS',
       keyword: pathname.split('/')[2],
     });
-    setPlaceList(items === '' ? [] : items.item);
-  }, [pathname]);
+
+    if (items === '') {
+      if (pageNo === 0) setPlaceList([]);
+      target.current && observer.unobserve(target.current);
+    } else {
+      setPlaceList((prev) => [...prev, ...items.item]);
+      page.current++;
+    }
+  };
+
+  const targetElement = useInfiniteScroll({
+    options,
+    handleObserver,
+    deps: [pathname],
+  });
 
   const handleSearchWord = (word: string) => {
     setSearchWord(word);
@@ -56,7 +80,7 @@ const SearchResultPage = () => {
           <button type="button" css={buttonCss}>
             <SearchSetIcon /> 기본 편의시설, 지체장애
           </button>
-          <SearchResult placeList={placeList} />
+          <SearchResult placeList={placeList} targetElement={targetElement} />
         </>
       )}
 

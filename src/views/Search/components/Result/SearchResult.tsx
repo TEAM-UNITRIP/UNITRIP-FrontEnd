@@ -1,14 +1,16 @@
 import { css } from '@emotion/react';
+import { MutableRefObject } from 'react';
 
 import PlaceCard from '@/components/PlaceCard';
 import { SearchResItem } from '@/types/search';
 
 interface SearchResultProps {
   placeList: SearchResItem[];
+  targetElement: MutableRefObject<HTMLDivElement | null>;
 }
 
 const SearchResult = (props: SearchResultProps) => {
-  const { placeList } = props;
+  const { placeList, targetElement } = props;
 
   const renderPlaceList = () => {
     if (placeList.length === 0) {
@@ -30,7 +32,12 @@ const SearchResult = (props: SearchResultProps) => {
     }
   };
 
-  return <ul css={containerCss}>{renderPlaceList()}</ul>;
+  return (
+    <ul css={containerCss}>
+      {renderPlaceList()}
+      <div ref={targetElement} css={lastTargetCss} />
+    </ul>
+  );
 };
 
 export default SearchResult;
@@ -44,4 +51,9 @@ const containerCss = css`
   overflow-y: scroll;
 
   padding: 1.6rem 2rem 0;
+`;
+
+const lastTargetCss = css`
+  width: 100%;
+  height: 1px;
 `;
