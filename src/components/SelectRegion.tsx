@@ -32,7 +32,7 @@ const SelectRegion = () => {
     };
   }, []);
 
-  const onClickDropDown = (inputType: string, regionName: string) => {
+  const onClickDropDown = (inputType: 'city' | 'town', regionName: string) => {
     if (inputType === 'city') {
       setSelectedRegion(() => {
         return {
@@ -57,6 +57,18 @@ const SelectRegion = () => {
     });
   };
 
+  const renderDropdown = (items: string[], onClick: (item: string) => void) => (
+    <div css={scrollBox}>
+      <ul css={dropDownBox}>
+        {items.map((item) => (
+          <li key={item} onClick={() => onClick(item)}>
+            <button type="button">{item}</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
   return (
     <li css={formItem}>
       <span css={title}>지역*</span>
@@ -73,21 +85,11 @@ const SelectRegion = () => {
             <input type="button" value={selectedRegion.city || '시'} />
             {inputState.city ? <ArrowToggleOpen /> : <ArrowToggleClosed />}
           </div>
-          {inputState.city && (
-            <div css={scrollBox}>
-              <ul css={dropDownBox}>
-                {REGION_LIST.map((item) => (
-                  <li
-                    key={item.city}
-                    onClick={() => {
-                      onClickDropDown('city', item.city);
-                    }}>
-                    <button type="button">{item.city}</button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {inputState.city &&
+            renderDropdown(
+              REGION_LIST.map((item) => item.city),
+              (item) => onClickDropDown('city', item),
+            )}
         </div>
         <div data-type="town" ref={townRef}>
           <div
@@ -104,21 +106,11 @@ const SelectRegion = () => {
               <ArrowToggleClosed />
             )}
           </div>
-          {selectedRegion.city && inputState.town && (
-            <div css={scrollBox}>
-              <ul css={dropDownBox}>
-                {locationList.map((item) => (
-                  <li
-                    key={item}
-                    onClick={() => {
-                      onClickDropDown('town', item);
-                    }}>
-                    <button type="button">{item}</button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {selectedRegion.city &&
+            inputState.town &&
+            renderDropdown(locationList, (item) =>
+              onClickDropDown('town', item),
+            )}
         </div>
       </div>
     </li>
