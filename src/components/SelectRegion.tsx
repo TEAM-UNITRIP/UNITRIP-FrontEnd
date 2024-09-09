@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { ArrowToggleClosed, ArrowToggleOpen } from '@/assets/icon';
 import { REGION_LIST } from '@/constants/REGION_LIST';
@@ -9,7 +9,28 @@ const SelectRegion = () => {
   const [locationList, setLocationList] = useState<string[]>([]);
   const [inputState, setInputState] = useState({ city: false, town: false });
   const [selectedRegion, setSelectedRegion] = useState({ city: '', town: '' });
-  const dropDownRef = useRef<HTMLDivElement>(null);
+
+  const cityRef = useRef<HTMLDivElement>(null);
+  const townRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleFocus = (e: MouseEvent) => {
+      if (cityRef.current && !cityRef.current.contains(e.target as Node))
+        setInputState((prev) => {
+          return { city: false, town: prev.town };
+        });
+      if (townRef.current && !townRef.current.contains(e.target as Node))
+        setInputState((prev) => {
+          return { city: prev.city, town: false };
+        });
+    };
+
+    document.addEventListener('mouseup', handleFocus);
+
+    return () => {
+      document.removeEventListener('mouseup', handleFocus);
+    };
+  }, []);
 
   const onClickDropDown = (inputType: string, regionName: string) => {
     if (inputType === 'city') {
@@ -31,6 +52,9 @@ const SelectRegion = () => {
         };
       });
     }
+    setInputState(() => {
+      return { city: false, town: false };
+    });
   };
 
   return (
@@ -38,20 +62,19 @@ const SelectRegion = () => {
       <span css={title}>지역*</span>
 
       <div css={multiInputSection}>
-        <div
-          ref={dropDownRef}
-          data-type="city"
-          onClick={() => {
-            setInputState((prev) => {
-              return { city: !prev.city, town: false };
-            });
-          }}>
-          <div css={inputBox(!selectedRegion.city)}>
+        <div data-type="city" ref={cityRef}>
+          <div
+            css={inputBox(!selectedRegion.city)}
+            onClick={() => {
+              setInputState((prev) => {
+                return { city: !prev.city, town: false };
+              });
+            }}>
             <input type="button" value={selectedRegion.city || '시'} />
             {inputState.city ? <ArrowToggleOpen /> : <ArrowToggleClosed />}
           </div>
-          <div css={scrollBox}>
-            {inputState.city && (
+          {inputState.city && (
+            <div css={scrollBox}>
               <ul css={dropDownBox}>
                 {REGION_LIST.map((item) => (
                   <li
@@ -63,27 +86,26 @@ const SelectRegion = () => {
                   </li>
                 ))}
               </ul>
-            )}
-          </div>
+            </div>
+          )}
         </div>
-        <div
-          ref={dropDownRef}
-          data-type="town"
-          onClick={() => {
-            setInputState((prev) => {
-              return { city: false, town: !prev.town };
-            });
-          }}>
-          <div css={inputBox(!selectedRegion.town)}>
+        <div data-type="town" ref={townRef}>
+          <div
+            css={inputBox(!selectedRegion.town)}
+            onClick={() => {
+              setInputState((prev) => {
+                return { city: false, town: !prev.town };
+              });
+            }}>
             <input type="button" value={selectedRegion.town || '군/구'} />
-            {inputState.city && inputState.town ? (
+            {selectedRegion.city && inputState.town ? (
               <ArrowToggleOpen />
             ) : (
               <ArrowToggleClosed />
             )}
           </div>
-          <div css={scrollBox}>
-            {inputState.city && inputState.town && (
+          {selectedRegion.city && inputState.town && (
+            <div css={scrollBox}>
               <ul css={dropDownBox}>
                 {locationList.map((item) => (
                   <li
@@ -95,8 +117,8 @@ const SelectRegion = () => {
                   </li>
                 ))}
               </ul>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </li>
