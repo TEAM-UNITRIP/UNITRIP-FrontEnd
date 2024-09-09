@@ -1,31 +1,33 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
+import { ArrowToggleClosed, ArrowToggleOpen } from '@/assets/icon';
 import { REGION_LIST } from '@/constants/REGION_LIST';
 import { COLORS, FONTS } from '@/styles/constants';
 
 const SelectRegion = () => {
   const [locationList, setLocationList] = useState<string[]>([]);
   const [inputState, setInputState] = useState({ city: false, town: false });
+  const [selectedRegion, setSelectedRegion] = useState({ city: '', town: '' });
+  const dropDownRef = useRef<HTMLDivElement>(null);
 
-  const onChangeRegion = (selected: string) => {
-    const town = REGION_LIST.find((item) => item.city === selected)?.town || [];
-    setLocationList(town);
-  };
-
-  const onChangeInput = (input: string) => {
-    if (input === 'city') {
-      setInputState((prev) => {
+  const onClickDropDown = (inputType: string, regionName: string) => {
+    if (inputType === 'city') {
+      setSelectedRegion(() => {
         return {
-          ...prev,
-          city: true,
+          city: regionName,
+          town: '',
         };
       });
-    } else if (input === 'town') {
-      setInputState((prev) => {
+
+      const town =
+        REGION_LIST.find((item) => item.city === regionName)?.town || [];
+      setLocationList(town);
+    } else if (inputType === 'town') {
+      setSelectedRegion((prev) => {
         return {
           ...prev,
-          town: true,
+          town: regionName,
         };
       });
     }
@@ -36,39 +38,65 @@ const SelectRegion = () => {
       <span css={title}>지역*</span>
 
       <div css={multiInputSection}>
-        <div css={region}>
-          <select
-            name="city"
-            defaultValue="default"
-            css={inputState.city ? selectTab : beforeSelectTab}
-            onChange={(e) => {
-              onChangeRegion(e.target.value);
-              onChangeInput('city');
-            }}>
-            <option value="default" disabled>
-              지역
-            </option>
-            {REGION_LIST.map((item, idx) => (
-              <option value={item.city} key={idx}>
-                {item.city}
-              </option>
-            ))}
-          </select>
+        <div
+          ref={dropDownRef}
+          data-type="city"
+          onClick={() => {
+            setInputState((prev) => {
+              return { city: !prev.city, town: false };
+            });
+          }}>
+          <div css={inputBox(!selectedRegion.city)}>
+            <input type="button" value={selectedRegion.city || '시'} />
+            {inputState.city ? <ArrowToggleOpen /> : <ArrowToggleClosed />}
+          </div>
+          <div css={scrollBox}>
+            {inputState.city && (
+              <ul css={dropDownBox}>
+                {REGION_LIST.map((item) => (
+                  <li
+                    key={item.city}
+                    onClick={() => {
+                      onClickDropDown('city', item.city);
+                    }}>
+                    <button type="button">{item.city}</button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
-
-        <div css={region}>
-          <select
-            name="town"
-            defaultValue="default"
-            css={inputState.town ? selectTab : beforeSelectTab}
-            onChange={() => onChangeInput('town')}>
-            <option value="default">시/군/구</option>
-            {locationList.map((item) => (
-              <option value={item} key={item}>
-                {item}
-              </option>
-            ))}
-          </select>
+        <div
+          ref={dropDownRef}
+          data-type="town"
+          onClick={() => {
+            setInputState((prev) => {
+              return { city: false, town: !prev.town };
+            });
+          }}>
+          <div css={inputBox(!selectedRegion.town)}>
+            <input type="button" value={selectedRegion.town || '군/구'} />
+            {inputState.city && inputState.town ? (
+              <ArrowToggleOpen />
+            ) : (
+              <ArrowToggleClosed />
+            )}
+          </div>
+          <div css={scrollBox}>
+            {inputState.city && inputState.town && (
+              <ul css={dropDownBox}>
+                {locationList.map((item) => (
+                  <li
+                    key={item}
+                    onClick={() => {
+                      onClickDropDown('town', item);
+                    }}>
+                    <button type="button">{item}</button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       </div>
     </li>
@@ -79,12 +107,20 @@ export default SelectRegion;
 
 const formItem = css`
   display: flex;
+  flex: 1;
+
   gap: 1.2rem;
   flex-direction: column;
 
   width: 100%;
 
+  overflow-y: hidden;
+
   ${FONTS.Body2};
+
+  & input {
+    border: none;
+  }
 `;
 
 const title = css`
@@ -93,29 +129,52 @@ const title = css`
 
 const multiInputSection = css`
   display: flex;
+  gap: 1.2rem;
   justify-content: space-between;
+
+  flex: 1;
+
+  overflow-y: hidden;
+
+  & > div {
+    display: flex;
+    gap: 0.8rem;
+    flex-direction: column;
+
+    height: 100%;
+    flex: 1;
+  }
 `;
 
-const inputDefault = css`
+const inputBox = (initial: boolean) => css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   padding: 1.6rem;
   border: 1px solid ${COLORS.gray3};
   border-radius: 1rem;
 
-  color: ${COLORS.gray9};
+  color: ${initial ? COLORS.gray4 : COLORS.gray9};
 `;
 
-const region = css`
-  ${inputDefault};
-  width: 48%;
+const scrollBox = css`
+  flex: 1;
+
+  height: 100%;
+  overflow-y: scroll;
 `;
 
-const selectTab = css`
-  width: 100%;
-  border: none;
-  outline: none;
-`;
+const dropDownBox = css`
+  display: flex;
+  gap: 0.8rem;
+  flex-direction: column;
 
-const beforeSelectTab = css`
-  ${selectTab};
-  color: ${COLORS.gray4};
+  padding: 1.6rem;
+  border: 1px solid ${COLORS.gray3};
+  border-radius: 1rem;
+
+  & > li {
+    padding: 0.6rem;
+  }
 `;

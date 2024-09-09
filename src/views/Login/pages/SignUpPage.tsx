@@ -5,11 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { HeaderBackIcon } from '@/assets/icon';
 import BottomButton from '@/components/BottomButton';
 import Header from '@/components/Header';
-import SelectRegion from '@/components/SelectRegion';
 import TravelerType from '@/views/Mypage/components/TravelerType';
 
+import Region from '../components/Region';
+
 const SignUpPage = () => {
-  const [step, setStep] = useState('여행자 유형 설정');
+  const [step, setStep] = useState('지역 설정');
 
   const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ const SignUpPage = () => {
 
   const renderItem = () => {
     if (step === '지역 설정') {
-      return <SelectRegion />;
+      return <Region />;
     }
     if (step === '여행자 유형 설정') {
       return <TravelerType />;
@@ -44,5 +45,6 @@ export default SignUpPage;
 
 const SignUpPageLayout = css`
   width: 100%;
+  height: calc(100dvh - 8rem - 4.8rem);
   padding: 2rem;
 `;
