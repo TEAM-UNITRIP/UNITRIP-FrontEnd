@@ -146,8 +146,6 @@ const multiInputSection = css`
   gap: 1.2rem;
   justify-content: space-between;
 
-  flex: 1;
-
   overflow-y: hidden;
 
   & > div {
@@ -155,7 +153,6 @@ const multiInputSection = css`
     gap: 0.8rem;
     flex-direction: column;
 
-    height: 100%;
     flex: 1;
   }
 `;
@@ -175,7 +172,6 @@ const inputBox = (initial: boolean) => css`
 const scrollBox = css`
   flex: 1;
 
-  height: 100%;
   overflow-y: scroll;
 `;
 
@@ -187,6 +183,8 @@ const dropDownBox = css`
   padding: 1.6rem;
   border: 1px solid ${COLORS.gray3};
   border-radius: 1rem;
+
+  color: ${COLORS.gray9};
 
   & > li {
     padding: 0.6rem;
