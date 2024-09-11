@@ -26,7 +26,7 @@ function FacilityIconList(props: FacilityIConListProps) {
         {facilities.map((item: Facility) => (
           <li key={item.name} css={iconWrapper}>
             {item.active}
-            <span css={iconName}>{item.name}</span>
+            <span css={iconName(item.name)}>{item.name}</span>
           </li>
         ))}
       </ul>
@@ -72,11 +72,16 @@ const iconWrapper = css`
   max-width: 7rem;
 `;
 
-const iconName = css`
+const iconName = (text: string) => css`
   word-break: keep-all;
 
   color: ${COLORS.gray5};
   text-align: center;
-
   ${FONTS.Small2};
+
+  ${(text === '점형/선형 블록' || text === '오디오가이드') &&
+  `
+    font-size: 1.1rem;
+    letter-spacing: -0.5px;
+  `}
 `;
