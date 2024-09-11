@@ -9,8 +9,8 @@ interface FacilityIConListProps {
 
 interface Facility {
   name: string;
-  default: JSX.Element;
-  none: JSX.Element;
+  active: JSX.Element;
+  inactive: JSX.Element;
 }
 
 function FacilityIconList(props: FacilityIConListProps) {
@@ -25,7 +25,7 @@ function FacilityIconList(props: FacilityIConListProps) {
       <ul css={iconList}>
         {facilities.map((item: Facility) => (
           <li key={item.name} css={iconWrapper}>
-            {item.default}
+            {item.active}
             <span css={iconName}>{item.name}</span>
           </li>
         ))}

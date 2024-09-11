@@ -3,10 +3,8 @@ import { css } from '@emotion/react';
 import { COLORS } from '@/styles/constants';
 
 import {
-  BASIC_FACILITIES,
   HEARING_FACILITIES,
   INFANT_FACILITIES,
-  OTHERS_FACILITIES,
   PHYSICAL_FACILITIES,
   VISUAL_FACILITIES,
 } from '../constants/constants';
@@ -16,8 +14,6 @@ function Universal() {
   return (
     <section css={universalContainer}>
       <div css={iconListContainer}>
-        <FacilityIconList title="기본 편의시설" facilities={BASIC_FACILITIES} />
-        <div css={borderLine} />
         <FacilityIconList title="지체장애" facilities={PHYSICAL_FACILITIES} />
         <div css={borderLine} />
         <FacilityIconList title="시각장애" facilities={VISUAL_FACILITIES} />
@@ -25,8 +21,6 @@ function Universal() {
         <FacilityIconList title="청각장애" facilities={HEARING_FACILITIES} />
         <div css={borderLine} />
         <FacilityIconList title="영유아 가족" facilities={INFANT_FACILITIES} />
-        <div css={borderLine} />
-        <FacilityIconList title="기타" facilities={OTHERS_FACILITIES} />
       </div>
     </section>
   );
