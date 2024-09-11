@@ -86,3 +86,5 @@ export { default as VideoGuideActiveIcon } from './icon_videoguide_active.svg?re
 export { default as VideoGuideInActiveIcon } from './icon_videoguide_inactive.svg?react';
 export { default as WheelChairAcitveIcon } from './icon_wheelchair_active.svg?react';
 export { default as WheelChairInAcitveIcon } from './icon_wheelchair_inactive.svg?react';
+
+export { default as EmptyPhotoIcon } from './icon_empty_photo.svg?react';

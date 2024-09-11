@@ -49,6 +49,11 @@ const backgroundImg = css`
   width: auto;
   height: 26.3rem;
 
+  background: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 0%) 0%,
+    rgb(0 0 0 / 34%) 100%
+  );
   background-size: cover;
   background-image: url(${BackgroundImage});
   background-repeat: no-repeat;
