@@ -27,7 +27,8 @@ function DetailPage() {
 
       {selectedTab === '상세정보' ||
       selectedTab === '유니버설' ||
-      selectedTab === '지도' ? (
+      selectedTab === '지도' ||
+      selectedTab === '사진' ? (
         <ErrorReport />
       ) : null}
     </div>
