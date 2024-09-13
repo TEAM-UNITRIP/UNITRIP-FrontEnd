@@ -26,7 +26,7 @@ const Explanation = (props: ExplanationProps) => {
       handleSetErrorContent(e.target.value);
       handleSetIsActive(e.target.value.trim().length);
     },
-    300,
+    200,
   );
 
   return (
