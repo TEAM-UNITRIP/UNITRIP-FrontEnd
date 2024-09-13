@@ -115,6 +115,7 @@ const input = css`
   border: 1px solid ${COLORS.gray3};
   border-radius: 1rem;
 
+  resize: none;
   outline: none;
 
   color: ${COLORS.gray9};
