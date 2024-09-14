@@ -1,28 +1,46 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { HeartMonoIcon, PinLocationMonoIcon } from '@/assets/icon';
+import {
+  HeartFillMonoIcon,
+  HeartMonoIcon,
+  PinLocationMonoIcon,
+} from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
 interface PlaceCardProps {
   placeName: string;
   address: string;
   imgSrc: string;
+  onClickHeart?: () => void;
 }
 
 /**
  * @param placeName 장소 이름
  * @param address 주소
  * @param imgSrc 대표 사진
+ * @param onClickHeart 하트 눌렀을 때 실행 함수
  */
 
 const PlaceCard = (props: PlaceCardProps) => {
-  const { placeName, address, imgSrc } = props;
+  const { placeName, address, imgSrc, onClickHeart = () => {} } = props;
+
+  const [isHeart, setIsHeart] = useState(false);
+
+  const handleOnClick = () => {
+    setIsHeart((prev) => !prev);
+    onClickHeart();
+  };
 
   return (
     <Link to="" css={cardContainerCss(imgSrc, placeName)}>
-      <button type="button">
-        <HeartMonoIcon css={iconCss} />
+      <button type="button" onClick={handleOnClick}>
+        {isHeart ? (
+          <HeartFillMonoIcon css={iconCss} />
+        ) : (
+          <HeartMonoIcon css={iconCss} />
+        )}
       </button>
       <p css={titleCss}>{placeName}</p>
       {address && (

@@ -42,6 +42,7 @@ const SearchResult = (props: SearchResultProps) => {
                 placeName={title}
                 address={addr1 + addr2}
                 imgSrc={firstimage || firstimage2 || ''}
+                onClickHeart={() => {}}
               />
             </li>
           );
