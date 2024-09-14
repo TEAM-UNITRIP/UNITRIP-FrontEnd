@@ -10,6 +10,7 @@ export const useDebounceGetWordList = (
 ) =>
   debounce(async (searchWord: string) => {
     setLoading(true);
+    setRelatedWordList([]);
 
     try {
       const wordList = await getSearchKeyword({
@@ -25,4 +26,4 @@ export const useDebounceGetWordList = (
     } finally {
       setLoading(false);
     }
-  }, 500);
+  }, 1000);

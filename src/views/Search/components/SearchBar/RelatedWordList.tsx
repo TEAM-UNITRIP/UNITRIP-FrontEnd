@@ -6,10 +6,11 @@ import { SearchResItem } from '@/types/search';
 
 interface RelatedWordListProps {
   relatedWordList: SearchResItem[];
+  loading: boolean;
 }
 
 const RelatedWordList = (props: RelatedWordListProps) => {
-  const { relatedWordList } = props;
+  const { relatedWordList, loading } = props;
 
   const renderRelatedWordList = () => {
     return relatedWordList?.map(({ title, contentid }) => (
@@ -23,9 +24,10 @@ const RelatedWordList = (props: RelatedWordListProps) => {
   };
 
   return (
-    relatedWordList.length && (
-      <ul css={containerCss}>{renderRelatedWordList()}</ul>
-    )
+    <ul css={containerCss}>
+      {loading && <div css={loadingCss}>로딩중..</div>}
+      {renderRelatedWordList()}
+    </ul>
   );
 };
 
@@ -35,7 +37,10 @@ const containerCss = css`
   display: flex;
   flex-direction: column;
 
-  margin-top: 2.4rem;
+  position: absolute;
+  z-index: 1000;
+
+  background-color: white;
 `;
 
 const wordCss = css`
@@ -60,4 +65,9 @@ const wordTextCss = css`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`;
+
+const loadingCss = css`
+  width: 100vw;
+  height: 100vh;
 `;

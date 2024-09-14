@@ -8,10 +8,11 @@ import SearchBar from './SearchBar';
 
 interface SearchBarContainerProps {
   children: ReactNode;
+  initialWord?: string;
 }
 
 const SearchBarContainer = (props: SearchBarContainerProps) => {
-  const { children } = props;
+  const { children, initialWord } = props;
 
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -30,14 +31,17 @@ const SearchBarContainer = (props: SearchBarContainerProps) => {
   return (
     <>
       <SearchBar
+        initialWord={initialWord}
         searchInputRef={searchInputRef}
         debounceGetWordList={debounceGetWordList}
         resetRelatedWordList={resetRelatedWordList}
       />
-      <RelatedWordList relatedWordList={relatedWordList} />
 
-      {loading && <div>로딩중 . . .</div>}
-      {!relatedWordList.length && children}
+      {initialWord !== searchInputRef.current?.value && (
+        <RelatedWordList relatedWordList={relatedWordList} loading={loading} />
+      )}
+      {!initialWord && relatedWordList.length === 0 && children}
+      {initialWord && children}
     </>
   );
 };

@@ -12,6 +12,7 @@ interface SearchResultProps {
 
 const SearchResult = (props: SearchResultProps) => {
   const { placeList, targetElement, loading } = props;
+  console.log(loading);
 
   const renderPlaceList = () => {
     if (placeList.length === 0) {
@@ -37,22 +38,19 @@ const SearchResult = (props: SearchResultProps) => {
     <ul css={containerCss}>
       {renderPlaceList()}
       <div ref={targetElement} css={lastTargetCss} />
-      {loading && (
-        <>
-          <li>
-            <PlaceCard placeName={''} address={''} imgSrc={''} />
-          </li>
-          <li>
-            <PlaceCard placeName={''} address={''} imgSrc={''} />
-          </li>
-          <li>
-            <PlaceCard placeName={''} address={''} imgSrc={''} />
-          </li>
-          <li>
-            <PlaceCard placeName={''} address={''} imgSrc={''} />
-          </li>
-        </>
-      )}
+
+      <li>
+        <PlaceCard placeName={''} address={''} imgSrc={''} />
+      </li>
+      <li>
+        <PlaceCard placeName={''} address={''} imgSrc={''} />
+      </li>
+      <li>
+        <PlaceCard placeName={''} address={''} imgSrc={''} />
+      </li>
+      <li>
+        <PlaceCard placeName={''} address={''} imgSrc={''} />
+      </li>
     </ul>
   );
 };

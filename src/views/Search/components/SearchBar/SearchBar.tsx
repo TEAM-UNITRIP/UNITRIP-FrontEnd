@@ -11,16 +11,22 @@ interface SearchBarProps {
   searchInputRef: RefObject<HTMLInputElement>;
   debounceGetWordList: DebouncedFunc<(searchWord: string) => Promise<void>>;
   resetRelatedWordList: () => void;
+  initialWord?: string;
 }
 
 const SearchBar = (props: SearchBarProps) => {
-  const { searchInputRef, debounceGetWordList, resetRelatedWordList } = props;
+  const {
+    searchInputRef,
+    debounceGetWordList,
+    resetRelatedWordList,
+    initialWord,
+  } = props;
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const [showResetButton, setShowResetButton] = useState(
-    !!searchInputRef.current?.value,
+    !!searchInputRef.current?.value || !!initialWord,
   );
 
   const handleOnClickPrevButton = () => {
@@ -65,6 +71,7 @@ const SearchBar = (props: SearchBarProps) => {
         ref={searchInputRef}
         css={inputCss}
         placeholder="어디로, 어떤 여행을 떠날까요?"
+        defaultValue={initialWord}
         onChange={handleOnChange}
         onKeyDown={handleOnKeyDown}
       />
