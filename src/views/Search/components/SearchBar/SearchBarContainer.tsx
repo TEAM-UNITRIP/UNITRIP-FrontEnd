@@ -24,6 +24,11 @@ const SearchBarContainer = (props: SearchBarContainerProps) => {
     setLoading,
   );
 
+  const handleSearchInputValue = (value: string) => {
+    if (!searchInputRef.current) return;
+    searchInputRef.current.value = value;
+  };
+
   const resetRelatedWordList = useCallback(() => {
     setRelatedWordList([]);
   }, []);
@@ -35,11 +40,17 @@ const SearchBarContainer = (props: SearchBarContainerProps) => {
         searchInputRef={searchInputRef}
         debounceGetWordList={debounceGetWordList}
         resetRelatedWordList={resetRelatedWordList}
+        handleSearchInputValue={handleSearchInputValue}
       />
 
-      {initialWord !== searchInputRef.current?.value && (
-        <RelatedWordList relatedWordList={relatedWordList} loading={loading} />
-      )}
+      {initialWord !== searchInputRef.current?.value &&
+        searchInputRef.current?.value && (
+          <RelatedWordList
+            relatedWordList={relatedWordList}
+            loading={loading}
+            handleSearchInputValue={handleSearchInputValue}
+          />
+        )}
       {!initialWord && relatedWordList.length === 0 && children}
       {initialWord && children}
     </>

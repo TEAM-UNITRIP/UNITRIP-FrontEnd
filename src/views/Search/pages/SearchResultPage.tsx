@@ -49,7 +49,6 @@ const SearchResultPage = () => {
         MobileOS: 'IOS',
         keyword: pathname.split('/')[2],
       });
-      console.log(items);
 
       if (items === '') {
         if (pageNo === 0) setPlaceList([]);

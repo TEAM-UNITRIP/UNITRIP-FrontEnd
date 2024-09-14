@@ -12,6 +12,7 @@ interface SearchBarProps {
   debounceGetWordList: DebouncedFunc<(searchWord: string) => Promise<void>>;
   resetRelatedWordList: () => void;
   initialWord?: string;
+  handleSearchInputValue: (value: string) => void;
 }
 
 const SearchBar = (props: SearchBarProps) => {
@@ -20,6 +21,7 @@ const SearchBar = (props: SearchBarProps) => {
     debounceGetWordList,
     resetRelatedWordList,
     initialWord,
+    handleSearchInputValue,
   } = props;
 
   const navigate = useNavigate();
@@ -38,20 +40,22 @@ const SearchBar = (props: SearchBarProps) => {
   };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.currentTarget.value) {
+    const { value } = e.currentTarget;
+
+    if (!value || initialWord === value) {
       resetRelatedWordList();
       setShowResetButton(false);
+      return;
     }
-    debounceGetWordList(e.currentTarget.value);
+
+    debounceGetWordList(value);
     setShowResetButton(true);
   };
 
   const handleOnClick = () => {
     setShowResetButton(false);
     resetRelatedWordList();
-
-    if (!searchInputRef.current) return;
-    searchInputRef.current.value = '';
+    handleSearchInputValue('');
   };
 
   const handleOnKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {

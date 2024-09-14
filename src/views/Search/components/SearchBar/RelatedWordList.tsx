@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 import { SearchMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -7,15 +8,23 @@ import { SearchResItem } from '@/types/search';
 interface RelatedWordListProps {
   relatedWordList: SearchResItem[];
   loading: boolean;
+  handleSearchInputValue: (value: string) => void;
 }
 
 const RelatedWordList = (props: RelatedWordListProps) => {
-  const { relatedWordList, loading } = props;
+  const { relatedWordList, loading, handleSearchInputValue } = props;
+
+  const navigate = useNavigate();
+
+  const handleOnClick = (title: string) => {
+    handleSearchInputValue(title);
+    navigate(`/search/${title}`);
+  };
 
   const renderRelatedWordList = () => {
     return relatedWordList?.map(({ title, contentid }) => (
       <li key={contentid}>
-        <button css={wordCss}>
+        <button css={wordCss} onClick={() => handleOnClick(title)}>
           <SearchMonoIcon />
           <span css={wordTextCss}>{title}</span>
         </button>
@@ -41,6 +50,9 @@ const containerCss = css`
   z-index: 1000;
 
   background-color: white;
+
+  width: 100vw;
+  min-height: 100vh;
 `;
 
 const wordCss = css`
