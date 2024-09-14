@@ -26,4 +26,4 @@ export const useDebounceGetWordList = (
     } finally {
       setLoading(false);
     }
-  }, 1000);
+  }, 600);

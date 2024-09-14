@@ -87,3 +87,4 @@ export { default as HearingTypeIcon } from './icon_hearing_type.svg?react';
 export { default as InfantTypeIcon } from './icon_infant_type.svg?react';
 export { default as NoneTypeIcon } from './icon_none_type.svg?react';
 export { default as PhysicalTypeIcon } from './icon_physical_type.svg?react';
+export { default as BigInfoIcon } from './icon_big_info.svg?react';

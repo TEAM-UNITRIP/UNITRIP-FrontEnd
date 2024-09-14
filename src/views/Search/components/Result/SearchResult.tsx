@@ -1,8 +1,12 @@
 import { css } from '@emotion/react';
 import { MutableRefObject } from 'react';
 
+import { BigInfoIcon } from '@/assets/icon';
 import PlaceCard from '@/components/PlaceCard';
+import { COLORS, FONTS } from '@/styles/constants';
 import { SearchResItem } from '@/types/search';
+
+import PopularSearch from '../Search/PopularSearch';
 
 interface SearchResultProps {
   placeList: SearchResItem[];
@@ -16,7 +20,19 @@ const SearchResult = (props: SearchResultProps) => {
 
   const renderPlaceList = () => {
     if (placeList.length === 0) {
-      return <span>검색 결과가 없습니다.</span>;
+      return (
+        <>
+          <div css={noResultContainerCss}>
+            <BigInfoIcon />
+            <div css={noResultTitleCss}>검색 결과가 없어요</div>
+            <p css={noResultInfoCss}>
+              검색 필터를 바꾸거나
+              <br />
+              다른 여행지를 검색해보세요!
+            </p>
+          </div>
+        </>
+      );
     } else {
       return placeList.map(
         ({ contentid, title, addr1, addr2, firstimage, firstimage2 }) => {
@@ -35,34 +51,41 @@ const SearchResult = (props: SearchResultProps) => {
   };
 
   return (
-    <ul css={containerCss}>
-      {renderPlaceList()}
-      <div ref={targetElement} css={lastTargetCss} />
+    <>
+      <ul css={containerCss(placeList.length)}>
+        {renderPlaceList()}
+        <div ref={targetElement} css={lastTargetCss} />
 
-      <li>
-        <PlaceCard placeName={''} address={''} imgSrc={''} />
-      </li>
-      <li>
-        <PlaceCard placeName={''} address={''} imgSrc={''} />
-      </li>
-      <li>
-        <PlaceCard placeName={''} address={''} imgSrc={''} />
-      </li>
-      <li>
-        <PlaceCard placeName={''} address={''} imgSrc={''} />
-      </li>
-    </ul>
+        {placeList.length >= 10 && (
+          <>
+            <li>
+              <PlaceCard placeName={''} address={''} imgSrc={''} />
+            </li>
+            <li>
+              <PlaceCard placeName={''} address={''} imgSrc={''} />
+            </li>
+            <li>
+              <PlaceCard placeName={''} address={''} imgSrc={''} />
+            </li>
+            <li>
+              <PlaceCard placeName={''} address={''} imgSrc={''} />
+            </li>
+          </>
+        )}
+      </ul>
+      {placeList.length === 0 && <PopularSearch />}
+    </>
   );
 };
 
 export default SearchResult;
 
-const containerCss = css`
+const containerCss = (placeLength: number) => css`
   display: flex;
   gap: 1.2rem;
   flex-direction: column;
 
-  height: calc(100vh - 11rem);
+  height: ${placeLength > 0 ? 'calc(100vh - 11rem)' : 'fit-content'};
   overflow-y: scroll;
 
   padding: 1.6rem 2rem 0;
@@ -71,4 +94,29 @@ const containerCss = css`
 const lastTargetCss = css`
   width: 100%;
   height: 1px;
+`;
+
+const noResultContainerCss = css`
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  margin: 6rem 0 1.2rem;
+`;
+
+const noResultTitleCss = css`
+  color: ${COLORS.gray9};
+
+  text-align: center;
+  margin: 2rem 0 0.8rem;
+
+  ${FONTS.Body2};
+`;
+
+const noResultInfoCss = css`
+  color: ${COLORS.brand1};
+
+  text-align: center;
+  ${FONTS.Small1};
 `;
