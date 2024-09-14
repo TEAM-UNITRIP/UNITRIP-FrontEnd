@@ -7,10 +7,11 @@ import { SearchResItem } from '@/types/search';
 interface SearchResultProps {
   placeList: SearchResItem[];
   targetElement: MutableRefObject<HTMLDivElement | null>;
+  loading: boolean;
 }
 
 const SearchResult = (props: SearchResultProps) => {
-  const { placeList, targetElement } = props;
+  const { placeList, targetElement, loading } = props;
 
   const renderPlaceList = () => {
     if (placeList.length === 0) {
@@ -36,6 +37,22 @@ const SearchResult = (props: SearchResultProps) => {
     <ul css={containerCss}>
       {renderPlaceList()}
       <div ref={targetElement} css={lastTargetCss} />
+      {loading && (
+        <>
+          <li>
+            <PlaceCard placeName={''} address={''} imgSrc={''} />
+          </li>
+          <li>
+            <PlaceCard placeName={''} address={''} imgSrc={''} />
+          </li>
+          <li>
+            <PlaceCard placeName={''} address={''} imgSrc={''} />
+          </li>
+          <li>
+            <PlaceCard placeName={''} address={''} imgSrc={''} />
+          </li>
+        </>
+      )}
     </ul>
   );
 };

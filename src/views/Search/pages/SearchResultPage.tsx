@@ -24,6 +24,8 @@ const SearchResultPage = () => {
 
   const [showGuide, setShowGuide] = useState(() => isGuideShown());
 
+  const [loading, setLoading] = useState(false);
+
   const options = {
     root: null,
     rootMargin: '0px',
@@ -35,20 +37,26 @@ const SearchResultPage = () => {
     target: MutableRefObject<HTMLElement | null>,
     page: MutableRefObject<number>,
   ) => {
+    setLoading(true);
     const pageNo = page.current;
-    const items = await getSearchKeyword({
-      pageNo,
-      numOfRows: 10,
-      MobileOS: 'IOS',
-      keyword: pathname.split('/')[2],
-    });
 
-    if (items === '') {
-      if (pageNo === 0) setPlaceList([]);
-      target.current && observer.unobserve(target.current);
-    } else {
-      setPlaceList((prev) => [...prev, ...items.item]);
-      page.current++;
+    try {
+      const items = await getSearchKeyword({
+        pageNo,
+        numOfRows: 10,
+        MobileOS: 'IOS',
+        keyword: pathname.split('/')[2],
+      });
+
+      if (items === '') {
+        if (pageNo === 0) setPlaceList([]);
+        target.current && observer.unobserve(target.current);
+      } else {
+        setPlaceList((prev) => [...prev, ...items.item]);
+        page.current++;
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,7 +88,11 @@ const SearchResultPage = () => {
           <button type="button" css={buttonCss}>
             <SearchSetIcon /> 기본 편의시설, 지체장애
           </button>
-          <SearchResult placeList={placeList} targetElement={targetElement} />
+          <SearchResult
+            placeList={placeList}
+            targetElement={targetElement}
+            loading={loading}
+          />
         </>
       )}
 

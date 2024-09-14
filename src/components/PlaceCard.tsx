@@ -20,21 +20,23 @@ const PlaceCard = (props: PlaceCardProps) => {
   const { placeName, address, imgSrc } = props;
 
   return (
-    <Link to="" css={cardContainerCss(imgSrc)}>
+    <Link to="" css={cardContainerCss(imgSrc, placeName)}>
       <button type="button">
         <HeartMonoIcon css={iconCss} />
       </button>
       <p css={titleCss}>{placeName}</p>
-      <p css={addressCss}>
-        <PinLocationMonoIcon /> <span>{address}</span>
-      </p>
+      {address && (
+        <p css={addressCss}>
+          <PinLocationMonoIcon /> <span>{address}</span>
+        </p>
+      )}
     </Link>
   );
 };
 
 export default PlaceCard;
 
-const cardContainerCss = (imgSrc: string) => css`
+const cardContainerCss = (imgSrc: string, placeName: string) => css`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -48,7 +50,7 @@ const cardContainerCss = (imgSrc: string) => css`
   background-image: url(${imgSrc});
   background-size: cover;
   background-position: center center;
-  background-color: gray;
+  background-color: ${placeName ? COLORS.gray4 : COLORS.gray2};
 `;
 
 const titleCss = css`
