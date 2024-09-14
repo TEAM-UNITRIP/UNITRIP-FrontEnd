@@ -17,12 +17,8 @@ const SearchBarContainer = (props: SearchBarContainerProps) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const [relatedWordList, setRelatedWordList] = useState<SearchResItem[]>([]);
-  const [loading, setLoading] = useState(false);
 
-  const debounceGetWordList = useDebounceGetWordList(
-    setRelatedWordList,
-    setLoading,
-  );
+  const debounceGetWordList = useDebounceGetWordList(setRelatedWordList);
 
   const handleSearchInputValue = (value: string) => {
     if (!searchInputRef.current) return;
@@ -51,8 +47,8 @@ const SearchBarContainer = (props: SearchBarContainerProps) => {
       {initialWord !== searchInputRef.current?.value &&
         searchInputRef.current?.value && (
           <RelatedWordList
+            searchWord={searchInputRef.current.value}
             relatedWordList={relatedWordList}
-            loading={loading}
             handleSearchInputValue={handleSearchInputValue}
           />
         )}

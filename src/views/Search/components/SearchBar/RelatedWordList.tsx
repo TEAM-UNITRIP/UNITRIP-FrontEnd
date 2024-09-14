@@ -6,13 +6,13 @@ import { COLORS, FONTS } from '@/styles/constants';
 import { SearchResItem } from '@/types/search';
 
 interface RelatedWordListProps {
+  searchWord: string;
   relatedWordList: SearchResItem[];
-  loading: boolean;
   handleSearchInputValue: (value: string) => void;
 }
 
 const RelatedWordList = (props: RelatedWordListProps) => {
-  const { relatedWordList, loading, handleSearchInputValue } = props;
+  const { searchWord, relatedWordList, handleSearchInputValue } = props;
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -23,22 +23,27 @@ const RelatedWordList = (props: RelatedWordListProps) => {
   };
 
   const renderRelatedWordList = () => {
-    return relatedWordList?.map(({ title, contentid }) => (
-      <li key={contentid}>
-        <button css={wordCss} onClick={() => handleOnClick(title)}>
-          <SearchMonoIcon />
-          <span css={wordTextCss}>{title}</span>
-        </button>
-      </li>
-    ));
+    return relatedWordList?.map(({ title, contentid }) => {
+      const searchWordIndex = title.indexOf(searchWord);
+      const beforeSearchWord = title.slice(0, searchWordIndex);
+      const afterSearchWord = title.slice(searchWordIndex + searchWord.length);
+
+      return (
+        <li key={contentid}>
+          <button css={wordCss} onClick={() => handleOnClick(title)}>
+            <SearchMonoIcon />
+            <div css={wordTextCss}>
+              {beforeSearchWord}
+              <span css={keywordCss}>{searchWord}</span>
+              {afterSearchWord}
+            </div>
+          </button>
+        </li>
+      );
+    });
   };
 
-  return (
-    <ul css={containerCss}>
-      {loading && <div css={loadingCss}>로딩중..</div>}
-      {renderRelatedWordList()}
-    </ul>
-  );
+  return <ul css={containerCss}>{renderRelatedWordList()}</ul>;
 };
 
 export default RelatedWordList;
@@ -69,9 +74,9 @@ const wordTextCss = css`
   padding-top: 0.2rem;
 
   width: calc(100vw - 24px - 6rem);
-  color: ${COLORS.brand1};
+  color: ${COLORS.gray5};
 
-  ${FONTS.Body3};
+  ${FONTS.Body5};
 
   text-align: left;
 
@@ -80,7 +85,7 @@ const wordTextCss = css`
   white-space: nowrap;
 `;
 
-const loadingCss = css`
-  width: 100vw;
-  height: 100vh;
+const keywordCss = css`
+  color: ${COLORS.brand1};
+  ${FONTS.Body3};
 `;

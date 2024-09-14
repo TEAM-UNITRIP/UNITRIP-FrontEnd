@@ -6,24 +6,16 @@ import { SearchResItem } from '@/types/search';
 
 export const useDebounceGetWordList = (
   setRelatedWordList: Dispatch<SetStateAction<SearchResItem[]>>,
-  setLoading: Dispatch<SetStateAction<boolean>>,
 ) =>
   debounce(async (searchWord: string) => {
-    setLoading(true);
-    setRelatedWordList([]);
+    const wordList = await getSearchKeyword({
+      pageNo: 1,
+      numOfRows: 20,
+      MobileOS: 'IOS',
+      keyword: searchWord,
+    });
 
-    try {
-      const wordList = await getSearchKeyword({
-        pageNo: 1,
-        numOfRows: 20,
-        MobileOS: 'IOS',
-        keyword: searchWord,
-      });
-
-      if (typeof wordList === 'object') {
-        setRelatedWordList(wordList.item);
-      } else setRelatedWordList([]);
-    } finally {
-      setLoading(false);
-    }
+    if (typeof wordList === 'object') {
+      setRelatedWordList(wordList.item);
+    } else setRelatedWordList([]);
   }, 600);
