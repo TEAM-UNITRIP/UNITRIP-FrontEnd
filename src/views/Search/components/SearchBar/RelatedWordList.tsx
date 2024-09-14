@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { SearchMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -15,10 +15,11 @@ const RelatedWordList = (props: RelatedWordListProps) => {
   const { relatedWordList, loading, handleSearchInputValue } = props;
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const handleOnClick = (title: string) => {
     handleSearchInputValue(title);
-    navigate(`/search/${title}`);
+    navigate(`/search/${title}`, { replace: pathname.startsWith('/search/') });
   };
 
   const renderRelatedWordList = () => {

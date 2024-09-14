@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
 import { SearchResItem } from '@/types/search';
 
@@ -32,6 +32,11 @@ const SearchBarContainer = (props: SearchBarContainerProps) => {
   const resetRelatedWordList = useCallback(() => {
     setRelatedWordList([]);
   }, []);
+
+  useEffect(() => {
+    if (!searchInputRef.current || !initialWord) return;
+    searchInputRef.current.value = initialWord;
+  }, [initialWord]);
 
   return (
     <>

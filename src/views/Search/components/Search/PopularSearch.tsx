@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { COLORS, FONTS } from '@/styles/constants';
 import { setStorageSearchWord } from '@/utils/storageSearchWord';
@@ -21,10 +21,13 @@ const pickRandomWord = (array: string[]) => {
 
 const PopularSearch = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const handleOnClick = (searchWord: string) => {
     setStorageSearchWord(searchWord);
-    navigate(searchWord);
+    navigate(`/search/${searchWord}`, {
+      replace: pathname.startsWith('/search/'),
+    });
   };
 
   const wordList = pickRandomWord(WORD_LIST_DATA).map((item, idx) => {

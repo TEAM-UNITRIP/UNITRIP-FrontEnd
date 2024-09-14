@@ -32,11 +32,7 @@ const SearchBar = (props: SearchBarProps) => {
   );
 
   const handleOnClickPrevButton = () => {
-    if (pathname === '/search') {
-      navigate(-1);
-    } else {
-      navigate('/search');
-    }
+    navigate(-1);
   };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +58,9 @@ const SearchBar = (props: SearchBarProps) => {
     if (e.key === 'Enter' && searchInputRef.current) {
       const { value } = searchInputRef.current;
       setStorageSearchWord(value);
-      navigate(`/search/${value}`);
+      navigate(`/search/${value}`, {
+        replace: pathname.startsWith('/search/'),
+      });
     }
   };
 
