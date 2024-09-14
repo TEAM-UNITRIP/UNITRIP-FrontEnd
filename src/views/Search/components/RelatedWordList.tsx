@@ -2,31 +2,29 @@ import { css } from '@emotion/react';
 
 import { SearchMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
+import { SearchResItem } from '@/types/search';
 
 interface RelatedWordListProps {
-  searchWord: string;
+  relatedWordList: SearchResItem[];
 }
 
 const RelatedWordList = (props: RelatedWordListProps) => {
-  const { searchWord } = props;
-  console.log(searchWord);
+  const { relatedWordList } = props;
 
-  return (
-    <ul css={containerCss}>
-      <li>
+  console.log(relatedWordList);
+
+  const renderRelatedWordList = () => {
+    return relatedWordList?.map(({ title, contentid }) => (
+      <li key={contentid}>
         <button css={wordCss}>
           <SearchMonoIcon />
-          <span css={wordTextCss}>대전시립미술관</span>
+          <span css={wordTextCss}>{title}</span>
         </button>
       </li>
-      <li>
-        <button css={wordCss}>
-          <SearchMonoIcon />
-          <span css={wordTextCss}>이응노미술관</span>
-        </button>
-      </li>
-    </ul>
-  );
+    ));
+  };
+
+  return <ul css={containerCss}>{renderRelatedWordList()}</ul>;
 };
 
 export default RelatedWordList;
