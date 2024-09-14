@@ -39,11 +39,6 @@ const PersonalInfo = () => {
             </div>
           </li>
 
-          <li css={formItem}>
-            <span css={title}>성별</span>
-            <input type="text" css={input} placeholder="선택안함" disabled />
-          </li>
-
           <SelectRegion />
         </ul>
       </form>
@@ -61,6 +56,7 @@ const PersonalInfoContainter = css`
 
   width: 100%;
   height: calc(100dvh - 6.2rem);
+  overflow-y: hidden;
 `;
 
 const itemList = css`
@@ -70,6 +66,9 @@ const itemList = css`
   flex-direction: column;
 
   width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+
   padding-top: 2.7rem;
 `;
 

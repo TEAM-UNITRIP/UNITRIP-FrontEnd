@@ -170,6 +170,8 @@ const inputBox = (initial: boolean) => css`
 `;
 
 const scrollBox = css`
+  border: 1px solid ${COLORS.gray3};
+  border-radius: 1rem;
   flex: 1;
 
   overflow-y: scroll;
@@ -181,8 +183,6 @@ const dropDownBox = css`
   flex-direction: column;
 
   padding: 1.6rem;
-  border: 1px solid ${COLORS.gray3};
-  border-radius: 1rem;
 
   color: ${COLORS.gray9};
 
