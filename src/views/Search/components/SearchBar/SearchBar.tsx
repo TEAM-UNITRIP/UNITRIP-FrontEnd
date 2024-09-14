@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
-import { ChangeEvent, KeyboardEvent } from 'react';
+import { DebouncedFunc } from 'lodash';
+import { ChangeEvent, KeyboardEvent, RefObject, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ChevronLeftIcon, ResetXIcon } from '@/assets/icon';
@@ -7,15 +8,20 @@ import { COLORS, FONTS } from '@/styles/constants';
 import { setStorageSearchWord } from '@/utils/storageSearchWord';
 
 interface SearchBarProps {
-  searchWord: string;
-  handleSearchWord: (word: string) => void;
+  searchInputRef: RefObject<HTMLInputElement>;
+  debounceGetWordList: DebouncedFunc<(searchWord: string) => Promise<void>>;
+  resetRelatedWordList: () => void;
 }
 
 const SearchBar = (props: SearchBarProps) => {
-  const { searchWord, handleSearchWord } = props;
+  const { searchInputRef, debounceGetWordList, resetRelatedWordList } = props;
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const [showResetButton, setShowResetButton] = useState(
+    !!searchInputRef.current?.value,
+  );
 
   const handleOnClickPrevButton = () => {
     if (pathname === '/search') {
@@ -26,17 +32,27 @@ const SearchBar = (props: SearchBarProps) => {
   };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleSearchWord(e.currentTarget.value);
+    if (!e.currentTarget.value) {
+      resetRelatedWordList();
+      setShowResetButton(false);
+    }
+    debounceGetWordList(e.currentTarget.value);
+    setShowResetButton(true);
   };
 
   const handleOnClick = () => {
-    handleSearchWord('');
+    setShowResetButton(false);
+    resetRelatedWordList();
+
+    if (!searchInputRef.current) return;
+    searchInputRef.current.value = '';
   };
 
   const handleOnKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      setStorageSearchWord(searchWord);
-      navigate(`/search/${searchWord}`);
+    if (e.key === 'Enter' && searchInputRef.current) {
+      const { value } = searchInputRef.current;
+      setStorageSearchWord(value);
+      navigate(`/search/${value}`);
     }
   };
 
@@ -46,13 +62,13 @@ const SearchBar = (props: SearchBarProps) => {
         <ChevronLeftIcon />
       </button>
       <input
+        ref={searchInputRef}
         css={inputCss}
         placeholder="어디로, 어떤 여행을 떠날까요?"
-        value={searchWord}
         onChange={handleOnChange}
         onKeyDown={handleOnKeyDown}
       />
-      {searchWord && (
+      {showResetButton && (
         <button type="button" onClick={handleOnClick}>
           <ResetXIcon css={deleteButtonCss} />
         </button>

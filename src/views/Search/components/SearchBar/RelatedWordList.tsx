@@ -11,8 +11,6 @@ interface RelatedWordListProps {
 const RelatedWordList = (props: RelatedWordListProps) => {
   const { relatedWordList } = props;
 
-  console.log(relatedWordList);
-
   const renderRelatedWordList = () => {
     return relatedWordList?.map(({ title, contentid }) => (
       <li key={contentid}>
@@ -24,7 +22,11 @@ const RelatedWordList = (props: RelatedWordListProps) => {
     ));
   };
 
-  return <ul css={containerCss}>{renderRelatedWordList()}</ul>;
+  return (
+    relatedWordList.length && (
+      <ul css={containerCss}>{renderRelatedWordList()}</ul>
+    )
+  );
 };
 
 export default RelatedWordList;
@@ -48,7 +50,14 @@ const wordCss = css`
 const wordTextCss = css`
   padding-top: 0.2rem;
 
+  width: calc(100vw - 24px - 6rem);
   color: ${COLORS.brand1};
 
   ${FONTS.Body3};
+
+  text-align: left;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
