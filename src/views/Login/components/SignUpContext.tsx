@@ -10,8 +10,16 @@ interface SignUpContextType {
   setTravelerType: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
+// 기본값 정의
+const defaultContextValue: SignUpContextType = {
+  region: { city: '', town: '' },
+  setRegion: () => {},
+  travelerType: [],
+  setTravelerType: () => {},
+};
+
 // Context 생성
-const SignUpContext = createContext<SignUpContextType | null>(null);
+const SignUpContext = createContext<SignUpContextType>(defaultContextValue);
 
 // Context Provider 컴포넌트
 export const SignUpProvider = ({ children }: React.PropsWithChildren) => {

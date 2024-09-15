@@ -4,11 +4,15 @@ import BottomButton from '@/components/BottomButton';
 import SelectRegion from '@/components/SelectRegion';
 import { COLORS, FONTS } from '@/styles/constants';
 
+import { useSignUpContext } from './SignUpContext';
+
 interface RegionProps {
   setStep: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Region = ({ setStep }: RegionProps) => {
+  const { region } = useSignUpContext();
+
   const moveNext = () => {
     setStep('여행자 유형 설정');
   };
@@ -23,7 +27,7 @@ const Region = ({ setStep }: RegionProps) => {
         </p>
         <SelectRegion />
       </section>
-      <BottomButton text="다음" clickedFn={moveNext} />
+      <BottomButton text="다음" clickedFn={moveNext} disabled={!region.town} />
     </>
   );
 };
