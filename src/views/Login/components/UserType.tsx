@@ -5,8 +5,12 @@ import BottomButton from '@/components/BottomButton';
 import { COLORS, FONTS } from '@/styles/constants';
 import TravelerType from '@/views/Mypage/components/TravelerType';
 
+import { useSignUpContext } from './SignUpContext';
+
 const UserType = () => {
   const navigate = useNavigate();
+
+  const { travelerType } = useSignUpContext();
 
   const moveNext = () => {
     navigate(`/`);
@@ -23,7 +27,11 @@ const UserType = () => {
         <TravelerType />
       </section>
 
-      <BottomButton text="확인" clickedFn={moveNext} />
+      <BottomButton
+        text="확인"
+        clickedFn={moveNext}
+        disabled={!travelerType.length}
+      />
     </>
   );
 };

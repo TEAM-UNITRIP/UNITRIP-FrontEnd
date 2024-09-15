@@ -4,17 +4,20 @@ import { useState } from 'react';
 import { MapMonoGrayIcon } from '@/assets/icon';
 import SelectTravelerType from '@/components/SelectTravelerType';
 import { COLORS, FONTS } from '@/styles/constants';
+import { useSignUpContext } from '@/views/Login/components/SignUpContext';
 
 const TravelerType = () => {
   const [travelerTypes, setTravelerTypes] = useState<string[]>([]);
+
+  const { travelerType, setTravelerType } = useSignUpContext();
 
   return (
     <div css={contentContainer}>
       <div>
         <p css={subText}>다중선택 가능</p>
         <SelectTravelerType
-          currentTravelerType={travelerTypes}
-          setTravelerType={setTravelerTypes}
+          currentTravelerType={travelerType || travelerTypes}
+          setTravelerType={setTravelerType || setTravelerTypes}
         />
       </div>
 
