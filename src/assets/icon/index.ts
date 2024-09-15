@@ -89,3 +89,9 @@ export { default as NoneTypeIcon } from './icon_none_type.svg?react';
 export { default as PhysicalTypeIcon } from './icon_physical_type.svg?react';
 
 export { default as CheckFilledYellowIcon } from './icon-check-fill-yellow.svg?react';
+
+//Map
+export { default as RefreshMonoIcon } from './icon-refresh-mono.svg?react';
+export { default as MapFavoirteIcon } from './icon_map_favorite.svg?react';
+export { default as MapSearchActiveIcon } from './icon_map_search_active.svg?react';
+export { default as MapSearchInactiveIcon } from './icon_map_search_inactive.svg?react';
