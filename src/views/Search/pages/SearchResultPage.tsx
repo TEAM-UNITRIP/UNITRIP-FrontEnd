@@ -10,6 +10,7 @@ import { isGuideShown } from '@/utils/storageHideGuide';
 import RelatedWordList from '../components/RelatedWordList';
 import Guide from '../components/Result/Guide';
 import SearchResult from '../components/Result/SearchResult';
+import FilterBottomSheet from '../components/Search/FilterBottomSheet';
 import SearchBar from '../components/SearchBar';
 
 const SearchResultPage = () => {
@@ -17,6 +18,8 @@ const SearchResultPage = () => {
   const [searchWord, setSearchWord] = useState(initialWord || '');
 
   const [showGuide, setShowGuide] = useState(() => isGuideShown());
+
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const handleSearchWord = (word: string) => {
     setSearchWord(word);
@@ -26,26 +29,36 @@ const SearchResultPage = () => {
     setShowGuide(value);
   };
 
-  return (
-    <div
-      css={css`
-        position: relative;
-      `}>
-      <SearchBar searchWord={searchWord} handleSearchWord={handleSearchWord} />
-      {searchWord !== '' && searchWord !== initialWord ? (
-        <RelatedWordList searchWord={searchWord} />
-      ) : (
-        <>
-          <button type="button" css={buttonCss}>
-            <SearchSetIcon /> 기본 편의시설, 지체장애
-          </button>
-          <SearchResult />
-        </>
-      )}
+  const handleOnClickFilter = () => {
+    setIsFilterOpen(true);
+  };
 
-      {showGuide && <Guide handleSetShowGuide={handleSetShowGuide} />}
-      <MenuBar />
-    </div>
+  return (
+    <>
+      <div
+        css={css`
+          position: relative;
+        `}>
+        <SearchBar
+          searchWord={searchWord}
+          handleSearchWord={handleSearchWord}
+        />
+        {searchWord !== '' && searchWord !== initialWord ? (
+          <RelatedWordList searchWord={searchWord} />
+        ) : (
+          <>
+            <button type="button" css={buttonCss} onClick={handleOnClickFilter}>
+              <SearchSetIcon /> 기본 편의시설, 지체장애
+            </button>
+            <SearchResult />
+          </>
+        )}
+
+        {showGuide && <Guide handleSetShowGuide={handleSetShowGuide} />}
+        <MenuBar />
+      </div>
+      {isFilterOpen && <FilterBottomSheet />}
+    </>
   );
 };
 
