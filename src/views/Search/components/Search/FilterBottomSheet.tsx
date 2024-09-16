@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { MouseEvent, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { COLORS, FONTS } from '@/styles/constants';
@@ -14,10 +15,16 @@ interface FilterBottomSheetProps {
 
 const FilterBottomSheet = (props: FilterBottomSheetProps) => {
   const { closeBottomSheet, filterState, handleFilterState } = props;
+  const bottomSheetRef = useRef<HTMLDivElement>(null);
+
+  const handleOnClickBackground = (e: MouseEvent<HTMLDivElement>) => {
+    if (bottomSheetRef.current?.contains(e.target as Node)) return;
+    closeBottomSheet();
+  };
 
   const portalContent = (
-    <div css={backgroundCss}>
-      <div css={containerCss}>
+    <div css={backgroundCss} onClick={handleOnClickBackground}>
+      <div css={containerCss} ref={bottomSheetRef}>
         <header css={titleCss}>
           <h3>필터 상세 설정</h3>
         </header>
