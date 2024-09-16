@@ -6,6 +6,7 @@ import { HeaderBackIcon } from '@/assets/icon';
 import Header from '@/components/Header';
 
 import Region from '../components/Region';
+import { SignUpProvider } from '../components/SignUpContext';
 import UserType from '../components/UserType';
 
 const SignUpPage = () => {
@@ -32,10 +33,10 @@ const SignUpPage = () => {
   };
 
   return (
-    <>
+    <SignUpProvider>
       <Header leftIcon={HeaderBackIcon} leftFn={moveBack} />
       <main css={SignUpPageLayout}>{renderItem()}</main>
-    </>
+    </SignUpProvider>
   );
 };
 

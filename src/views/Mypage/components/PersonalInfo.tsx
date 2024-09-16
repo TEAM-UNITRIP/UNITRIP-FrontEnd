@@ -1,9 +1,12 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 
-import SelectRegion from '@/components/SelectRegion';
+import SelectRegion, { Region } from '@/components/SelectRegion';
 import { COLORS, FONTS } from '@/styles/constants';
 
 const PersonalInfo = () => {
+  const [region, setRegion] = useState<Region>({ city: '', town: '' });
+
   return (
     <>
       <form action="submit" css={PersonalInfoContainter}>
@@ -11,40 +14,20 @@ const PersonalInfo = () => {
           <li css={formItem}>
             <span css={title}>이름*</span>
 
-            <input type="text" css={input} placeholder="이돌이" disabled />
+            <input type="text" css={input} value="이돌이" disabled />
           </li>
 
           <li css={formItem}>
             <span css={title}>생년월일*</span>
 
             <div css={multiInputSection}>
-              <input
-                type="number"
-                css={birth('year')}
-                disabled
-                placeholder="2015"
-              />
-              <input
-                type="number"
-                css={birth('month')}
-                disabled
-                placeholder="9"
-              />
-              <input
-                type="number"
-                css={birth('date')}
-                disabled
-                placeholder="7"
-              />
+              <input type="number" css={birth('year')} disabled value="2015" />
+              <input type="number" css={birth('month')} disabled value="9" />
+              <input type="number" css={birth('date')} disabled value="7" />
             </div>
           </li>
 
-          <li css={formItem}>
-            <span css={title}>성별</span>
-            <input type="text" css={input} placeholder="선택안함" disabled />
-          </li>
-
-          <SelectRegion />
+          <SelectRegion region={region} setRegion={setRegion} />
         </ul>
       </form>
     </>
@@ -61,6 +44,7 @@ const PersonalInfoContainter = css`
 
   width: 100%;
   height: calc(100dvh - 6.2rem);
+  overflow-y: hidden;
 `;
 
 const itemList = css`
@@ -70,6 +54,9 @@ const itemList = css`
   flex-direction: column;
 
   width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+
   padding-top: 2.7rem;
 `;
 
@@ -92,14 +79,15 @@ const inputDefault = css`
   border: 1px solid ${COLORS.gray3};
   border-radius: 1rem;
 
-  color: ${COLORS.gray9};
+  background-color: ${COLORS.gray0};
+
+  color: ${COLORS.gray4};
 `;
 
 const input = css`
-  ${inputDefault};
   width: 100%;
 
-  font-weight: 400;
+  ${inputDefault};
 `;
 
 const multiInputSection = css`

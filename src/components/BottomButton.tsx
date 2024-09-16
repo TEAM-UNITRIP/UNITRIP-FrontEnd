@@ -34,7 +34,7 @@ const bottomBtnLayout = css`
 
 const bottomBtn = (disabled?: boolean) => css`
   width: 100%;
-  padding: 1.7rem 15.35rem;
+  padding: 1.7rem 0;
   border-radius: 1.2rem;
 
   background-color: ${disabled ? COLORS.gray1 : COLORS.brand1};

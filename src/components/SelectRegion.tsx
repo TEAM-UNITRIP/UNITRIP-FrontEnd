@@ -5,10 +5,19 @@ import { ArrowToggleClosed, ArrowToggleOpen } from '@/assets/icon';
 import { REGION_LIST } from '@/constants/REGION_LIST';
 import { COLORS, FONTS } from '@/styles/constants';
 
-const SelectRegion = () => {
+export type Region = {
+  city: string;
+  town: string;
+};
+
+interface SelectRegionProps {
+  region: Region;
+  setRegion: React.Dispatch<React.SetStateAction<Region>>;
+}
+
+const SelectRegion = ({ region, setRegion }: SelectRegionProps) => {
   const [locationList, setLocationList] = useState<string[]>([]);
   const [inputState, setInputState] = useState({ city: false, town: false });
-  const [selectedRegion, setSelectedRegion] = useState({ city: '', town: '' });
 
   const cityRef = useRef<HTMLDivElement>(null);
   const townRef = useRef<HTMLDivElement>(null);
@@ -34,7 +43,7 @@ const SelectRegion = () => {
 
   const onClickDropDown = (inputType: 'city' | 'town', regionName: string) => {
     if (inputType === 'city') {
-      setSelectedRegion(() => {
+      setRegion(() => {
         return {
           city: regionName,
           town: '',
@@ -45,7 +54,7 @@ const SelectRegion = () => {
         REGION_LIST.find((item) => item.city === regionName)?.town || [];
       setLocationList(town);
     } else if (inputType === 'town') {
-      setSelectedRegion((prev) => {
+      setRegion((prev) => {
         return {
           ...prev,
           town: regionName,
@@ -76,13 +85,13 @@ const SelectRegion = () => {
       <div css={multiInputSection}>
         <div data-type="city" ref={cityRef}>
           <div
-            css={inputBox(!selectedRegion.city)}
+            css={inputBox(!region.city)}
             onClick={() => {
               setInputState((prev) => {
                 return { city: !prev.city, town: false };
               });
             }}>
-            <input type="button" value={selectedRegion.city || '시'} />
+            <input type="button" value={region.city || '시'} />
             {inputState.city ? <ArrowToggleOpen /> : <ArrowToggleClosed />}
           </div>
           {inputState.city &&
@@ -93,20 +102,20 @@ const SelectRegion = () => {
         </div>
         <div data-type="town" ref={townRef}>
           <div
-            css={inputBox(!selectedRegion.town)}
+            css={inputBox(!region.town)}
             onClick={() => {
               setInputState((prev) => {
                 return { city: false, town: !prev.town };
               });
             }}>
-            <input type="button" value={selectedRegion.town || '군/구'} />
-            {selectedRegion.city && inputState.town ? (
+            <input type="button" value={region.town || '군/구'} />
+            {region.city && inputState.town ? (
               <ArrowToggleOpen />
             ) : (
               <ArrowToggleClosed />
             )}
           </div>
-          {selectedRegion.city &&
+          {region.city &&
             inputState.town &&
             renderDropdown(locationList, (item) =>
               onClickDropDown('town', item),
@@ -170,6 +179,8 @@ const inputBox = (initial: boolean) => css`
 `;
 
 const scrollBox = css`
+  border: 1px solid ${COLORS.gray3};
+  border-radius: 1rem;
   flex: 1;
 
   overflow-y: scroll;
@@ -181,8 +192,6 @@ const dropDownBox = css`
   flex-direction: column;
 
   padding: 1.6rem;
-  border: 1px solid ${COLORS.gray3};
-  border-radius: 1rem;
 
   color: ${COLORS.gray9};
 
