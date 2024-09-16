@@ -5,15 +5,9 @@ import {
   ArrowBackIconIosDownIcon,
   ArrowBackIconIosUpIcon,
 } from '@/assets/icon';
-import {
-  Facility,
-  HEARING_FACILITIES,
-  INFANT_FACILITIES,
-  PHYSICAL_FACILITIES,
-  VISUAL_FACILITIES,
-} from '@/constants/facilities';
 import { COLORS, FONTS } from '@/styles/constants';
 
+import { MAP_CATEGORY_FACILITIES } from '../../constants/category';
 import { category, filterState } from '../../types/category';
 
 interface FacilitiesIconListProps {
@@ -21,16 +15,6 @@ interface FacilitiesIconListProps {
   filterState: filterState;
   handleFilterState: (category: category, facility: string) => void;
 }
-
-const MAP_CATEGORY_FACILITIES: Record<
-  category,
-  { categoryName: string; iconList: Facility[] }
-> = {
-  physical: { categoryName: '지체장애', iconList: PHYSICAL_FACILITIES },
-  visual: { categoryName: '시각장애', iconList: VISUAL_FACILITIES },
-  hearing: { categoryName: '청각장애', iconList: HEARING_FACILITIES },
-  infant: { categoryName: '지적장애', iconList: INFANT_FACILITIES },
-};
 
 const FacilitiesAccordian = (props: FacilitiesIconListProps) => {
   const { category, filterState, handleFilterState } = props;

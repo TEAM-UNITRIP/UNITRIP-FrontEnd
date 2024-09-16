@@ -12,7 +12,10 @@ import Guide from '../components/Result/Guide';
 import SearchResult from '../components/Result/SearchResult';
 import FilterBottomSheet from '../components/Search/FilterBottomSheet';
 import SearchBar from '../components/SearchBar';
-import { createInitialFilterState } from '../constants/initialFiltersState';
+import {
+  createInitialFilterState,
+  MAP_CATEGORY_FACILITIES,
+} from '../constants/category';
 import { category } from '../types/category';
 
 const SearchResultPage = () => {
@@ -56,6 +59,20 @@ const SearchResultPage = () => {
     }));
   };
 
+  // render
+  const selectedCategory = () => {
+    const category: string[] = [];
+    Object.entries(filterState).forEach(([key, entries]) => {
+      Object.values(entries).forEach((item) => {
+        if (item) {
+          category.push(MAP_CATEGORY_FACILITIES[key as category].categoryName);
+          return;
+        }
+      });
+    });
+    return category.join(', ');
+  };
+
   return (
     <>
       <div
@@ -71,7 +88,8 @@ const SearchResultPage = () => {
         ) : (
           <>
             <button type="button" css={buttonCss} onClick={openFilter}>
-              <SearchSetIcon /> 기본 편의시설, 지체장애
+              <SearchSetIcon />
+              {selectedCategory()}
             </button>
             <SearchResult />
           </>
