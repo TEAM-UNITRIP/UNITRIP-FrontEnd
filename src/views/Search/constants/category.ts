@@ -15,7 +15,7 @@ export const MAP_CATEGORY_FACILITIES: Record<
   physical: { categoryName: '지체장애', iconList: PHYSICAL_FACILITIES },
   visual: { categoryName: '시각장애', iconList: VISUAL_FACILITIES },
   hearing: { categoryName: '청각장애', iconList: HEARING_FACILITIES },
-  infant: { categoryName: '지적장애', iconList: INFANT_FACILITIES },
+  infant: { categoryName: '영유아 가족', iconList: INFANT_FACILITIES },
 };
 
 const INITIAL_FILTER_STATE: filterState = {
