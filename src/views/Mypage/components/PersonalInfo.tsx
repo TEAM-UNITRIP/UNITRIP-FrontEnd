@@ -14,31 +14,16 @@ const PersonalInfo = () => {
           <li css={formItem}>
             <span css={title}>이름*</span>
 
-            <input type="text" css={input} placeholder="이돌이" disabled />
+            <input type="text" css={input} value="이돌이" disabled />
           </li>
 
           <li css={formItem}>
             <span css={title}>생년월일*</span>
 
             <div css={multiInputSection}>
-              <input
-                type="number"
-                css={birth('year')}
-                disabled
-                placeholder="2015"
-              />
-              <input
-                type="number"
-                css={birth('month')}
-                disabled
-                placeholder="9"
-              />
-              <input
-                type="number"
-                css={birth('date')}
-                disabled
-                placeholder="7"
-              />
+              <input type="number" css={birth('year')} disabled value="2015" />
+              <input type="number" css={birth('month')} disabled value="9" />
+              <input type="number" css={birth('date')} disabled value="7" />
             </div>
           </li>
 
@@ -94,14 +79,15 @@ const inputDefault = css`
   border: 1px solid ${COLORS.gray3};
   border-radius: 1rem;
 
-  color: ${COLORS.gray9};
+  background-color: ${COLORS.gray0};
+
+  color: ${COLORS.gray4};
 `;
 
 const input = css`
-  ${inputDefault};
   width: 100%;
 
-  font-weight: 400;
+  ${inputDefault};
 `;
 
 const multiInputSection = css`
