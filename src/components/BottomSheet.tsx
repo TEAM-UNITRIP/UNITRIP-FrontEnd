@@ -28,11 +28,14 @@ const BottomSheet = (props: BottomSheetProps) => {
     children,
   } = props;
 
+  document.body.style.overflow = 'hidden';
+
   const bottomSheetRef = useRef<HTMLDivElement>(null);
 
   const handleOnClickBackground = (e: MouseEvent<HTMLDivElement>) => {
     if (bottomSheetRef.current?.contains(e.target as Node)) return;
     closeBottomSheet();
+    document.body.style.overflow = '';
   };
 
   return (
@@ -45,7 +48,12 @@ const BottomSheet = (props: BottomSheetProps) => {
         ref={bottomSheetRef}>
         {children}
         {!noButton && (
-          <div css={buttonCotainerCss} onClick={closeBottomSheet}>
+          <div
+            css={buttonCotainerCss}
+            onClick={() => {
+              closeBottomSheet();
+              document.body.style.overflow = '';
+            }}>
             <button css={buttonCss}>{buttonText}</button>
           </div>
         )}
