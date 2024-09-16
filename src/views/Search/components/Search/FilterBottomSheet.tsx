@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { createPortal } from 'react-dom';
 
 import BottomSheet from '@/components/BottomSheet';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -16,7 +15,7 @@ interface FilterBottomSheetProps {
 const FilterBottomSheet = (props: FilterBottomSheetProps) => {
   const { closeBottomSheet, filterState, handleFilterState } = props;
 
-  const portalContent = (
+  return (
     <BottomSheet
       closeBottomSheet={closeBottomSheet}
       height={'80vh'}
@@ -54,8 +53,6 @@ const FilterBottomSheet = (props: FilterBottomSheetProps) => {
       </ul>
     </BottomSheet>
   );
-
-  return createPortal(portalContent, document.body);
 };
 
 export default FilterBottomSheet;

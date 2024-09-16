@@ -1,5 +1,6 @@
 import { css, SerializedStyles } from '@emotion/react';
 import { MouseEvent, ReactNode, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 import { COLORS, FONTS } from '@/styles/constants';
 
@@ -40,7 +41,7 @@ const BottomSheet = (props: BottomSheetProps) => {
     document.body.style.overflow = '';
   };
 
-  return (
+  const portalContent = (
     <div css={backgroundCss} onClick={handleOnClickBackground}>
       <div
         css={css`
@@ -62,6 +63,8 @@ const BottomSheet = (props: BottomSheetProps) => {
       </div>
     </div>
   );
+
+  return createPortal(portalContent, document.body);
 };
 
 export default BottomSheet;
