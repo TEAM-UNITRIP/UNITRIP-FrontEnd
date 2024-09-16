@@ -14,10 +14,12 @@ import {
 } from '@/constants/facilities';
 import { COLORS, FONTS } from '@/styles/constants';
 
-import { category } from '../../types/category';
+import { category, filterState } from '../../types/category';
 
 interface FacilitiesIconListProps {
   category: category;
+  filterState: filterState;
+  handleFilterState: (category: category, facility: string) => void;
 }
 
 const MAP_CATEGORY_FACILITIES: Record<
@@ -31,15 +33,22 @@ const MAP_CATEGORY_FACILITIES: Record<
 };
 
 const FacilitiesAccordian = (props: FacilitiesIconListProps) => {
-  const { category } = props;
+  const { category, filterState, handleFilterState } = props;
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+
+  const facilityState = filterState[category];
+  const handleOnClick = (facility: string) => {
+    handleFilterState(category, facility);
+  };
 
   const iconList = MAP_CATEGORY_FACILITIES[category].iconList.map(
-    ({ name, default: defaultIcon }) => {
+    ({ name, default: defaultIcon, selected: selectedIcon }) => {
       return (
         <li css={iconListCss} key={name}>
-          {defaultIcon}
+          <button onClick={() => handleOnClick(name)}>
+            {facilityState[name] ? selectedIcon : defaultIcon}
+          </button>
           <span>{name}</span>
         </li>
       );

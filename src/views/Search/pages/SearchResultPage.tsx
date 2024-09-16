@@ -12,15 +12,22 @@ import Guide from '../components/Result/Guide';
 import SearchResult from '../components/Result/SearchResult';
 import FilterBottomSheet from '../components/Search/FilterBottomSheet';
 import SearchBar from '../components/SearchBar';
+import { createInitialFilterState } from '../constants/initialFiltersState';
+import { category } from '../types/category';
 
 const SearchResultPage = () => {
   const { word: initialWord } = useParams();
+
+  const initialFilterState = createInitialFilterState();
+
   const [searchWord, setSearchWord] = useState(initialWord || '');
+  const [filterState, setFilterState] = useState(initialFilterState);
 
+  // modal, bottom sheet state
   const [showGuide, setShowGuide] = useState(() => isGuideShown());
-
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  // state handling func
   const handleSearchWord = (word: string) => {
     setSearchWord(word);
   };
@@ -29,8 +36,24 @@ const SearchResultPage = () => {
     setShowGuide(value);
   };
 
-  const handleOnClickFilter = () => {
+  const openFilter = () => {
     setIsFilterOpen(true);
+  };
+
+  const closeFilter = () => {
+    setIsFilterOpen(false);
+  };
+
+  const handleFilterState = (category: category, facility: string) => {
+    const categoryFacilities = filterState[category];
+
+    setFilterState((prev) => ({
+      ...prev,
+      [category]: {
+        ...categoryFacilities,
+        [facility]: !categoryFacilities[facility],
+      },
+    }));
   };
 
   return (
@@ -47,7 +70,7 @@ const SearchResultPage = () => {
           <RelatedWordList searchWord={searchWord} />
         ) : (
           <>
-            <button type="button" css={buttonCss} onClick={handleOnClickFilter}>
+            <button type="button" css={buttonCss} onClick={openFilter}>
               <SearchSetIcon /> 기본 편의시설, 지체장애
             </button>
             <SearchResult />
@@ -57,7 +80,14 @@ const SearchResultPage = () => {
         {showGuide && <Guide handleSetShowGuide={handleSetShowGuide} />}
         <MenuBar />
       </div>
-      {isFilterOpen && <FilterBottomSheet />}
+
+      {isFilterOpen && (
+        <FilterBottomSheet
+          closeBottomSheet={closeFilter}
+          filterState={filterState}
+          handleFilterState={handleFilterState}
+        />
+      )}
     </>
   );
 };
