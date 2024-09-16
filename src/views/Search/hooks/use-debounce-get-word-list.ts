@@ -11,7 +11,7 @@ export const useDebounceGetWordList = (
     const wordList = await getSearchKeyword({
       pageNo: 1,
       numOfRows: 20,
-      MobileOS: 'IOS',
+      MobileOS: 'ETC',
       keyword: searchWord,
     });
 

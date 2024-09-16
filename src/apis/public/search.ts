@@ -9,7 +9,6 @@ interface searchKeywordParams {
   pageNo: number;
   numOfRows: number;
   MobileOS: 'IOS' | 'AND' | 'WIN' | 'ETC';
-  //   arrange: 'A' | 'C' | 'D' | 'O' | 'Q' | 'R';
   keyword: string;
 }
 

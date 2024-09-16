@@ -46,7 +46,7 @@ const SearchResultPage = () => {
       const items = await getSearchKeyword({
         pageNo,
         numOfRows: 10,
-        MobileOS: 'IOS',
+        MobileOS: 'ETC',
         keyword: pathname.split('/')[2],
       });
 
