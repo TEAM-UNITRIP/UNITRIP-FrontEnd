@@ -62,14 +62,12 @@ const SearchResultPage = () => {
   // render
   const selectedCategory = () => {
     const category: string[] = [];
+
     Object.entries(filterState).forEach(([key, entries]) => {
-      Object.values(entries).forEach((item) => {
-        if (item) {
-          category.push(MAP_CATEGORY_FACILITIES[key as category].categoryName);
-          return;
-        }
-      });
+      if (Object.values(entries).some((item) => item))
+        category.push(MAP_CATEGORY_FACILITIES[key as category].categoryName);
     });
+
     return category.join(', ');
   };
 
