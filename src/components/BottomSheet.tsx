@@ -6,7 +6,8 @@ import { COLORS, FONTS } from '@/styles/constants';
 interface BottomSheetProps {
   closeBottomSheet: () => void;
   height: string;
-  buttonText: string;
+
+  buttonText?: string;
   noButton?: boolean;
   bottomSheetCss?: SerializedStyles;
   children: ReactNode;
@@ -15,6 +16,7 @@ interface BottomSheetProps {
 /**
  * @param closeBottomSheet 바텀시트 닫는 함수
  * @param height 바텀시트 height값
+ * @param buttonText button text
  * @param noButton button 여부
  * @param bottomSheetCss 바텀시트 css 오버라이딩
  */
