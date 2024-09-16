@@ -21,10 +21,10 @@ import { category } from '../types/category';
 const SearchResultPage = () => {
   const { word: initialWord } = useParams();
 
-  const initialFilterState = createInitialFilterState();
-
   const [searchWord, setSearchWord] = useState(initialWord || '');
-  const [filterState, setFilterState] = useState(initialFilterState);
+  const [filterState, setFilterState] = useState(() =>
+    createInitialFilterState(),
+  );
 
   // modal, bottom sheet state
   const [showGuide, setShowGuide] = useState(() => isGuideShown());
