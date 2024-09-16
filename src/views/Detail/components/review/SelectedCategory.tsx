@@ -2,10 +2,17 @@ import { css } from '@emotion/react';
 
 import { COLORS, FONTS } from '@/styles/constants';
 
-const SelectedCategory = () => {
+interface SelectedCategoryProps {
+  openBottomSheet: () => void;
+}
+
+const SelectedCategory = (props: SelectedCategoryProps) => {
+  const { openBottomSheet } = props;
   return (
     <div>
-      <button css={buttonCss}>필터 더보기</button>
+      <button css={buttonCss} onClick={openBottomSheet}>
+        필터 더보기
+      </button>
     </div>
   );
 };

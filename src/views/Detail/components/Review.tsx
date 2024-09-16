@@ -1,5 +1,7 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 
+import CategoryBottomSheet from './review/CategoryBottomSheet';
 import ReviewCard from './review/ReviewCard';
 import SelectedCategory from './review/SelectedCategory';
 import TotalReview from './review/TotalReview';
@@ -33,16 +35,29 @@ const REVIEW_DATA = [
 ];
 
 const Review = () => {
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
+  const openBottomSheet = () => {
+    setIsBottomSheetOpen(true);
+  };
+  const closeBottomSheet = () => {
+    setIsBottomSheetOpen(false);
+  };
+
   return (
     <>
       <TotalScore />
       <TotalReview />
-      <SelectedCategory />
+      <SelectedCategory openBottomSheet={openBottomSheet} />
       <ul css={reviewCardContainerCss}>
         {REVIEW_DATA.map((item, idx) => {
           return <ReviewCard key={idx + item.writer + item.rate} {...item} />;
         })}
       </ul>
+
+      {isBottomSheetOpen && (
+        <CategoryBottomSheet closeBottomSheet={closeBottomSheet} />
+      )}
     </>
   );
 };
