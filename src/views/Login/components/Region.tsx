@@ -11,7 +11,7 @@ interface RegionProps {
 }
 
 const Region = ({ setStep }: RegionProps) => {
-  const { region } = useSignUpContext();
+  const { region, setRegion } = useSignUpContext();
 
   const moveNext = () => {
     setStep('여행자 유형 설정');
@@ -25,7 +25,7 @@ const Region = ({ setStep }: RegionProps) => {
           <br />
           선택해주세요
         </p>
-        <SelectRegion />
+        <SelectRegion region={region} setRegion={setRegion} />
       </section>
       <BottomButton text="다음" clickedFn={moveNext} disabled={!region.town} />
     </>

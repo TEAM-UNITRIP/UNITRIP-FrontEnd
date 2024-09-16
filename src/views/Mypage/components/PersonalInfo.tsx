@@ -1,9 +1,12 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 
-import SelectRegion from '@/components/SelectRegion';
+import SelectRegion, { Region } from '@/components/SelectRegion';
 import { COLORS, FONTS } from '@/styles/constants';
 
 const PersonalInfo = () => {
+  const [region, setRegion] = useState<Region>({ city: '', town: '' });
+
   return (
     <>
       <form action="submit" css={PersonalInfoContainter}>
@@ -39,7 +42,7 @@ const PersonalInfo = () => {
             </div>
           </li>
 
-          <SelectRegion />
+          <SelectRegion region={region} setRegion={setRegion} />
         </ul>
       </form>
     </>

@@ -4,13 +4,20 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowToggleClosed, ArrowToggleOpen } from '@/assets/icon';
 import { REGION_LIST } from '@/constants/REGION_LIST';
 import { COLORS, FONTS } from '@/styles/constants';
-import { useSignUpContext } from '@/views/Login/components/SignUpContext';
 
-const SelectRegion = () => {
+export type Region = {
+  city: string;
+  town: string;
+};
+
+interface SelectRegionProps {
+  region: Region;
+  setRegion: React.Dispatch<React.SetStateAction<Region>>;
+}
+
+const SelectRegion = ({ region, setRegion }: SelectRegionProps) => {
   const [locationList, setLocationList] = useState<string[]>([]);
   const [inputState, setInputState] = useState({ city: false, town: false });
-
-  const { region, setRegion } = useSignUpContext();
 
   const cityRef = useRef<HTMLDivElement>(null);
   const townRef = useRef<HTMLDivElement>(null);

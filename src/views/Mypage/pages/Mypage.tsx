@@ -14,7 +14,6 @@ import { MYPAGE_TAB_CONTENTS } from '../constants/text';
 
 const Mypage = () => {
   const [currentTab, setCurrentTab] = useState<string>('main');
-
   const [travelerTypes, setTravelerTypes] = useState<string[]>([]);
 
   const backToMainTab = () => {
