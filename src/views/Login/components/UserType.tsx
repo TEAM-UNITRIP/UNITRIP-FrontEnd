@@ -2,15 +2,15 @@ import { css } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
 
 import BottomButton from '@/components/BottomButton';
+import TravelerType from '@/components/TravelerType';
 import { COLORS, FONTS } from '@/styles/constants';
-import TravelerType from '@/views/Mypage/components/TravelerType';
 
 import { useSignUpContext } from './SignUpContext';
 
 const UserType = () => {
   const navigate = useNavigate();
 
-  const { travelerType } = useSignUpContext();
+  const { travelerType, setTravelerType } = useSignUpContext();
 
   const moveNext = () => {
     navigate(`/`);
@@ -24,7 +24,10 @@ const UserType = () => {
           <br />
           모두 선택해주세요
         </p>
-        <TravelerType />
+        <TravelerType
+          travelerType={travelerType}
+          setTravelerType={setTravelerType}
+        />
       </section>
 
       <BottomButton

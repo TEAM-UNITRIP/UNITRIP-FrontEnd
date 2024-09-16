@@ -5,7 +5,7 @@ import { HeaderBackIcon } from '@/assets/icon';
 import BottomButton from '@/components/BottomButton';
 import Header from '@/components/Header';
 import MenuBar from '@/components/MenuBar';
-import TravelerType from '@/views/Mypage/components/TravelerType';
+import TravelerType from '@/components/TravelerType';
 
 import Favorite from '../components/Favorite';
 import Main from '../components/Main';
@@ -14,6 +14,8 @@ import { MYPAGE_TAB_CONTENTS } from '../constants/text';
 
 const Mypage = () => {
   const [currentTab, setCurrentTab] = useState<string>('main');
+
+  const [travelerTypes, setTravelerTypes] = useState<string[]>([]);
 
   const backToMainTab = () => {
     setCurrentTab('main');
@@ -34,7 +36,12 @@ const Mypage = () => {
       case MYPAGE_TAB_CONTENTS.FAVORITE_TRAVEL_LIST:
         return <Favorite />;
       case MYPAGE_TAB_CONTENTS.TRAVELER_TYPE:
-        return <TravelerType />;
+        return (
+          <TravelerType
+            travelerType={travelerTypes}
+            setTravelerType={setTravelerTypes}
+          />
+        );
       default:
         return null;
     }

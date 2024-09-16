@@ -1,23 +1,22 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
 
 import { MapMonoGrayIcon } from '@/assets/icon';
 import SelectTravelerType from '@/components/SelectTravelerType';
 import { COLORS, FONTS } from '@/styles/constants';
-import { useSignUpContext } from '@/views/Login/components/SignUpContext';
 
-const TravelerType = () => {
-  const [travelerTypes, setTravelerTypes] = useState<string[]>([]);
+interface TravelerTypeProps {
+  travelerType: string[];
+  setTravelerType: React.Dispatch<React.SetStateAction<string[]>>;
+}
 
-  const { travelerType, setTravelerType } = useSignUpContext();
-
+const TravelerType = ({ travelerType, setTravelerType }: TravelerTypeProps) => {
   return (
     <div css={contentContainer}>
       <div>
         <p css={subText}>다중선택 가능</p>
         <SelectTravelerType
-          currentTravelerType={travelerType || travelerTypes}
-          setTravelerType={setTravelerType || setTravelerTypes}
+          currentTravelerType={travelerType}
+          setTravelerType={setTravelerType}
         />
       </div>
 
