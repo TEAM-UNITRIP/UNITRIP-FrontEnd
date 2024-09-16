@@ -96,3 +96,4 @@ export { default as WheelChairInAcitveIcon } from './icon_wheelchair_inactive.sv
 
 export { default as EmptyPhotoIcon } from './icon_empty_photo.svg?react';
 export { default as PencilMonoIcon } from './icon-pencil-mono.svg?react';
+export { default as SmallStarIcon } from './small_star.svg?react';
