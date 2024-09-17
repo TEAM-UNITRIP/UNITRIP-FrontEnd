@@ -1,4 +1,4 @@
-import { KakaoResProps } from '../types/loginType';
+import { KakaoResProps } from '../views/Login/types/loginType';
 
 const getKaKaoInfo = async () => {
   const response: KakaoResProps = await window.Kakao.API.request({
@@ -12,7 +12,14 @@ const getKaKaoInfo = async () => {
     throw new Error('응답이 없습니다');
   }
 
-  return response;
+  const {
+    id,
+    kakao_account: {
+      profile: { nickname, thumbnail_image_url },
+    },
+  } = response;
+
+  return { id, nickname, thumbnail_image_url };
 };
 
 export default getKaKaoInfo;

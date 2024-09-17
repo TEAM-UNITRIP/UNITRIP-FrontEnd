@@ -37,7 +37,7 @@ const fetchKakaoLogin = async () => {
      * JS SDK는 리프레쉬 토근 별도로 사용하지 않음
      */
     window.Kakao.Auth.setAccessToken(`${access_token}`);
-    getKaKaoInfo();
+    await getKaKaoInfo();
   } else {
     throw new Error('카카오 코드가 존재하지 않습니다.');
   }
