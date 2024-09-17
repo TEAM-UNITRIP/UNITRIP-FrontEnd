@@ -11,7 +11,7 @@ const TotalReview = () => {
         <span>리뷰</span>
         <span>2</span>
       </div>
-      <Link to="/">
+      <Link to="review/write">
         <PencilMonoIcon />
       </Link>
     </div>
