@@ -1,13 +1,25 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import LoginModal from '@/components/LoginModal';
 import { COLORS, FONTS } from '@/styles/constants';
 
 import { cardContainer, scrollContainer } from '../styles/main';
 import TravelCard from './TravelCard';
 
 const NearbyTravel = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
+  const [activateModal, setActivateModal] = useState(false);
+
+  const closeModal = () => {
+    setActivateModal(false);
+  };
+
+  const showModal = () => {
+    setActivateModal(true);
+  };
+
   return (
     <section css={container}>
       <h2 css={title}>{isLoggedIn && '서울'} 주변 갈 만한 여행지 🗺️</h2>
@@ -44,9 +56,12 @@ const NearbyTravel = () => {
             <br />
             카카오톡 로그인이 필요해요!
           </p>
-          <button css={button}>여행지 추천받기</button>
+          <button type="button" css={button} onClick={showModal}>
+            여행지 추천받기
+          </button>
         </div>
       )}
+      {activateModal && <LoginModal onClick={closeModal} />}
     </section>
   );
 };

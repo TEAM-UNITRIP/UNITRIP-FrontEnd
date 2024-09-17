@@ -9,6 +9,7 @@ import RecommendedTravel from '../components/RecommendedTravel';
 
 const MainPage = () => {
   const isLoggedIn = true;
+
   return (
     <>
       <Header />
