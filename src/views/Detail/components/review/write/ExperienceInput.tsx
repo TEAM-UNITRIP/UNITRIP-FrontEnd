@@ -41,6 +41,7 @@ const textAreaCss = css`
 
   &:focus {
     outline: none;
+    border: 1px solid ${COLORS.brand1};
   }
 
   &::placeholder {
