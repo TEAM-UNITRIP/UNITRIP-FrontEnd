@@ -19,6 +19,7 @@ const WriteReviewPage = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const [score, setScore] = useState(0);
+  const [experience, setExperience] = useState('');
   const [filterState, setFilterState] = useState(() =>
     createInitialFilterState(),
   );
@@ -33,6 +34,10 @@ const WriteReviewPage = () => {
 
   const closeBottomSheet = () => {
     setIsBottomSheetOpen(false);
+  };
+
+  const handleExperience = (value: string) => {
+    setExperience(value);
   };
 
   const handleFilterState = (category: category, facility: string) => {
@@ -59,7 +64,10 @@ const WriteReviewPage = () => {
 
         <div css={writeContainerCss}>
           <ScoreSection score={score} handleScore={handleScore} />
-          <ExperienceInput />
+          <ExperienceInput
+            experience={experience}
+            handleExperience={handleExperience}
+          />
           <Facilities
             openBottomSheet={openBottomSheet}
             filterState={filterState}
