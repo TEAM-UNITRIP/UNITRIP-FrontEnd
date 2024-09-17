@@ -21,6 +21,7 @@ const LoginModal = (props: LoginModalProps) => {
         redirectUri:
           import.meta.env.VITE_LOCAL_REDIRECT_URI ||
           import.meta.env.VITE_REDIRECT_URI,
+        scope: 'profile_nickname, profile_image, account_email',
       });
     }
   };

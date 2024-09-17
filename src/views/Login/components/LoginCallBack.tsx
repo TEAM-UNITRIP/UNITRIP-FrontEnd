@@ -1,4 +1,4 @@
-import fetchKakaoLogin from '../hooks/fetchKakaoLogin';
+import fetchKakaoLogin from '../apis/fetchKakaoLogin';
 
 const LoginCallBack = () => {
   fetchKakaoLogin();

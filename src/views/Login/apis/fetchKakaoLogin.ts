@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import fetchSupabaseLogin from './fetchSupabaseLogin';
+import getKaKaoInfo from './getKaKaoInfo';
 
 const fetchKakaoLogin = async () => {
   /* 인가 코드 받기 */
@@ -26,12 +27,19 @@ const fetchKakaoLogin = async () => {
 
     /* token 데이터 받기 */
     const tokenData = await tokenResponse.json();
-    const { id_token } = tokenData;
+    const { access_token, id_token } = tokenData;
 
     /* id 토큰으로 회원 가입 */
     id_token && fetchSupabaseLogin(id_token);
+
+    /*
+     * Access 토큰으로 회원 정보 불러오기
+     * JS SDK는 리프레쉬 토근 별도로 사용하지 않음
+     */
+    window.Kakao.Auth.setAccessToken(`${access_token}`);
+    getKaKaoInfo();
   } else {
-    console.log('카카오 코드가 존재하지 않습니다.');
+    throw new Error('카카오 코드가 존재하지 않습니다.');
   }
 
   navigate('/');
