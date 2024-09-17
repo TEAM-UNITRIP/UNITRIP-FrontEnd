@@ -16,7 +16,7 @@ const Facilities = (props: FacilitiesProps) => {
   const { openBottomSheet, filterState } = props;
 
   const renderSelectedCategoryList = () => {
-    return Object.values(filterState)
+    const categoryList = Object.values(filterState)
       .flatMap((object) =>
         Object.entries(object)
           .filter(([, value]) => value)
@@ -27,15 +27,21 @@ const Facilities = (props: FacilitiesProps) => {
           {name}
         </li>
       ));
+
+    return (
+      categoryList.length > 0 && (
+        <ul css={categoryContainerCss}>{categoryList}</ul>
+      )
+    );
   };
 
   return (
     <div>
       <Question>어떤 편의시설이 있었나요?</Question>
       <Description>남겨주신 정보는 다른 사용자에게 큰 도움이 돼요</Description>
-      <ul css={categoryContainerCss}>{renderSelectedCategoryList()}</ul>
+      {renderSelectedCategoryList()}
       <button css={categoryButtonCss} onClick={openBottomSheet}>
-        편의시설 선택하기
+        편의시설 선택하기 &gt;
       </button>
     </div>
   );
