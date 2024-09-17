@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { ChevronLeftIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
+import { createInitialFilterState } from '@/views/Search/constants/category';
+import { category } from '@/views/Search/types/category';
 
 import CategoryBottomSheet from '../components/review/CategoryBottomSheet';
 import ExperienceInput from '../components/review/write/ExperienceInput';
@@ -17,6 +19,9 @@ const WriteReviewPage = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const [score, setScore] = useState(0);
+  const [filterState, setFilterState] = useState(() =>
+    createInitialFilterState(),
+  );
 
   const handleScore = (score: number) => {
     setScore(score);
@@ -28,6 +33,18 @@ const WriteReviewPage = () => {
 
   const closeBottomSheet = () => {
     setIsBottomSheetOpen(false);
+  };
+
+  const handleFilterState = (category: category, facility: string) => {
+    const categoryFacilities = filterState[category];
+
+    setFilterState((prev) => ({
+      ...prev,
+      [category]: {
+        ...categoryFacilities,
+        [facility]: !categoryFacilities[facility],
+      },
+    }));
   };
 
   return (
@@ -43,13 +60,20 @@ const WriteReviewPage = () => {
         <div css={writeContainerCss}>
           <ScoreSection score={score} handleScore={handleScore} />
           <ExperienceInput />
-          <Facilities openBottomSheet={openBottomSheet} />
+          <Facilities
+            openBottomSheet={openBottomSheet}
+            filterState={filterState}
+          />
           <ImageInput />
         </div>
 
         <button css={submitCss}>등록하기</button>
         {isBottomSheetOpen && (
-          <CategoryBottomSheet closeBottomSheet={closeBottomSheet} />
+          <CategoryBottomSheet
+            closeBottomSheet={closeBottomSheet}
+            filterState={filterState}
+            handleFilterState={handleFilterState}
+          />
         )}
       </div>
     </>

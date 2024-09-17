@@ -1,6 +1,9 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 
+import { createInitialFilterState } from '@/views/Search/constants/category';
+import { category } from '@/views/Search/types/category';
+
 import CategoryBottomSheet from './review/CategoryBottomSheet';
 import ReviewCard from './review/ReviewCard';
 import SelectedCategory from './review/SelectedCategory';
@@ -36,12 +39,27 @@ const REVIEW_DATA = [
 
 const Review = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [filterState, setFilterState] = useState(() =>
+    createInitialFilterState(),
+  );
 
   const openBottomSheet = () => {
     setIsBottomSheetOpen(true);
   };
   const closeBottomSheet = () => {
     setIsBottomSheetOpen(false);
+  };
+
+  const handleFilterState = (category: category, facility: string) => {
+    const categoryFacilities = filterState[category];
+
+    setFilterState((prev) => ({
+      ...prev,
+      [category]: {
+        ...categoryFacilities,
+        [facility]: !categoryFacilities[facility],
+      },
+    }));
   };
 
   return (
@@ -56,7 +74,11 @@ const Review = () => {
       </ul>
 
       {isBottomSheetOpen && (
-        <CategoryBottomSheet closeBottomSheet={closeBottomSheet} />
+        <CategoryBottomSheet
+          closeBottomSheet={closeBottomSheet}
+          filterState={filterState}
+          handleFilterState={handleFilterState}
+        />
       )}
     </>
   );

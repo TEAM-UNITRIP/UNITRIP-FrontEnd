@@ -7,6 +7,9 @@ import {
   VISUAL_FACILITIES,
 } from '@/constants/facilities';
 import { COLORS, FONTS } from '@/styles/constants';
+import { filterState } from '@/views/Search/types/category';
+
+import { categoryButtonCss } from '../../styles/review';
 
 type category = 'physical' | 'visual' | 'hearing' | 'infant';
 interface Facility {
@@ -27,15 +30,25 @@ export const MAP_CATEGORY_FACILITIES: Record<
 
 interface CategoryListProps {
   category: category;
+  filterState: filterState;
+  handleFilterState: (category: category, facility: string) => void;
 }
 
 const CategoryList = (props: CategoryListProps) => {
-  const { category } = props;
+  const { category, filterState, handleFilterState } = props;
+
+  const facilityState = filterState[category];
+  const handleOnClick = (facility: string) => {
+    handleFilterState(category, facility);
+  };
 
   const categoryList = MAP_CATEGORY_FACILITIES[category].iconList.map(
     ({ name }) => {
       return (
-        <button key={name} css={categoryButtonCss}>
+        <button
+          key={name}
+          css={categoryButtonCss(facilityState[name])}
+          onClick={() => handleOnClick(name)}>
           {name}
         </button>
       );
@@ -63,14 +76,6 @@ const categoryNameCss = css`
 
   color: ${COLORS.brand1};
   ${FONTS.Body2};
-`;
-
-const categoryButtonCss = css`
-  border-radius: 1.7rem;
-  border: 1px solid #d6d6d6;
-  padding: 0.7rem 1.5rem;
-  color: #616671;
-  ${FONTS.Body3}
 `;
 
 const categoryContainerCss = css`
