@@ -23,6 +23,7 @@ const WriteReviewPage = () => {
   const [filterState, setFilterState] = useState(() =>
     createInitialFilterState(),
   );
+  const [imgList, setImgList] = useState<string[]>([]);
 
   const handleScore = (score: number) => {
     setScore(score);
@@ -52,6 +53,15 @@ const WriteReviewPage = () => {
     }));
   };
 
+  const addImg = (imgUrl: string) => {
+    setImgList((prev) => [...prev, imgUrl]);
+  };
+
+  const removeImg = (imgUrl: string) => {
+    const filteredImgList = imgList.filter((item) => item !== imgUrl);
+    setImgList(filteredImgList);
+  };
+
   return (
     <>
       <div css={containerCss}>
@@ -72,7 +82,7 @@ const WriteReviewPage = () => {
             openBottomSheet={openBottomSheet}
             filterState={filterState}
           />
-          <ImageInput />
+          <ImageInput imgList={imgList} addImg={addImg} removeImg={removeImg} />
         </div>
 
         <button css={submitCss}>등록하기</button>
