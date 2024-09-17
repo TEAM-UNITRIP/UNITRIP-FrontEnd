@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeftIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
-import CategoryBottomSheet from '../components/review/write/CategoryBottomSheet';
+import CategoryBottomSheet from '../components/review/CategoryBottomSheet';
 import ExperienceInput from '../components/review/write/ExperienceInput';
 import Facilities from '../components/review/write/Facilities';
 import ImageInput from '../components/review/write/ImageInput';
@@ -26,6 +26,10 @@ const WriteReviewPage = () => {
     setIsBottomSheetOpen(true);
   };
 
+  const closeBottomSheet = () => {
+    setIsBottomSheetOpen(false);
+  };
+
   return (
     <>
       <div css={containerCss}>
@@ -44,8 +48,10 @@ const WriteReviewPage = () => {
         </div>
 
         <button css={submitCss}>등록하기</button>
+        {isBottomSheetOpen && (
+          <CategoryBottomSheet closeBottomSheet={closeBottomSheet} />
+        )}
       </div>
-      {isBottomSheetOpen && <CategoryBottomSheet />}
     </>
   );
 };

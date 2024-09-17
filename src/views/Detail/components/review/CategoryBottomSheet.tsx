@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import React from 'react';
 
 import BottomSheet from '@/components/BottomSheet';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -12,6 +11,7 @@ interface CategoryBottomSheetProps {
 
 const CategoryBottomSheet = (props: CategoryBottomSheetProps) => {
   const { closeBottomSheet } = props;
+
   return (
     <BottomSheet
       closeBottomSheet={closeBottomSheet}

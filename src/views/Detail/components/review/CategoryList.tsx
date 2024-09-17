@@ -1,13 +1,12 @@
 import { css } from '@emotion/react';
 
-import { COLORS, FONTS } from '@/styles/constants';
-
 import {
   HEARING_FACILITIES,
   INFANT_FACILITIES,
   PHYSICAL_FACILITIES,
   VISUAL_FACILITIES,
-} from '../../constants/constants';
+} from '@/constants/facilities';
+import { COLORS, FONTS } from '@/styles/constants';
 
 type category = 'physical' | 'visual' | 'hearing' | 'infant';
 interface Facility {
