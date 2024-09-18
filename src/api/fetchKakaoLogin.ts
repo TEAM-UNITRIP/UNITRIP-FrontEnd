@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 
-import fetchSupabaseLogin from './fetchSupabaseLogin';
 import getKaKaoInfo from './getKaKaoInfo';
+import fetchSupabaseLogin from './supabase/fetchSupabaseLogin';
+import getUserData from './supabase/getUserData';
 
 const fetchKakaoLogin = async () => {
+  const navigate = useNavigate();
   /* 인가 코드 받기 */
   const KAKAO_CODE = new URL(window.location.href).searchParams.get('code');
-  const navigate = useNavigate();
 
   if (KAKAO_CODE) {
     const tokenResponse = await fetch('https://kauth.kakao.com/oauth/token', {
@@ -30,19 +31,34 @@ const fetchKakaoLogin = async () => {
     const { access_token, id_token } = tokenData;
 
     /* id 토큰으로 회원 가입 */
-    id_token && fetchSupabaseLogin(id_token);
+    if (id_token) {
+      await fetchSupabaseLogin(id_token);
+    }
 
     /*
      * Access 토큰으로 회원 정보 불러오기
-     * JS SDK는 리프레쉬 토근 별도로 사용하지 않음
+     * JS SDK는 리프레쉬 토큰 별도로 사용하지 않음
      */
-    window.Kakao.Auth.setAccessToken(`${access_token}`);
-    await getKaKaoInfo();
-  } else {
-    throw new Error('카카오 코드가 존재하지 않습니다.');
-  }
+    if (access_token) {
+      window.Kakao.Auth.setAccessToken(`${access_token}`);
+      const { id, nickname, thumbnail_image_url } = await getKaKaoInfo();
 
-  navigate('/');
+      //로그인 분기 처리
+      const registered = sessionStorage.getItem('kakao_id');
+      if (registered) {
+        const { name, region, universal_type, favorite_list } =
+          await getUserData(Number(registered));
+
+        navigate(`/`, {
+          state: { name, region, universal_type, favorite_list },
+        });
+      } else {
+        navigate(`/sign-up`, { state: { id, nickname, thumbnail_image_url } });
+      }
+    } else {
+      throw new Error('카카오 코드가 존재하지 않습니다.');
+    }
+  }
 };
 
 export default fetchKakaoLogin;

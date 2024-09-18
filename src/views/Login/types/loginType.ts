@@ -1,5 +1,5 @@
 export interface KakaoResProps {
-  id: string;
+  id: number;
   kakao_account: {
     // 프로필 또는 닉네임 동의항목 필요
     profile_nickname_needs_agreement: boolean;
