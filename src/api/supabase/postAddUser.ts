@@ -15,7 +15,7 @@ const postAddUser = async ({
 }: AddUserProps) => {
   const { id, nickname, thumbnail_image_url } = userData;
 
-  const { error } = await unitripSupabase.from('USER').insert([
+  const { data, error } = await unitripSupabase.from('USER').insert([
     {
       kakao_id: id,
       name: nickname,
@@ -24,6 +24,10 @@ const postAddUser = async ({
       region: `${region.city} ${region.town}`,
     },
   ]);
+
+  if (data) {
+    sessionStorage.setItem('kakao_id', String(id));
+  }
 
   if (error) {
     throw new Error('회원가입 과정에 오류가 있습니다');

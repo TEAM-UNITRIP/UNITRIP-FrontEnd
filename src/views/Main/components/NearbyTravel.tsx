@@ -8,7 +8,11 @@ import { COLORS, FONTS } from '@/styles/constants';
 import { cardContainer, scrollContainer } from '../styles/main';
 import TravelCard from './TravelCard';
 
-const NearbyTravel = () => {
+interface NearbyTravelProps {
+  region?: string; // prop 타입 수정
+}
+
+const NearbyTravel = ({ region }: NearbyTravelProps) => {
   const isLoggedIn = false;
   const [activateModal, setActivateModal] = useState(false);
 
@@ -46,7 +50,7 @@ const NearbyTravel = () => {
             </li>
           </div>
           <Link to="" css={link}>
-            서울 여행지 둘러보기
+            `${region}` 여행지 둘러보기
           </Link>
         </>
       ) : (
