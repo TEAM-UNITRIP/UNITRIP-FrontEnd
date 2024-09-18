@@ -19,8 +19,6 @@ const useGetUserData = (kakaoId: number) => {
     /* kakao_id에 해당하는 행이 존재하는지 확인 */
     if (data.length) {
       setUserData(data[0]);
-    } else {
-      throw new Error('일치하는 데이터가 없습니다');
     }
   };
 

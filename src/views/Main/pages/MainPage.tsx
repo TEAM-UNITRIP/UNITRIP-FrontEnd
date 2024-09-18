@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useGetUserData from '@/api/supabase/useGetUserData';
 import MenuBar from '@/components/MenuBar';
@@ -14,11 +14,17 @@ const MainPage = () => {
   const [userData, setUserData] = useState<UserDataProps>();
 
   const isLoggedIn = sessionStorage.getItem('kakao_id');
+  const response = isLoggedIn && useGetUserData(Number(isLoggedIn));
 
-  if (isLoggedIn) {
-    const response = useGetUserData(Number(isLoggedIn));
-    setUserData(response);
-  }
+  useEffect(() => {
+    const fetchData = () => {
+      if (response) {
+        setUserData(response);
+      }
+    };
+
+    fetchData();
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -33,7 +39,10 @@ const MainPage = () => {
           )}
           오늘 어디로 떠날까요?
         </h1>
-        <NearbyTravel region={userData?.region} />
+        <NearbyTravel
+          isLoggedIn={Boolean(isLoggedIn)}
+          region={userData?.region}
+        />
 
         <div css={graySpacing} />
         <RecommendedTravel />

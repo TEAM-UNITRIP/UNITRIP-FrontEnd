@@ -9,11 +9,11 @@ import { cardContainer, scrollContainer } from '../styles/main';
 import TravelCard from './TravelCard';
 
 interface NearbyTravelProps {
+  isLoggedIn: boolean;
   region?: string; // prop 타입 수정
 }
 
-const NearbyTravel = ({ region }: NearbyTravelProps) => {
-  const isLoggedIn = false;
+const NearbyTravel = ({ isLoggedIn, region }: NearbyTravelProps) => {
   const [activateModal, setActivateModal] = useState(false);
 
   const closeModal = () => {
@@ -26,7 +26,7 @@ const NearbyTravel = ({ region }: NearbyTravelProps) => {
 
   return (
     <section css={container}>
-      <h2 css={title}>{isLoggedIn && '서울'} 주변 갈 만한 여행지 🗺️</h2>
+      <h2 css={title}>{isLoggedIn && region} 주변 갈 만한 여행지 🗺️</h2>
       {isLoggedIn ? (
         <>
           <div css={scrollContainer}>
@@ -50,7 +50,7 @@ const NearbyTravel = ({ region }: NearbyTravelProps) => {
             </li>
           </div>
           <Link to="" css={link}>
-            `${region}` 여행지 둘러보기
+            {region} 여행지 둘러보기
           </Link>
         </>
       ) : (
