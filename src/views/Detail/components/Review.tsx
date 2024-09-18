@@ -66,7 +66,10 @@ const Review = () => {
     <>
       <TotalScore />
       <TotalReview />
-      <SelectedCategory openBottomSheet={openBottomSheet} />
+      <SelectedCategory
+        filterState={filterState}
+        openBottomSheet={openBottomSheet}
+      />
       <ul css={reviewCardContainerCss}>
         {REVIEW_DATA.map((item, idx) => {
           return <ReviewCard key={idx + item.writer + item.rate} {...item} />;

@@ -61,6 +61,7 @@ const categoryButtonCss = css`
   color: ${COLORS.gray9};
   ${FONTS.Body2};
 `;
+
 const categoryContainerCss = css`
   display: flex;
   gap: 1rem;
