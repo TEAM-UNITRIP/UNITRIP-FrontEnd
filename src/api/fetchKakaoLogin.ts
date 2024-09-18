@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 
 import getKaKaoInfo from './getKaKaoInfo';
 import fetchSupabaseLogin from './supabase/fetchSupabaseLogin';
-import getUserData from './supabase/getUserData';
 
 const fetchKakaoLogin = async () => {
   const navigate = useNavigate();
@@ -46,12 +45,7 @@ const fetchKakaoLogin = async () => {
       //로그인 분기 처리
       const registered = sessionStorage.getItem('kakao_id');
       if (registered) {
-        const { name, region, universal_type, favorite_list } =
-          await getUserData(Number(registered));
-
-        navigate(`/`, {
-          state: { name, region, universal_type, favorite_list },
-        });
+        navigate(`/`);
       } else {
         navigate(`/sign-up`, { state: { id, nickname, thumbnail_image_url } });
       }

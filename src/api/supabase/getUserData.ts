@@ -1,3 +1,4 @@
+import { UserDataProps } from '@/types/type';
 import { unitripSupabase } from '@/utils/supabaseClient';
 
 const getUserData = async (kakaoId: number) => {
@@ -12,7 +13,8 @@ const getUserData = async (kakaoId: number) => {
 
   /* kakao_id에 해당하는 행이 존재하는지 확인 */
   if (data.length) {
-    const { name, region, universal_type, favorite_list } = data[0];
+    const { name, region, universal_type, favorite_list }: UserDataProps =
+      data[0];
 
     return { name, region, universal_type, favorite_list };
   } else {
