@@ -44,7 +44,7 @@ const usePostKakaoLogin = async () => {
       const { id, nickname, thumbnail_image_url } = await getKaKaoInfo();
 
       //로그인 분기 처리
-      const registered = getUserExistence(id);
+      const registered = await getUserExistence(id);
       if (!registered) {
         navigate(`/sign-up`, { state: { id, nickname, thumbnail_image_url } });
       } else {

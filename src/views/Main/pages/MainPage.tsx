@@ -24,14 +24,14 @@ const MainPage = () => {
     };
 
     fetchData();
-  }, [isLoggedIn]);
+  }, [response]);
 
   return (
     <>
       <Header />
       <main css={container}>
         <h1 css={mainText}>
-          {isLoggedIn && userData && (
+          {userData && (
             <>
               {userData.name}님,
               <br />

@@ -15,15 +15,18 @@ const postAddUser = async ({
 }: AddUserProps) => {
   const { id, nickname, thumbnail_image_url } = userData;
 
-  const { data, error } = await unitripSupabase.from('USER').insert([
-    {
-      kakao_id: id,
-      name: nickname,
-      profile: thumbnail_image_url,
-      universal_type: travelerType,
-      region: `${region.city} ${region.town}`,
-    },
-  ]);
+  const { data, error } = await unitripSupabase
+    .from('USER')
+    .insert([
+      {
+        kakao_id: id,
+        name: nickname,
+        profile: thumbnail_image_url,
+        universal_type: travelerType,
+        region: `${region.city} ${region.town}`,
+      },
+    ])
+    .select();
 
   if (data) {
     sessionStorage.setItem('kakao_id', String(id));
