@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   MapFavoirteIcon,
@@ -9,63 +9,63 @@ import {
 } from '@/assets/icon';
 import MenuBar from '@/components/MenuBar';
 import { COLORS, FONTS } from '@/styles/constants';
+import { locationBasedList1Res } from '@/types/locationBasedList1';
 
-import { POSITION_LATLNG } from '../constants/POSITION_LATLNG';
+import { createKakaoMap } from '../utils/createKakaoMap';
+import { createMapPin } from '../utils/createMapPin';
+import { getMapCenter } from '../utils/getMapCenter';
+import { setDefaultLocation } from '../utils/setDefaultLoctaion';
 
-const { kakao } = window;
-
-interface locType {
+export interface locType {
   lat: number | undefined;
   lng: number | undefined;
 }
 
+export type mapType = kakao.maps.Map | undefined;
+
 const MapPage = () => {
-  const [map, setMap] = useState(null);
-  const [region, setRegion] = useState({ city: '', town: '' });
-  const [loc, setLoc] = useState<locType>();
+  const [map, setMap] = useState<mapType>();
+  const [markers, setMarkers] = useState<kakao.maps.Marker[]>([]);
+  const [region, setRegion] = useState({ city: '', town: '' }); // 사용자 지정 지역
+  const [defaultLoc, setDefaultLoc] = useState<locType>();
+
   const [getLocActive, setGetLocActive] = useState(false);
 
-  /** 저장된 유저 정보로 default 위도, 경도 세팅 */
-  const setDefaultLocation = (city: string, town: string) => {
-    setRegion({ city: '서울특별시', town: '성동구' });
+  const apiRes = useRef<locationBasedList1Res[]>();
 
-    const currentCity = POSITION_LATLNG.find((item) => item.city === city);
-    const currentTown = currentCity?.town.find((item) => item.key === town);
-
-    setLoc({
+  /** 기본 사용자의 위치에 따른 위도, 경도 값 업데이트 */
+  useEffect(() => {
+    setRegion({ city: '서울특별시', town: '광진구' });
+    const currentTown = setDefaultLocation(region.city, region.town);
+    setDefaultLoc({
       lat: currentTown?.lat,
       lng: currentTown?.lng,
     });
-  };
-
-  /** 사용자의 위치에 따른 위도, 경도 값 업데이트 */
-  useEffect(() => {
-    setDefaultLocation(region.city, region.town);
   }, [region.city, region.town]);
 
-  /** 업데이트 된 위도, 경도 값 가져와서 카카오맵 center로 지정, 지도 띄우기 */
+  /** 업데이트 된 위도, 경도 값 가져와서 카카오맵 center로 지정, 지도 띄우기
+   * 1. 페이지 진입 시, 본인이 설정한 지역에 대한 좌표값 받아와 지도 그리기
+   * 2. 내 위치 버튼 클릭 시, 현재 위치 좌표 받아와 지도 다시 그리기
+   */
   useEffect(() => {
-    if (loc?.lat && loc?.lng) {
-      const container = document.getElementById('map');
-      const options = {
-        center: new kakao.maps.LatLng(loc.lat, loc.lng),
-        level: 4,
-      };
-      const kakaoMap = new kakao.maps.Map(container, options);
-      setMap(kakaoMap);
-      console.log(map);
-    }
-  }, [loc]);
+    const kakaoMap = createKakaoMap(defaultLoc, 5);
+    setMap(kakaoMap);
+  }, [defaultLoc]);
 
   /** 사용자의 현재 위치 (위도, 경도) 받아오기 */
   const getCurrentLoc = () => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setLoc({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
+          const latlng = new kakao.maps.LatLng(
+            position.coords.latitude,
+            position.coords.longitude,
+          );
+          if (map) {
+            clearMarker();
+            map.setCenter(latlng);
+            map.setLevel(4);
+          }
           setGetLocActive(true);
         },
         (err) => {
@@ -79,6 +79,33 @@ const MapPage = () => {
     }
   };
 
+  /** 지도에서 마커 제거, 마커 state 초기화 */
+  const clearMarker = () => {
+    markers.forEach((marker) => marker.setMap(null));
+    setMarkers([]);
+  };
+
+  //주변 여행지 찾기 클릭 시 지도 중심좌표 값 받아오기 & 공공api 검색 / 지도에 핀 박기
+  const onClickSearch = async () => {
+    const response = await getMapCenter(map);
+
+    if (map && response && response.item) {
+      clearMarker();
+
+      apiRes.current = response.item;
+
+      const { curMarkers } = createMapPin(apiRes.current, map);
+      if (curMarkers) {
+        curMarkers.forEach((marker) => {
+          marker.setMap(map);
+        });
+
+        setMarkers(curMarkers);
+        map.setLevel(6);
+      }
+    }
+  };
+
   return (
     <div id="map" css={MapContainer}>
       <section css={buttonSection}>
@@ -86,7 +113,7 @@ const MapPage = () => {
           <MapFavoirteIcon />
         </div>
         <div css={bottomButtonSection}>
-          <button css={searchButton} type="button">
+          <button css={searchButton} type="button" onClick={onClickSearch}>
             주변 여행지 찾아보기
             <RefreshMonoIcon />
           </button>
