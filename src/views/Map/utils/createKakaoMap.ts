@@ -1,6 +1,3 @@
-/** 카카오맵 그리기
- * 호출 일시 : /map 초기화면, 현위치 버튼 클릭 시
- */
 import { locType } from '../pages/MapPage';
 
 const { kakao } = window;

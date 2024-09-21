@@ -62,10 +62,7 @@ const MapPage = () => {
     });
   }, [region.city, region.town]);
 
-  /** 업데이트 된 위도, 경도 값 가져와서 카카오맵 center로 지정, 지도 띄우기
-   * 1. 페이지 진입 시, 본인이 설정한 지역에 대한 좌표값 받아와 지도 그리기
-   * 2. 내 위치 버튼 클릭 시, 현재 위치 좌표 받아와 지도 다시 그리기
-   */
+  /** '/map' 진입시, 사용자가 회원가입 할 때 등록했던 지역을 기준으로 지도 띄우기 */
   useEffect(() => {
     const kakaoMap = createKakaoMap(defaultLoc, 5);
     setMap(kakaoMap);

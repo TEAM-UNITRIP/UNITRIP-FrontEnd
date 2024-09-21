@@ -4,13 +4,6 @@ import BottomSheet from '@/components/BottomSheet';
 
 import BottomSheetContent from './BottomSheetContent';
 
-/** bottomsheet props
- * @param closeBottomSheet 바텀시트 닫는 함수
- * @param height 바텀시트 height값 -> 22.8rem
- * @param buttonText button text -> X
- * @param noButton button 여부 -> true
- * @param bottomSheetCss 바텀시트 css 오버라이딩
- */
 interface searchBottomSheetProps {
   title: string;
   address: string;
