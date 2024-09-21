@@ -5,6 +5,7 @@ import { createInitialFilterState } from '@/views/Search/constants/category';
 import { category } from '@/views/Search/types/category';
 
 import CategoryBottomSheet from './review/CategoryBottomSheet';
+import NoReview from './review/NoReview';
 import ReviewCard from './review/ReviewCard';
 import SelectedCategory from './review/SelectedCategory';
 import TotalReview from './review/TotalReview';
@@ -68,6 +69,7 @@ const Review = () => {
       <TotalReview />
       <SelectedCategory
         filterState={filterState}
+        handleFilterState={handleFilterState}
         openBottomSheet={openBottomSheet}
       />
       <ul css={reviewCardContainerCss}>
@@ -75,6 +77,8 @@ const Review = () => {
           return <ReviewCard key={idx + item.writer + item.rate} {...item} />;
         })}
       </ul>
+
+      <NoReview />
 
       {isBottomSheetOpen && (
         <CategoryBottomSheet

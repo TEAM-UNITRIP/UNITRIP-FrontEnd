@@ -148,3 +148,4 @@ export { default as HelpDogDefaultIcon } from './helpdog_default.svg?react';
 export { default as HelpDogSelectedIcon } from './helpdog_selected.svg?react';
 export { default as CameraIcon } from './icon-camera.svg?react';
 export { default as ToggleXFillIcon } from './toggle-fill-x.svg?react';
+export { default as NoReviewIcon } from './no_reveiw_image.svg?react';

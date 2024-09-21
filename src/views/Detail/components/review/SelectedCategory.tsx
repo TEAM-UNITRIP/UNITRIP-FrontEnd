@@ -9,10 +9,11 @@ import { MAP_CATEGORY_FACILITIES } from './CategoryList';
 interface SelectedCategoryProps {
   openBottomSheet: () => void;
   filterState: filterState;
+  handleFilterState: (category: category, facility: string) => void;
 }
 
 const SelectedCategory = (props: SelectedCategoryProps) => {
-  const { openBottomSheet, filterState } = props;
+  const { openBottomSheet, filterState, handleFilterState } = props;
 
   const selectedCategory: {
     category: category;
@@ -23,11 +24,7 @@ const SelectedCategory = (props: SelectedCategoryProps) => {
 
   const renderSelectedCategoryList = () => {
     const categoryList = Object.entries(filterState)
-      .map(([, objectValue]) =>
-        Object.entries(objectValue)
-          .filter(([, value]) => value)
-          .map(([key]) => key),
-      )
+      .map(([, objectValue]) => Object.entries(objectValue).map(([key]) => key))
       .map((name) => name);
 
     categoryList.forEach((facilityList, idx) => {
@@ -48,9 +45,12 @@ const SelectedCategory = (props: SelectedCategoryProps) => {
           <ul css={facilitiesContainerCss}>
             {facilityList.map((facility) => {
               return (
-                <li key={facility} css={categoryButtonCss(false)}>
+                <button
+                  key={facility}
+                  css={categoryButtonCss(filterState[category][facility])}
+                  onClick={() => handleFilterState(category, facility)}>
                   {facility}
-                </li>
+                </button>
               );
             })}
           </ul>
@@ -60,7 +60,7 @@ const SelectedCategory = (props: SelectedCategoryProps) => {
   };
 
   return (
-    <div>
+    <div css={containerCss}>
       {renderSelectedCategoryList()}
       <button css={buttonCss} onClick={openBottomSheet}>
         필터 더보기
@@ -71,15 +71,16 @@ const SelectedCategory = (props: SelectedCategoryProps) => {
 
 export default SelectedCategory;
 
+const containerCss = css`
+  padding-top: 0.94rem;
+`;
+
 const selectedCategoryContainerCss = css`
   display: flex;
   align-items: center;
   gap: 4rem;
 
-  width: 
-  height: 6.5rem;
-
-  padding-left: 1.9rem;
+  padding: 0 0 0.94rem 1.9rem;
 
   overflow: auto;
 `;
