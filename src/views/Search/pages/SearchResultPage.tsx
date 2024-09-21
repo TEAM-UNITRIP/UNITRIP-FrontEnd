@@ -16,6 +16,7 @@ import {
   createInitialFilterState,
   MAP_CATEGORY_FACILITIES,
 } from '../constants/category';
+import { STORAGE_KEY } from '../constants/localStorageKey';
 import { category } from '../types/category';
 
 const SearchResultPage = () => {
@@ -27,7 +28,9 @@ const SearchResultPage = () => {
   );
 
   // modal, bottom sheet state
-  const [showGuide, setShowGuide] = useState(() => isGuideShown());
+  const [showGuide, setShowGuide] = useState(() =>
+    isGuideShown(STORAGE_KEY.hideSearchGuide),
+  );
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   // state handling func

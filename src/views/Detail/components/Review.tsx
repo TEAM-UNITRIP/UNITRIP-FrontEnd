@@ -2,10 +2,13 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 
 import { ReviewResponse } from '@/types/api/review';
+import { isGuideShown } from '@/utils/storageHideGuide';
 import { createInitialFilterState } from '@/views/Search/constants/category';
 import { category } from '@/views/Search/types/category';
 
+import { STORAGE_KEY } from '../constants/localStorageKey';
 import CategoryBottomSheet from './review/CategoryBottomSheet';
+import Guide from './review/Guide';
 import NoReview from './review/NoReview';
 import ReviewCard from './review/ReviewCard';
 import SelectedCategory from './review/SelectedCategory';
@@ -41,6 +44,10 @@ const REVIEW_DATA: ReviewResponse[] = [
 
 const Review = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [showGuide, setShowGuide] = useState(() =>
+    isGuideShown(STORAGE_KEY.hideReviewFilterGuide),
+  );
+
   const [filterState, setFilterState] = useState(() =>
     createInitialFilterState(),
   );
@@ -50,6 +57,10 @@ const Review = () => {
   };
   const closeBottomSheet = () => {
     setIsBottomSheetOpen(false);
+  };
+
+  const handleSetShowGuide = (value: boolean) => {
+    setShowGuide(value);
   };
 
   const handleFilterState = (category: category, facility: string) => {
@@ -81,6 +92,7 @@ const Review = () => {
         })}
       </ul>
 
+      {showGuide && <Guide handleSetShowGuide={handleSetShowGuide} />}
       {isBottomSheetOpen && (
         <CategoryBottomSheet
           closeBottomSheet={closeBottomSheet}
