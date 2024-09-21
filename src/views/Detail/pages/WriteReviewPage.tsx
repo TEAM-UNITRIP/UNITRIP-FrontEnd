@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ChevronLeftIcon } from '@/assets/icon';
+import ToastMessage from '@/components/ToastMessage';
 import { COLORS, FONTS } from '@/styles/constants';
 import { createInitialFilterState } from '@/views/Search/constants/category';
 import { category } from '@/views/Search/types/category';
@@ -17,6 +18,7 @@ const WriteReviewPage = () => {
   const navigate = useNavigate();
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [toast, setToast] = useState(true);
 
   const [score, setScore] = useState(0);
   const [experience, setExperience] = useState('');
@@ -62,6 +64,10 @@ const WriteReviewPage = () => {
     setImgList(filteredImgList);
   };
 
+  const handleOnClick = () => {
+    setToast(true);
+  };
+
   return (
     <>
       <div css={containerCss}>
@@ -85,7 +91,14 @@ const WriteReviewPage = () => {
           <ImageInput imgList={imgList} addImg={addImg} removeImg={removeImg} />
         </div>
 
-        <button css={submitCss}>등록하기</button>
+        <button css={submitCss} onClick={handleOnClick}>
+          등록하기
+        </button>
+        {toast && (
+          <ToastMessage setToast={setToast}>
+            리뷰가 저장되었습니다.
+          </ToastMessage>
+        )}
         {isBottomSheetOpen && (
           <CategoryBottomSheet
             closeBottomSheet={closeBottomSheet}
@@ -136,7 +149,7 @@ const submitCss = css`
   height: 5.6rem;
 
   border-radius: 1.2rem;
-  margin-top: 7.2rem;
+  margin: 7.2rem 0 0.5rem;
 
   color: ${COLORS.white};
   background-color: ${COLORS.brand1};
