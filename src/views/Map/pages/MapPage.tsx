@@ -11,6 +11,7 @@ import MenuBar from '@/components/MenuBar';
 import { COLORS, FONTS } from '@/styles/constants';
 import { locationBasedList1Res } from '@/types/locationBasedList1';
 
+import SearchBottomSheet from '../components/SearchBottomSheet';
 import { createKakaoMap } from '../utils/createKakaoMap';
 import { createMapPin } from '../utils/createMapPin';
 import { getMapCenter } from '../utils/getMapCenter';
@@ -21,15 +22,33 @@ export interface locType {
   lng: number | undefined;
 }
 
+export interface bottomSheetType {
+  title: string;
+  address: string;
+  image: string;
+  contentId: string;
+}
+
 export type mapType = kakao.maps.Map | undefined;
 
 const MapPage = () => {
-  const [map, setMap] = useState<mapType>();
-  const [markers, setMarkers] = useState<kakao.maps.Marker[]>([]);
+  const [map, setMap] = useState<mapType>(); // 카카오맵 관리
+  const [markers, setMarkers] = useState<kakao.maps.Marker[]>([]); // 주변여행지 검색 시 마커 리스트
   const [region, setRegion] = useState({ city: '', town: '' }); // 사용자 지정 지역
-  const [defaultLoc, setDefaultLoc] = useState<locType>();
+  const [defaultLoc, setDefaultLoc] = useState<locType>(); // 사용자 지정 지역 좌표
+  const [getLocActive, setGetLocActive] = useState(false); // 위치 허용에 따른 아이콘 변화
 
-  const [getLocActive, setGetLocActive] = useState(false);
+  // 바텀시트 내용
+  const [bottomSheetContent, setBottomSheetContent] = useState<bottomSheetType>(
+    {
+      title: '',
+      address: '',
+      image: '',
+      contentId: '',
+    },
+  );
+
+  const [isPinClicked, setIsPinClicked] = useState(false); // 핀 클릭 바텀시트
 
   const apiRes = useRef<locationBasedList1Res[]>();
 
@@ -51,6 +70,14 @@ const MapPage = () => {
     const kakaoMap = createKakaoMap(defaultLoc, 5);
     setMap(kakaoMap);
   }, [defaultLoc]);
+
+  const openBottomSheet = () => {
+    setIsPinClicked(true);
+  };
+
+  const closeBottomSheet = () => {
+    setIsPinClicked(false);
+  };
 
   /** 사용자의 현재 위치 (위도, 경도) 받아오기 */
   const getCurrentLoc = () => {
@@ -94,7 +121,13 @@ const MapPage = () => {
 
       apiRes.current = response.item;
 
-      const { curMarkers } = createMapPin(apiRes.current, map);
+      const { curMarkers } = createMapPin(
+        apiRes.current,
+        map,
+        setBottomSheetContent,
+        openBottomSheet,
+      );
+
       if (curMarkers) {
         curMarkers.forEach((marker) => {
           marker.setMap(map);
@@ -112,17 +145,36 @@ const MapPage = () => {
         <div css={topButtonSection}>
           <MapFavoirteIcon />
         </div>
-        <div css={bottomButtonSection}>
-          <button css={searchButton} type="button" onClick={onClickSearch}>
-            주변 여행지 찾아보기
-            <RefreshMonoIcon />
-          </button>
-          <button css={rightButton} onClick={getCurrentLoc} type="button">
-            {getLocActive ? <MapSearchActiveIcon /> : <MapSearchInactiveIcon />}
-          </button>
-        </div>
-        <MenuBar />
+        {!isPinClicked ? (
+          <div css={bottomButtonSection}>
+            <button css={searchButton} type="button" onClick={onClickSearch}>
+              주변 여행지 찾아보기
+              <RefreshMonoIcon />
+            </button>
+            <button css={rightButton} onClick={getCurrentLoc} type="button">
+              {getLocActive ? (
+                <MapSearchActiveIcon />
+              ) : (
+                <MapSearchInactiveIcon />
+              )}
+            </button>
+          </div>
+        ) : null}
       </section>
+      <div css={bottomSection}>
+        {isPinClicked && (
+          <SearchBottomSheet
+            title={bottomSheetContent.title}
+            address={bottomSheetContent.address}
+            image={bottomSheetContent.image}
+            contentId={bottomSheetContent.contentId}
+            closeBottomSheet={closeBottomSheet}
+          />
+        )}
+        <nav css={menuBarCss}>
+          <MenuBar />
+        </nav>
+      </div>
     </div>
   );
 };
@@ -187,4 +239,13 @@ const rightButton = css`
   position: absolute;
   right: 1.3rem;
   bottom: 1.1rem;
+`;
+
+const bottomSection = css`
+  position: relative;
+`;
+
+const menuBarCss = css`
+  position: absolute;
+  z-index: 1000;
 `;
