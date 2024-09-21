@@ -6,8 +6,6 @@ import PlaceCard from '@/components/PlaceCard';
 import { COLORS, FONTS } from '@/styles/constants';
 import { SearchResItem } from '@/types/search';
 
-import PopularSearch from '../Search/PopularSearch';
-
 interface SearchResultProps {
   placeList: SearchResItem[];
   targetElement: MutableRefObject<HTMLDivElement | null>;
@@ -74,7 +72,6 @@ const SearchResult = (props: SearchResultProps) => {
           </>
         )}
       </ul>
-      {placeList.length === 0 && <PopularSearch />}
     </>
   );
 };
