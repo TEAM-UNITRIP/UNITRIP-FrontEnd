@@ -17,7 +17,7 @@ const TotalScore = (props: TotalScoreProps) => {
   const renderStar = () => {
     const starEl = [];
     for (let i = 0; i < Math.floor(averageScore); i++) {
-      starEl.push(<StarIcon />);
+      starEl.push(<StarIcon key={i} />);
     }
     return starEl;
   };
