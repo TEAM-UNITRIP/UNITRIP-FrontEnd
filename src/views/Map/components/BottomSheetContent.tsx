@@ -1,7 +1,6 @@
 /** 바텀시트 내부 맵핑 할 내용들 */
 
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
 
 import { DefaultImage } from '@/assets/image';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -15,15 +14,7 @@ interface contentProps {
 
 const BottomSheetContent = (props: contentProps) => {
   const { title, address, image, contentId } = props;
-  const [imageUrl, setImageUrl] = useState(image);
-
-  useEffect(() => {
-    handleUrl();
-  }, []);
-
-  const handleUrl = () => {
-    image === '' && setImageUrl(DefaultImage);
-  };
+  const isImageNone = image === '';
 
   return (
     <div css={contentContainer} onClick={() => console.log(contentId)}>
@@ -34,7 +25,11 @@ const BottomSheetContent = (props: contentProps) => {
         </div>
         <p css={addressText}>{address}</p>
       </section>
-      <img css={imageCss} src={imageUrl} alt={`${title} 대표이미지`} />
+      <img
+        css={imageCss}
+        src={isImageNone ? DefaultImage : image}
+        alt={`${title} 대표이미지`}
+      />
     </div>
   );
 };
