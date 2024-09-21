@@ -69,7 +69,7 @@ const Review = () => {
   return (
     <>
       <TotalScore reviewData={REVIEW_DATA} />
-      <TotalReview />
+      <TotalReview reviewCount={REVIEW_DATA.length} />
       <SelectedCategory
         filterState={filterState}
         handleFilterState={handleFilterState}

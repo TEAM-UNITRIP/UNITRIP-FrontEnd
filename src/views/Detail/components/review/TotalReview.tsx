@@ -4,12 +4,18 @@ import { Link } from 'react-router-dom';
 import { PencilMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
-const TotalReview = () => {
+interface TotalReviewProps {
+  reviewCount: number;
+}
+
+const TotalReview = (props: TotalReviewProps) => {
+  const { reviewCount } = props;
+
   return (
     <div css={containerCss}>
       <div css={reviewCountCss}>
         <span>리뷰</span>
-        <span>2</span>
+        <span>{reviewCount}</span>
       </div>
       <Link to="review/write">
         <PencilMonoIcon />
