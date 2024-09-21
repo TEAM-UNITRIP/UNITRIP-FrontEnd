@@ -35,19 +35,17 @@ const PlaceCard = (props: PlaceCardProps) => {
 
   return (
     <Link to="" css={cardContainerCss(imgSrc, placeName)}>
-      <button type="button" onClick={handleOnClick}>
-        {isHeart ? (
-          <HeartFillMonoIcon css={iconCss} />
-        ) : (
-          <HeartMonoIcon css={iconCss} />
+      <div css={backgroundCss}>
+        <button type="button" onClick={handleOnClick} css={iconCss}>
+          {isHeart ? <HeartFillMonoIcon /> : <HeartMonoIcon />}
+        </button>
+        <p css={titleCss}>{placeName}</p>
+        {address && (
+          <p css={addressCss}>
+            <PinLocationMonoIcon /> <span>{address}</span>
+          </p>
         )}
-      </button>
-      <p css={titleCss}>{placeName}</p>
-      {address && (
-        <p css={addressCss}>
-          <PinLocationMonoIcon /> <span>{address}</span>
-        </p>
-      )}
+      </div>
     </Link>
   );
 };
@@ -63,12 +61,28 @@ const cardContainerCss = (imgSrc: string, placeName: string) => css`
   height: 16.8rem;
   border-radius: 1.2rem;
 
-  color: ${COLORS.white};
-
   background-image: url(${imgSrc});
   background-size: cover;
   background-position: center center;
   background-color: ${placeName ? COLORS.gray4 : COLORS.gray2};
+`;
+
+const backgroundCss = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 16.8rem;
+  border-radius: 1.2rem;
+
+  color: ${COLORS.white};
+
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.34) 100%
+  );
 `;
 
 const titleCss = css`
