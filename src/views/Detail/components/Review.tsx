@@ -63,6 +63,8 @@ const Review = () => {
     }));
   };
 
+  if (REVIEW_DATA.length === 0) return <NoReview />;
+
   return (
     <>
       <TotalScore />
@@ -77,8 +79,6 @@ const Review = () => {
           return <ReviewCard key={idx + item.writer + item.rate} {...item} />;
         })}
       </ul>
-
-      <NoReview />
 
       {isBottomSheetOpen && (
         <CategoryBottomSheet
