@@ -32,11 +32,13 @@ const ImageInput = (props: ImageInputProps) => {
             </button>
           </div>
         ))}
-        <label css={imageSquareLabelCss}>
-          <CameraIcon />
-          이미지 첨부
-          <input css={imageButtonCss} type="file" onChange={handleOnChange} />
-        </label>
+        {imgList.length < 10 && (
+          <label css={imageSquareLabelCss}>
+            <CameraIcon />
+            이미지 첨부
+            <input css={imageButtonCss} type="file" onChange={handleOnChange} />
+          </label>
+        )}
       </div>
     </div>
   );
