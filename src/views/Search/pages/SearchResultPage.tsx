@@ -48,6 +48,7 @@ const SearchResultPage = () => {
         numOfRows: 10,
         MobileOS: 'ETC',
         keyword: pathname.split('/')[2],
+        contentTypeId: 12,
       });
 
       if (items === '') {

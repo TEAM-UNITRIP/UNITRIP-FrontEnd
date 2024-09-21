@@ -26,6 +26,8 @@ export const useInfiniteScroll = ({
   const page = useRef(1);
 
   useEffect(() => {
+    page.current = 1;
+
     const observer = new IntersectionObserver((entries, observer) => {
       if (entries[0].intersectionRatio <= 0) return;
 

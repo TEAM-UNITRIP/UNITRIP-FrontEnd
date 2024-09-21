@@ -13,6 +13,7 @@ export const useDebounceGetWordList = (
       numOfRows: 20,
       MobileOS: 'ETC',
       keyword: searchWord,
+      contentTypeId: 12,
     });
 
     if (typeof wordList === 'object') {

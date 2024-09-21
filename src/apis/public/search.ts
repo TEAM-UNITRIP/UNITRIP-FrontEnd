@@ -10,6 +10,7 @@ interface searchKeywordParams {
   numOfRows: number;
   MobileOS: 'IOS' | 'AND' | 'WIN' | 'ETC';
   keyword: string;
+  contentTypeId: number;
 }
 
 export const getSearchKeyword = async (paramsInfo: searchKeywordParams) => {
