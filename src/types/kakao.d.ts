@@ -46,4 +46,16 @@ declare namespace kakao.maps {
     map: kakao.maps.Map | undefined;
     setMap: React.Dispatch<React.SetStateAction<kakao.maps.Map | null>>;
   }
+
+  namespace event {
+    interface Listener {
+      (event: Event): void;
+    }
+
+    function addListener(
+      target: Marker,
+      eventName: string,
+      listener: Listener,
+    ): void;
+  }
 }
