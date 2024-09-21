@@ -89,7 +89,11 @@ const titleCss = css`
   margin: 9.4rem 0 0 1.6rem;
   ${FONTS.H3};
 
+  width: calc(100% - 1.6rem);
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const addressCss = css`
