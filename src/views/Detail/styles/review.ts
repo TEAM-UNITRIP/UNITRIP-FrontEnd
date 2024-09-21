@@ -9,7 +9,7 @@ export const categoryButtonCss = (isSelected: boolean) => css`
   color: ${isSelected ? COLORS.white : '#616671'};
   ${FONTS.Body3};
 
-  min-width: 4.5rem;
+  min-width: fit-content;
 
   background-color: ${isSelected && COLORS.brand1};
 `;

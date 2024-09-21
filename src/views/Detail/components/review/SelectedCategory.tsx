@@ -15,39 +15,27 @@ interface SelectedCategoryProps {
 const SelectedCategory = (props: SelectedCategoryProps) => {
   const { openBottomSheet, filterState, handleFilterState } = props;
 
-  const selectedCategory: {
-    category: category;
-    facilityList: string[];
-  }[] = [];
-
-  const categoryKeys = Object.keys(filterState) as category[];
-
   const renderSelectedCategoryList = () => {
-    const categoryList = Object.entries(filterState)
-      .map(([, objectValue]) => Object.entries(objectValue).map(([key]) => key))
-      .map((name) => name);
+    const categoryList = Object.entries(filterState).filter(
+      ([, objectValue]) => {
+        return Object.values(objectValue).some((value) => value);
+      },
+    ) as [category, Record<string, boolean>][];
 
-    categoryList.forEach((facilityList, idx) => {
-      if (facilityList.length > 0) {
-        selectedCategory.push({
-          category: categoryKeys[idx],
-          facilityList,
-        });
-      }
-    });
+    return categoryList.map(([category, facilityList]) => {
+      const facilityState = filterState[category];
 
-    return selectedCategory.map(({ category, facilityList }) => {
       return (
         <div key={category} css={selectedCategoryContainerCss}>
           <div css={categoryNameCss}>
             {MAP_CATEGORY_FACILITIES[category].categoryName}
           </div>
           <ul css={facilitiesContainerCss}>
-            {facilityList.map((facility) => {
+            {Object.keys(facilityList).map((facility) => {
               return (
                 <button
                   key={facility}
-                  css={categoryButtonCss(filterState[category][facility])}
+                  css={categoryButtonCss(facilityState[facility])}
                   onClick={() => handleFilterState(category, facility)}>
                   {facility}
                 </button>
@@ -78,7 +66,7 @@ const containerCss = css`
 const selectedCategoryContainerCss = css`
   display: flex;
   align-items: center;
-  gap: 4rem;
+  gap: 2rem;
 
   padding: 0 0 0.94rem 1.9rem;
 
@@ -100,7 +88,7 @@ const buttonCss = css`
 `;
 
 const categoryNameCss = css`
-  width: 7.4rem;
+  min-width: 7.4rem;
 
   color: ${COLORS.brand1};
   ${FONTS.Body2};
