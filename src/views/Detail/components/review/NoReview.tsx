@@ -29,11 +29,11 @@ const containerCss = css`
 
   align-items: center;
 
-  margin-top: 1.5rem;
+  margin-top: 2.4rem;
 `;
 
 const titleCss = css`
-  margin: 1.25rem 0 0.5rem;
+  margin: 2rem 0 0.8rem;
   color: ${COLORS.gray9};
   ${FONTS.Body2}
 `;
@@ -46,10 +46,10 @@ const descriptionCss = css`
 `;
 
 const buttonCss = css`
-  padding: 0.5rem 1rem;
-  margin: 1.5rem 0;
+  padding: 0.8rem 1.6rem;
+  margin: 2.4rem 0;
 
-  border-radius: 0.625rem;
+  border-radius: 1rem;
 
   color: ${COLORS.white};
   background-color: ${COLORS.brand1};
