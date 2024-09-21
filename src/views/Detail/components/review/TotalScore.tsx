@@ -2,19 +2,30 @@ import { css } from '@emotion/react';
 
 import { StarIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
+import { ReviewResponse } from '@/types/api/review';
 
-const TotalScore = () => {
+interface TotalScoreProps {
+  reviewData: ReviewResponse[];
+}
+
+const TotalScore = (props: TotalScoreProps) => {
+  const { reviewData } = props;
+
+  const averageScore =
+    reviewData.reduce((acc, cur) => acc + cur.rate, 0) / reviewData.length;
+
+  const renderStar = () => {
+    const starEl = [];
+    for (let i = 0; i < Math.floor(averageScore); i++) {
+      starEl.push(<StarIcon />);
+    }
+    return starEl;
+  };
   return (
     <div css={containerCss}>
-      <div css={starContainerCss}>
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-      </div>
+      <div css={starContainerCss}>{renderStar()}</div>
       <div css={scoreContainerCss}>
-        4.2 <span>/ 5.0</span>
+        {Math.round(averageScore * 10) / 10} <span>/ 5.0</span>
       </div>
     </div>
   );
@@ -32,6 +43,7 @@ const containerCss = css`
 const starContainerCss = css`
   display: flex;
   gap: 0.3rem;
+  align-items: center;
 
   & > svg {
     width: 2.2rem;
