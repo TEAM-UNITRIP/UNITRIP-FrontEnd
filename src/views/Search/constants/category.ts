@@ -51,6 +51,14 @@ const INITIAL_FILTER_STATE: filterState = {
   },
 };
 
+export const getFilterList = (filterState: filterState) => {
+  return Object.values(filterState).flatMap((obj) =>
+    Object.entries(obj)
+      .filter(([, value]) => value)
+      .map(([key]) => key),
+  );
+};
+
 export const createInitialFilterState = () => {
   return INITIAL_FILTER_STATE;
 };
