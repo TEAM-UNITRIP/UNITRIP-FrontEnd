@@ -1,23 +1,31 @@
 import { css } from '@emotion/react';
-import { MutableRefObject } from 'react';
+import { MutableRefObject, useRef } from 'react';
 
 import { BigInfoIcon } from '@/assets/icon';
-import PlaceCard from '@/components/PlaceCard';
+import FilteredPlaceCard from '@/components/FilteredPlaceCard';
 import { COLORS, FONTS } from '@/styles/constants';
 import { SearchResItem } from '@/types/search';
+
+import { filterState } from '../../types/category';
 
 interface SearchResultProps {
   placeList: SearchResItem[];
   targetElement: MutableRefObject<HTMLDivElement | null>;
   loading: boolean;
+  filterState: filterState;
 }
 
 const SearchResult = (props: SearchResultProps) => {
-  const { placeList, targetElement, loading } = props;
+  const { placeList, targetElement, loading, filterState } = props;
+  const placeListRef = useRef<HTMLUListElement>(null);
   console.log(loading);
 
   const renderPlaceList = () => {
-    if (placeList.length === 0) {
+    // 검색 결과가 없거나, 필터링된 결과가 없을 때
+    if (
+      placeList.length === 0 ||
+      placeListRef.current?.childElementCount === 1
+    ) {
       return (
         <>
           <div css={noResultContainerCss}>
@@ -35,14 +43,15 @@ const SearchResult = (props: SearchResultProps) => {
       return placeList.map(
         ({ contentid, title, addr1, addr2, firstimage, firstimage2 }) => {
           return (
-            <li key={contentid}>
-              <PlaceCard
-                placeName={title}
-                address={addr1 + addr2}
-                imgSrc={firstimage || firstimage2 || ''}
-                onClickHeart={() => {}}
-              />
-            </li>
+            <FilteredPlaceCard
+              key={contentid}
+              filterState={filterState}
+              contentid={contentid}
+              placeName={title}
+              address={addr1 + addr2}
+              imgSrc={firstimage || firstimage2 || ''}
+              onClickHeart={() => {}}
+            />
           );
         },
       );
@@ -51,26 +60,27 @@ const SearchResult = (props: SearchResultProps) => {
 
   return (
     <>
-      <ul css={containerCss(placeList.length)}>
+      <ul css={containerCss(placeList.length)} ref={placeListRef}>
         {renderPlaceList()}
         <div ref={targetElement} css={lastTargetCss} />
 
-        {placeList.length >= 10 && (
+        {/* 로딩 ui 필요 */}
+        {/* {placeList.length >= 10 && (
           <>
-            <li>
+            <div>
               <PlaceCard placeName={''} address={''} imgSrc={''} />
-            </li>
-            <li>
+            </div>
+            <div>
               <PlaceCard placeName={''} address={''} imgSrc={''} />
-            </li>
-            <li>
+            </div>
+            <div>
               <PlaceCard placeName={''} address={''} imgSrc={''} />
-            </li>
-            <li>
+            </div>
+            <div>
               <PlaceCard placeName={''} address={''} imgSrc={''} />
-            </li>
+            </div>
           </>
-        )}
+        )} */}
       </ul>
     </>
   );

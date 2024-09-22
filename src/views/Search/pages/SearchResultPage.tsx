@@ -130,6 +130,7 @@ const SearchResultPage = () => {
           placeList={placeList}
           targetElement={targetElement}
           loading={loading}
+          filterState={filterState}
         />
       </SearchBarContainer>
 
