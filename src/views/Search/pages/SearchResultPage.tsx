@@ -18,7 +18,7 @@ import {
   createInitialFilterState,
   MAP_CATEGORY_FACILITIES,
 } from '../constants/category';
-import { category } from '../types/category';
+import { category, filterState } from '../types/category';
 
 const SearchResultPage = () => {
   const { word: initialWord } = useParams();
@@ -95,16 +95,8 @@ const SearchResultPage = () => {
     setIsFilterOpen(false);
   };
 
-  const handleFilterState = (category: category, facility: string) => {
-    const categoryFacilities = filterState[category];
-
-    setFilterState((prev) => ({
-      ...prev,
-      [category]: {
-        ...categoryFacilities,
-        [facility]: !categoryFacilities[facility],
-      },
-    }));
+  const handleFilterState = (value: filterState) => {
+    setFilterState({ ...value });
   };
 
   // render

@@ -8,6 +8,7 @@ interface BottomSheetProps {
   closeBottomSheet: () => void;
   height: string;
 
+  onClickButton?: () => void;
   buttonText?: string;
   noButton?: boolean;
   bottomSheetCss?: SerializedStyles;
@@ -20,6 +21,7 @@ interface BottomSheetProps {
  * @param buttonText button text
  * @param noButton button 여부
  * @param bottomSheetCss 바텀시트 css 오버라이딩
+ * @param onClickButton 아래 버튼 클릭 함수
  */
 const BottomSheet = (props: BottomSheetProps) => {
   const {
@@ -29,6 +31,7 @@ const BottomSheet = (props: BottomSheetProps) => {
     noButton,
     bottomSheetCss,
     children,
+    onClickButton,
   } = props;
 
   document.body.style.overflow = 'hidden';
@@ -54,6 +57,7 @@ const BottomSheet = (props: BottomSheetProps) => {
           <div
             css={buttonCotainerCss}
             onClick={() => {
+              onClickButton && onClickButton();
               closeBottomSheet();
               document.body.style.overflow = '';
             }}>
@@ -81,26 +85,25 @@ const backgroundCss = css`
   width: 100vw;
   height: 100vh;
 
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgb(0 0 0 / 30%);
 `;
 
 const containerCss = (height: string) => css`
   position: absolute;
   bottom: 0;
+  overflow: auto;
 
   width: 100vw;
   height: ${height};
-  border-radius: 1.2rem 1.2rem 0rem 0rem;
+  border-radius: 1.2rem 1.2rem 0 0;
 
   background-color: white;
-
-  overflow: auto;
 `;
 
 const buttonCotainerCss = css`
   position: fixed;
-  left: 0;
   bottom: 1.2rem;
+  left: 0;
 
   width: 100vw;
   padding: 0 2rem;
@@ -109,11 +112,11 @@ const buttonCotainerCss = css`
 const buttonCss = css`
   width: 100%;
   padding: 1.4rem 0;
-
   border-radius: 1.2rem;
 
-  color: ${COLORS.brand1};
   background-color: ${COLORS.brand2};
+
+  color: ${COLORS.brand1};
 
   ${FONTS.Body3};
 `;
