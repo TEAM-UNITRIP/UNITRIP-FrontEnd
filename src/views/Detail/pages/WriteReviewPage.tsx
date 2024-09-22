@@ -5,7 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeftIcon } from '@/assets/icon';
 import ToastMessage from '@/components/ToastMessage';
 import { COLORS, FONTS } from '@/styles/constants';
-import { createInitialFilterState } from '@/views/Search/constants/category';
+import {
+  createInitialFilterState,
+  getFilterList,
+} from '@/views/Search/constants/category';
 import { category } from '@/views/Search/types/category';
 
 import CategoryBottomSheet from '../components/review/CategoryBottomSheet';
@@ -65,6 +68,12 @@ const WriteReviewPage = () => {
   };
 
   const handleOnClick = () => {
+    console.log({
+      rate: score,
+      description: experience,
+      convenience: getFilterList(filterState),
+      imgUrl: imgList,
+    });
     setToast(true);
   };
 
@@ -118,17 +127,17 @@ const containerCss = css`
 `;
 
 const headerCss = css`
-  position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  position: relative;
+
   width: 100%;
-
   padding: 1.2rem 0;
-
   margin-bottom: 2rem;
 
   color: ${COLORS.gray9};
+
   ${FONTS.Body2};
 
   & > button {
@@ -139,19 +148,18 @@ const headerCss = css`
 
 const writeContainerCss = css`
   display: flex;
-  flex-direction: column;
-
   gap: 2.8rem;
+  flex-direction: column;
 `;
 
 const submitCss = css`
   width: 100%;
   height: 5.6rem;
-
-  border-radius: 1.2rem;
   margin: 7.2rem 0 0.5rem;
+  border-radius: 1.2rem;
+
+  background-color: ${COLORS.brand1};
 
   color: ${COLORS.white};
-  background-color: ${COLORS.brand1};
-  ${FONTS.Body2}
+  ${FONTS.Body2};
 `;
