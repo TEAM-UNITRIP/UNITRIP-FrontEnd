@@ -96,25 +96,23 @@ const lastTargetCss = css`
 
 const noResultContainerCss = css`
   display: flex;
-  flex-direction: column;
-
   align-items: center;
+  flex-direction: column;
 
   margin: 6rem 0 1.2rem;
 `;
 
 const noResultTitleCss = css`
-  color: ${COLORS.gray9};
-
-  text-align: center;
   margin: 2rem 0 0.8rem;
+
+  color: ${COLORS.gray9};
+  text-align: center;
 
   ${FONTS.Body2};
 `;
 
 const noResultInfoCss = css`
   color: ${COLORS.brand1};
-
   text-align: center;
   ${FONTS.Small1};
 `;

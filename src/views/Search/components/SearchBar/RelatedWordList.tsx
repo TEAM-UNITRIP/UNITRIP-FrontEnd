@@ -51,13 +51,12 @@ export default RelatedWordList;
 const containerCss = css`
   display: flex;
   flex-direction: column;
-
   position: absolute;
   z-index: 1000;
 
-  background-color: white;
-
   width: 100vw;
+
+  background-color: white;
   min-height: 100vh;
 `;
 
@@ -71,18 +70,17 @@ const wordCss = css`
 `;
 
 const wordTextCss = css`
-  padding-top: 0.2rem;
+  overflow: hidden;
 
   width: calc(100vw - 24px - 6rem);
+  padding-top: 0.2rem;
+
   color: ${COLORS.gray5};
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
   ${FONTS.Body5};
-
-  text-align: left;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `;
 
 const keywordCss = css`
