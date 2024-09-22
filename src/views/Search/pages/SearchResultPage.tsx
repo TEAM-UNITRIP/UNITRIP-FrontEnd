@@ -24,7 +24,7 @@ const SearchResultPage = () => {
 
   const [searchWord, setSearchWord] = useState(initialWord || '');
   const [filterState, setFilterState] = useState(() =>
-    createInitialFilterState(),
+    createInitialFilterState('physical'),
   );
 
   // modal, bottom sheet state

@@ -59,6 +59,11 @@ export const getFilterList = (filterState: filterState) => {
   );
 };
 
-export const createInitialFilterState = () => {
+export const createInitialFilterState = (initialCategory: category) => {
+  const filterState = INITIAL_FILTER_STATE;
+  Object.keys(INITIAL_FILTER_STATE[initialCategory]).forEach((key) => {
+    filterState[initialCategory][key] = true;
+  });
+
   return INITIAL_FILTER_STATE;
 };

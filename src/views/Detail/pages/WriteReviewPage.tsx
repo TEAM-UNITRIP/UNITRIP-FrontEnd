@@ -26,7 +26,7 @@ const WriteReviewPage = () => {
   const [score, setScore] = useState(0);
   const [experience, setExperience] = useState('');
   const [filterState, setFilterState] = useState(() =>
-    createInitialFilterState(),
+    createInitialFilterState('physical'),
   );
   const [imgList, setImgList] = useState<string[]>([]);
 

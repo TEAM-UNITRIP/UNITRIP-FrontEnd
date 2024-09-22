@@ -52,7 +52,7 @@ const Review = () => {
   );
 
   const [filterState, setFilterState] = useState(() =>
-    createInitialFilterState(),
+    createInitialFilterState('physical'),
   );
 
   const openBottomSheet = () => {
