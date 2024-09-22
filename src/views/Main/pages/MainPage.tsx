@@ -1,7 +1,11 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 
+import { getPlaceBasedArea } from '@/apis/public/main';
 import MenuBar from '@/components/MenuBar';
+import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { COLORS, FONTS } from '@/styles/constants';
+import { PlaceBasedAreaItem } from '@/types/main';
 
 import Header from '../components/Header';
 import NearbyTravel from '../components/NearbyTravel';
@@ -9,6 +13,13 @@ import RecommendedTravel from '../components/RecommendedTravel';
 
 const MainPage = () => {
   const isLoggedIn = true;
+  const [placeList, setPlaceList] = useState<PlaceBasedAreaItem[]>([]);
+
+  useAsyncEffect(async () => {
+    const placeList = await getPlaceBasedArea({ MobileOS: 'ETC' });
+    setPlaceList(placeList === '' ? [] : placeList.item);
+  }, []);
+
   return (
     <>
       <Header />
@@ -22,7 +33,7 @@ const MainPage = () => {
           )}
           오늘 어디로 떠날까요?
         </h1>
-        <NearbyTravel />
+        <NearbyTravel placeList={placeList} />
 
         <div css={graySpacing} />
         <RecommendedTravel />

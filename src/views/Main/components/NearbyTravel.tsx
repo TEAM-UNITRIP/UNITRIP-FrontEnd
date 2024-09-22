@@ -2,12 +2,20 @@ import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
 import { COLORS, FONTS } from '@/styles/constants';
+import { PlaceBasedAreaItem } from '@/types/main';
 
 import { cardContainer, scrollContainer } from '../styles/main';
 import TravelCard from './TravelCard';
 
-const NearbyTravel = () => {
+interface NearByTravelProps {
+  placeList: PlaceBasedAreaItem[];
+}
+
+const NearbyTravel = (props: NearByTravelProps) => {
+  const { placeList } = props;
+
   const isLoggedIn = true;
+
   return (
     <section css={container}>
       <h2 css={title}>{isLoggedIn && '서울'} 주변 갈 만한 여행지 🗺️</h2>
@@ -15,22 +23,16 @@ const NearbyTravel = () => {
         <>
           <div css={scrollContainer}>
             <li css={cardContainer}>
-              <TravelCard
-                name="대전 오월드"
-                address="대전 중구 사정공원로 70"
-              />
-              <TravelCard
-                name="대전 오월드"
-                address="대전 중구 사정공원로 70"
-              />
-              <TravelCard
-                name="대전 오월드"
-                address="대전 중구 사정공원로 70"
-              />
-              <TravelCard
-                name="대전 오월드"
-                address="대전 중구 사정공원로 70"
-              />
+              {placeList.map(
+                ({ title, addr1, addr2, contentid, firstimage }) => (
+                  <TravelCard
+                    key={contentid}
+                    name={title}
+                    address={`${addr1} ${addr2}`}
+                    imgUrl={firstimage}
+                  />
+                ),
+              )}
             </li>
           </div>
           <Link to="" css={link}>

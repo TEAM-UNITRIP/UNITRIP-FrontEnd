@@ -6,19 +6,23 @@ import { COLORS, FONTS } from '@/styles/constants';
 interface TravelCardProps {
   name: string;
   address: string;
+  imgUrl: string;
 }
 
 const TravelCard = (props: TravelCardProps) => {
-  const { name, address } = props;
+  const { name, address, imgUrl } = props;
+
   return (
-    <ul css={card}>
-      <button css={heart} onClick={() => {}}>
-        <HeartMonoIcon />
-      </button>
-      <p css={nameCss}>{name}</p>
-      <div css={addressContainer}>
-        <PinLocationMonoIcon />
-        <address css={locationCss}>{address}</address>
+    <ul css={card(imgUrl)}>
+      <div css={background}>
+        <button css={heart} onClick={() => {}}>
+          <HeartMonoIcon />
+        </button>
+        <p css={nameCss}>{name}</p>
+        <div css={addressContainer}>
+          <PinLocationMonoIcon />
+          <address css={locationCss}>{address}</address>
+        </div>
       </div>
     </ul>
   );
@@ -26,16 +30,38 @@ const TravelCard = (props: TravelCardProps) => {
 
 export default TravelCard;
 
-const card = css`
+const card = (imgUrl: string) => css`
+  position: relative;
+
+  height: 24.8rem;
+  border-radius: 1.2rem;
+
+  background-color: ${COLORS.gray4};
+  background-position: center center;
+  background-size: cover;
+  background-image: url(${imgUrl});
+
+  min-width: 23.2rem;
+`;
+
+const background = css`
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
 
-  width: 21.2rem;
   height: 24.8rem;
   padding: 1.6rem;
   border-radius: 1.2rem;
 
-  background-color: ${COLORS.brand1};
+  background: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 0%) 0%,
+    rgb(0 0 0 / 34%) 100%
+  );
+
+  min-width: fit-content;
 `;
 
 const heart = css`
@@ -51,10 +77,14 @@ const nameCss = css`
 
 const locationCss = css`
   color: ${COLORS.white};
+
   ${FONTS.Small2};
 `;
 
 const addressContainer = css`
   display: flex;
   gap: 0.3rem;
+  align-items: center;
+
+  margin-top: 0.2rem;
 `;
