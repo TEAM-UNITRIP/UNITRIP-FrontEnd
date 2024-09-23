@@ -21,7 +21,7 @@ const WriteReviewPage = () => {
   const navigate = useNavigate();
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [toast, setToast] = useState(true);
+  const [toast, setToast] = useState(false);
 
   const [score, setScore] = useState(0);
   const [experience, setExperience] = useState('');
