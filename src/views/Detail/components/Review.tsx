@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ReviewResponse } from '@/types/api/review';
 import { isGuideShown } from '@/utils/storageHideGuide';
@@ -64,6 +64,7 @@ const Review = () => {
 
   const handleSetShowGuide = (value: boolean) => {
     setShowGuide(value);
+    document.body.style.overflow = '';
   };
 
   const handleFilterState = (category: category, facility: string) => {
@@ -81,6 +82,10 @@ const Review = () => {
   const selectedFilterList = getFilterList(filterState);
 
   if (REVIEW_DATA.length === 0) return <NoReview />;
+
+  useEffect(() => {
+    if (showGuide) document.body.style.overflow = 'hidden';
+  }, []);
 
   return (
     <>
