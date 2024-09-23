@@ -6,8 +6,8 @@ import { ChevronLeftIcon } from '@/assets/icon';
 import ToastMessage from '@/components/ToastMessage';
 import { COLORS, FONTS } from '@/styles/constants';
 import {
-  createInitialFilterState,
   getFilterList,
+  INITIAL_FILTER_STATE,
 } from '@/views/Search/constants/category';
 import { category } from '@/views/Search/types/category';
 
@@ -25,9 +25,7 @@ const WriteReviewPage = () => {
 
   const [score, setScore] = useState(0);
   const [experience, setExperience] = useState('');
-  const [filterState, setFilterState] = useState(() =>
-    createInitialFilterState('physical'),
-  );
+  const [filterState, setFilterState] = useState(INITIAL_FILTER_STATE);
   const [imgList, setImgList] = useState<string[]>([]);
 
   const handleScore = (score: number) => {

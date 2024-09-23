@@ -18,7 +18,7 @@ export const MAP_CATEGORY_FACILITIES: Record<
   infant: { categoryName: '영유아 가족', iconList: INFANT_FACILITIES },
 };
 
-const INITIAL_FILTER_STATE: filterState = {
+export const INITIAL_FILTER_STATE: filterState = {
   physical: {
     주차장: false,
     접근로: false,
