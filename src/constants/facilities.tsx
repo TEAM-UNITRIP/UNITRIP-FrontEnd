@@ -1,6 +1,7 @@
 import {
   AudioGuideActiveIcon,
   AudioGuideDefaultIcon,
+  AudioGuideInActiveIcon,
   AudioGuideSelectedIcon,
   AuditoriumActiveIcon,
   AuditoriumDefaultIcon,
@@ -194,7 +195,7 @@ export const VISUAL_FACILITIES: Facility[] = [
   {
     name: '오디오가이드',
     active: <AudioGuideActiveIcon />,
-    inactive: <AudioGuideActiveIcon />,
+    inactive: <AudioGuideInActiveIcon />,
     default: <AudioGuideDefaultIcon />,
     selected: <AudioGuideSelectedIcon />,
   },
