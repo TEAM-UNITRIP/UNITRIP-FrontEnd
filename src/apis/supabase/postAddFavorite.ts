@@ -2,14 +2,13 @@ import { useLocation } from 'react-router-dom';
 
 import { unitripSupabase } from '@/utils/supabaseClient';
 
-const postAddFavorite = async () => {
+const toggleFavorite = async () => {
   const kakaoId = sessionStorage.getItem('kakao_id');
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const place = queryParams.get('contentId');
 
-  // 현재 사용자의 favorite 배열을 가져오기
   const { data, error: fetchError } = await unitripSupabase
     .from('USER')
     .select('favorite')
@@ -19,8 +18,11 @@ const postAddFavorite = async () => {
     throw new Error('사용자 정보를 가져오는 데 문제가 발생했습니다');
   }
 
-  // 기존 favorite 배열에 새로운 값을 추가
-  const updatedFavorites = [...(data[0].favorite || []), place];
+  const currentFavorites = data[0].favorite || [];
+  //기존 배열에 해당 장소가 존재하면 제거, 존재하지 않으면 추가
+  const updatedFavorites = currentFavorites.includes(place)
+    ? currentFavorites.filter((favorite: number) => favorite !== Number(place))
+    : [...currentFavorites, Number(place)];
 
   const { error } = await unitripSupabase
     .from('USER')
@@ -34,4 +36,4 @@ const postAddFavorite = async () => {
   }
 };
 
-export default postAddFavorite;
+export default toggleFavorite;
