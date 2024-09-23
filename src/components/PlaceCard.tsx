@@ -13,6 +13,7 @@ interface PlaceCardProps {
   placeName: string;
   address: string;
   imgSrc: string;
+  isHeart: boolean;
   onClickHeart?: () => void;
 }
 
@@ -20,13 +21,20 @@ interface PlaceCardProps {
  * @param placeName 장소 이름
  * @param address 주소
  * @param imgSrc 대표 사진
+ * @param isHeart 하트 여부
  * @param onClickHeart 하트 눌렀을 때 실행 함수
  */
 
 const PlaceCard = (props: PlaceCardProps) => {
-  const { placeName, address, imgSrc, onClickHeart = () => {} } = props;
+  const {
+    placeName,
+    address,
+    imgSrc,
+    isHeart: isHeartData,
+    onClickHeart = () => {},
+  } = props;
 
-  const [isHeart, setIsHeart] = useState(false);
+  const [isHeart, setIsHeart] = useState(isHeartData);
 
   const handleOnClick = () => {
     setIsHeart((prev) => !prev);

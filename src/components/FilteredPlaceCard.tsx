@@ -14,6 +14,7 @@ interface PlaceCardProps {
   address: string;
   imgSrc: string;
   onClickHeart?: () => void;
+  isHeart: boolean;
 }
 
 const FilteredPlaceCard = (props: PlaceCardProps) => {

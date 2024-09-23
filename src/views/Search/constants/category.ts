@@ -18,7 +18,7 @@ export const MAP_CATEGORY_FACILITIES: Record<
   infant: { categoryName: '영유아 가족', iconList: INFANT_FACILITIES },
 };
 
-const INITIAL_FILTER_STATE: filterState = {
+export const INITIAL_FILTER_STATE: filterState = {
   physical: {
     주차장: false,
     접근로: false,
@@ -59,6 +59,19 @@ export const getFilterList = (filterState: filterState) => {
   );
 };
 
-export const createInitialFilterState = () => {
+const MAP_CATGORY: Record<string, category> = {
+  시각장애인: 'visual',
+  청각장애인: 'hearing',
+  지체장애인: 'physical',
+  영유아가족: 'infant',
+};
+
+export const createInitialFilterState = (initialCategory: string) => {
+  const filterState = INITIAL_FILTER_STATE;
+  const category = MAP_CATGORY[initialCategory];
+  Object.keys(INITIAL_FILTER_STATE[category]).forEach((key) => {
+    filterState[category][key] = true;
+  });
+
   return INITIAL_FILTER_STATE;
 };

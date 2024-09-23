@@ -13,10 +13,11 @@ interface SearchResultProps {
   targetElement: MutableRefObject<HTMLDivElement | null>;
   loading: boolean;
   filterState: filterState;
+  heartList: number[];
 }
 
 const SearchResult = (props: SearchResultProps) => {
-  const { placeList, targetElement, loading, filterState } = props;
+  const { placeList, targetElement, loading, filterState, heartList } = props;
   const placeListRef = useRef<HTMLUListElement>(null);
   console.log(loading);
 
@@ -51,6 +52,7 @@ const SearchResult = (props: SearchResultProps) => {
               address={addr1 + addr2}
               imgSrc={firstimage || firstimage2 || ''}
               onClickHeart={() => {}}
+              isHeart={heartList.includes(Number(contentid))}
             />
           );
         },

@@ -3,8 +3,10 @@ import { MutableRefObject, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { getSearchKeyword } from '@/apis/public/search';
+import { getUserInfoSearchPage } from '@/apis/search';
 import { SearchSetIcon } from '@/assets/icon';
 import MenuBar from '@/components/MenuBar';
+import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll';
 import { COLORS, FONTS } from '@/styles/constants';
 import { SearchResItem } from '@/types/search';
@@ -16,6 +18,7 @@ import FilterBottomSheet from '../components/Search/FilterBottomSheet';
 import SearchBarContainer from '../components/SearchBar/SearchBarContainer';
 import {
   createInitialFilterState,
+  INITIAL_FILTER_STATE,
   MAP_CATEGORY_FACILITIES,
 } from '../constants/category';
 import { category, filterState } from '../types/category';
@@ -24,9 +27,13 @@ const SearchResultPage = () => {
   const { word: initialWord } = useParams();
 
   const { pathname } = useLocation();
-  const [filterState, setFilterState] = useState(() =>
-    createInitialFilterState(),
-  );
+  const [userData, setUserData] = useState<{
+    universal_type: string;
+    favorite_list: number[];
+  } | null>(null);
+
+  const [filterState, setFilterState] =
+    useState<filterState>(INITIAL_FILTER_STATE);
 
   // modal, bottom sheet state
   const [placeList, setPlaceList] = useState<SearchResItem[]>([]);
@@ -39,6 +46,12 @@ const SearchResultPage = () => {
   useEffect(() => {
     setPlaceList([]);
   }, [pathname]);
+
+  useAsyncEffect(async () => {
+    const data = await getUserInfoSearchPage();
+    setUserData(data);
+    setFilterState(createInitialFilterState(data.universal_type));
+  }, []);
 
   // 무한스크롤
   const options = {
@@ -123,6 +136,7 @@ const SearchResultPage = () => {
           targetElement={targetElement}
           loading={loading}
           filterState={filterState}
+          heartList={userData?.favorite_list || []}
         />
       </SearchBarContainer>
 
