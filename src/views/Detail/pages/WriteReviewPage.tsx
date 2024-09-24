@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ChevronLeftIcon } from '@/assets/icon';
@@ -74,6 +74,10 @@ const WriteReviewPage = () => {
     });
     setToast(true);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

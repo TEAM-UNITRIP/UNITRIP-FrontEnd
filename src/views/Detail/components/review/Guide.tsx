@@ -55,23 +55,23 @@ const containerCss = css`
 
 const section1Css = css`
   position: relative;
-  padding-top: 45rem;
 
   height: 55rem;
+  padding-top: 45rem;
 
   background-color: rgb(82 82 82 / 72%);
 `;
 
 const section2Css = css`
   height: 100%;
-  margin-top: 6rem;
   padding-top: 1.25rem;
+  margin-top: 6rem;
 
   background-color: rgb(82 82 82 / 72%);
 `;
 
 const buttonCss = css`
-  position: absolute;
+  position: fixed;
   top: 2.5rem;
   right: 2.4rem;
 
