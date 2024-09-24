@@ -21,7 +21,7 @@ const CategoryBottomSheet = (props: CategoryBottomSheetProps) => {
       height={'80vh'}
       buttonText={'확인'}
       bottomSheetCss={css`
-        padding: 4rem 2rem 7rem 2rem;
+        padding: 4rem 2rem 7rem;
       `}>
       <header css={titleCss}>
         <h3>리뷰 필터</h3>
