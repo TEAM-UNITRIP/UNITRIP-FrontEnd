@@ -13,7 +13,7 @@ const TravelCard = (props: TravelCardProps) => {
   const { name, address, imgUrl } = props;
 
   return (
-    <ul css={card(imgUrl)}>
+    <li css={card(imgUrl)}>
       <div css={background}>
         <button css={heart} onClick={() => {}}>
           <HeartMonoIcon />
@@ -24,7 +24,7 @@ const TravelCard = (props: TravelCardProps) => {
           <address css={locationCss}>{address}</address>
         </div>
       </div>
-    </ul>
+    </li>
   );
 };
 
@@ -61,7 +61,7 @@ const background = css`
     rgb(0 0 0 / 34%) 100%
   );
 
-  min-width: fit-content;
+  min-width: 23.2rem;
 `;
 
 const heart = css`

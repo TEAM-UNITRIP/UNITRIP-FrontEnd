@@ -22,7 +22,7 @@ const NearbyTravel = (props: NearByTravelProps) => {
       {isLoggedIn ? (
         <>
           <div css={scrollContainer}>
-            <li css={cardContainer}>
+            <ul css={cardContainer}>
               {placeList.map(
                 ({ title, addr1, addr2, contentid, firstimage }) => (
                   <TravelCard
@@ -33,7 +33,7 @@ const NearbyTravel = (props: NearByTravelProps) => {
                   />
                 ),
               )}
-            </li>
+            </ul>
           </div>
           <Link to="" css={link}>
             서울 여행지 둘러보기
