@@ -20,9 +20,13 @@ const ImageInput = (props: ImageInputProps) => {
     if (e.target.files) {
       const file = e.target.files[0];
       const timestamp = +new Date();
-      const newFile = new File([file], `${file.name}${timestamp}`, {
-        type: file.type,
-      });
+      const newFile = new File(
+        [file],
+        `${encodeURIComponent(file.name)}${timestamp}`,
+        {
+          type: file.type,
+        },
+      );
       addImg(newFile);
       e.target.value = '';
     }

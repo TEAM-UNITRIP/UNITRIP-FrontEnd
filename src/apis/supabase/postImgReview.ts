@@ -1,13 +1,14 @@
 import { unitripSupabase } from '@/utils/supabaseClient';
 
-const postImgReview = async (imgs: File[]) => {
+const postImgReview = async (place: number, imgs: File[]) => {
   const imgUrls: string[] = [];
 
   // 각 파일을 Supabase Storage에 업로드
   for (const img of imgs) {
+    console.log(img);
     const { error: uploadError } = await unitripSupabase.storage
       .from('REVIEW_IMAGES')
-      .upload(`images/${img.name}`, img);
+      .upload(`${place}/${img.name}`, img);
 
     if (uploadError) {
       throw new Error('이미지 업로드 과정에서 에러가 발생했습니다');
@@ -16,7 +17,7 @@ const postImgReview = async (imgs: File[]) => {
     // 업로드한 파일의 URL 생성
     const { data } = unitripSupabase.storage
       .from('REVIEW_IMAGES')
-      .getPublicUrl(`images/${img.name}`);
+      .getPublicUrl(`${place}/${img.name}`);
 
     if (data) {
       const { publicUrl } = data;

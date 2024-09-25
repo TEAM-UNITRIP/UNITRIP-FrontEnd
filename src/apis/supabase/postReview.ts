@@ -32,7 +32,7 @@ const postReview = async ({
     ])
     .select();
 
-  await postImgReview(imgs);
+  await postImgReview(Number(contentId), imgs);
 
   if (error) {
     throw new Error('서버에 문제가 있습니다');
