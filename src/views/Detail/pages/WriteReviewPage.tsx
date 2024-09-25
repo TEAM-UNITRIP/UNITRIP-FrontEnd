@@ -157,7 +157,7 @@ const writeContainerCss = css`
 const submitCss = css`
   width: 100%;
   height: 5.6rem;
-  margin: 7.2rem 0 0.5rem;
+  margin: 7.2rem 0 1.2rem;
   border-radius: 1.2rem;
 
   background-color: ${COLORS.brand1};
