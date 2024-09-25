@@ -21,6 +21,8 @@ const postReview = async ({
 
   const imgUrls = await postImgReview(Number(contentId), imgs);
 
+  const date = new Date().toLocaleDateString().replace(/\s/g, '');
+
   const { error } = await unitripSupabase
     .from('REVIEW')
     .insert([
@@ -31,6 +33,7 @@ const postReview = async ({
         description,
         convenience,
         imgUrls,
+        date,
       },
     ])
     .select();
