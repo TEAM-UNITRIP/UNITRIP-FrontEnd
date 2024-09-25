@@ -19,8 +19,6 @@ const ReviewCard = (props: ReviewResponse) => {
 
   const descriptionRef = useRef<HTMLDivElement>(null);
 
-  // 5.25rem
-  // 63
   useEffect(() => {
     if (
       descriptionRef.current &&
@@ -46,7 +44,7 @@ const ReviewCard = (props: ReviewResponse) => {
           {description}
           {isMoreButton && !showAll && (
             <div css={moreContentCss}>
-              <div>...</div>{' '}
+              <div>...</div>
               <button
                 css={moreContentButtonCss}
                 onClick={() => setShowAll(true)}>
