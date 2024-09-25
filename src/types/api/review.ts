@@ -6,6 +6,7 @@ export interface ReviewResponse {
   description: string;
   convenience: string[];
   imgUrls: string[];
+  date: string;
   USER: {
     name: string;
   };

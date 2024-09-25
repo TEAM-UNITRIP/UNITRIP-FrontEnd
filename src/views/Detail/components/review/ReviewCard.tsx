@@ -12,6 +12,7 @@ const ReviewCard = (props: ReviewResponse) => {
     convenience,
     imgUrls,
     USER: { name },
+    date,
   } = props;
 
   const [showAll, setShowAll] = useState(false);
@@ -61,7 +62,7 @@ const ReviewCard = (props: ReviewResponse) => {
         ))}
       </div>
 
-      <div css={dateCss}>2024.07.28</div>
+      <div css={dateCss}>{date}</div>
     </li>
   );
 };
