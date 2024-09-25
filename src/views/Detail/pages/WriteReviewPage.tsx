@@ -74,7 +74,7 @@ const WriteReviewPage = () => {
         description: experience,
         convenience: getFilterList(filterState),
         imgs: imgList,
-        contentId,
+        contentId: Number(contentId),
       });
       setToast(true);
       navigate(`/${contentId}`);

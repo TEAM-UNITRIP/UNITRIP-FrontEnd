@@ -7,7 +7,7 @@ interface postReviewProps {
   description: string;
   convenience: string[];
   imgs: File[];
-  contentId: string | undefined;
+  contentId: number | undefined;
 }
 
 const postReview = async ({
@@ -19,6 +19,8 @@ const postReview = async ({
 }: postReviewProps) => {
   const writer = sessionStorage.getItem('kakao_id');
 
+  const imgUrls = await postImgReview(Number(contentId), imgs);
+
   const { error } = await unitripSupabase
     .from('REVIEW')
     .insert([
@@ -28,11 +30,10 @@ const postReview = async ({
         rate,
         description,
         convenience,
+        imgUrls,
       },
     ])
     .select();
-
-  await postImgReview(Number(contentId), imgs);
 
   if (error) {
     throw new Error('서버에 문제가 있습니다');
