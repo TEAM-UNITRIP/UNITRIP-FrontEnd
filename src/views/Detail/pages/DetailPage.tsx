@@ -83,7 +83,7 @@ const DetailPage = () => {
         ...prev,
         info: {
           ...prev.info,
-          useTime: res[0].usetime,
+          useTime: res[0].usetime !== '' ? res[0].usetime : '-',
         },
       }));
     }

@@ -14,8 +14,8 @@ interface TabProps {
   setSelectedTab: (tab: string) => void;
   contentTypeId: string;
   latlng: {
-    lat: number;
-    lng: number;
+    lat: string;
+    lng: string;
   };
 }
 

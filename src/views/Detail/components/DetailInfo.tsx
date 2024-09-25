@@ -20,10 +20,10 @@ const DetailInfo = (props: detailInfoProps) => {
   const { contentTypeId } = props;
 
   const [info, setInfo] = useState<detailInfoItem>({
-    restDate: '',
-    useTime: '',
-    useTimeCulture: '',
-    useFee: '',
+    restDate: '-',
+    useTime: '-',
+    useTimeCulture: '-',
+    useFee: '-',
   });
 
   useEffect(() => {
@@ -35,9 +35,19 @@ const DetailInfo = (props: detailInfoProps) => {
 
     if (res) {
       setInfo({
-        restDate: res[0].restdate,
-        useTime: contentTypeId === '12' ? res[0].usetime : '-',
-        useTimeCulture: contentTypeId === '14' ? res[0].usetimeculture : '-',
+        restDate: res[0].restdate !== '' ? res[0].restdate : '-',
+        useTime:
+          contentTypeId === '12'
+            ? res[0].usetime !== ''
+              ? res[0].usetime
+              : '-'
+            : '-',
+        useTimeCulture:
+          contentTypeId === '14'
+            ? res[0].usetimeculture !== ''
+              ? res[0].usetimeculture
+              : '-'
+            : '-',
         useFee: contentTypeId === '14' ? res[0].usefee : '-',
       });
     }

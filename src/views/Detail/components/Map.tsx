@@ -7,8 +7,8 @@ const { kakao } = window;
 
 interface mapProps {
   latlng: {
-    lat: number;
-    lng: number;
+    lat: string;
+    lng: string;
   };
 }
 
