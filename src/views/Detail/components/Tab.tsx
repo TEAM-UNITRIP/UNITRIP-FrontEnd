@@ -12,10 +12,15 @@ const TAB_MENU = ['상세정보', '유니버설', '지도', '사진', '리뷰'];
 interface TabProps {
   selectedTab: string;
   setSelectedTab: (tab: string) => void;
+  contentTypeId: string;
+  latlng: {
+    lat: number;
+    lng: number;
+  };
 }
 
 function Tab(props: TabProps) {
-  const { selectedTab, setSelectedTab } = props;
+  const { selectedTab, setSelectedTab, contentTypeId, latlng } = props;
 
   const tabOnClick = (item: string) => {
     setSelectedTab(item);
@@ -33,9 +38,11 @@ function Tab(props: TabProps) {
           </li>
         ))}
       </ul>
-      {selectedTab === '상세정보' && <DetailInfo />}
+      {selectedTab === '상세정보' && (
+        <DetailInfo contentTypeId={contentTypeId} />
+      )}
       {selectedTab === '사진' && <Photos />}
-      {selectedTab === '지도' && <Map />}
+      {selectedTab === '지도' && <Map latlng={latlng} />}
       {selectedTab === '유니버설' && <Universal />}
     </div>
   );

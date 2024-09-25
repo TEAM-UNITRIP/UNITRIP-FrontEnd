@@ -25,7 +25,7 @@ export const createMapPin = (
   const response: responseType[] = [];
   const imageSrc = KakaoMarkerImage;
   const imageSize = new kakao.maps.Size(25, 40);
-  const imageOption = { offset: new kakao.maps.Point(27, 69) };
+  const imageOption = { offset: new kakao.maps.Point(0, 0) };
 
   const markerImage = new kakao.maps.MarkerImage(
     imageSrc,
