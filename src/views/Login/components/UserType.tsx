@@ -5,12 +5,12 @@ import postAddUser from '@/apis/supabase/postAddUser';
 import BottomButton from '@/components/BottomButton';
 import TravelerType from '@/components/TravelerType';
 import { COLORS, FONTS } from '@/styles/constants';
-import { KakaoUserDataProps } from '@/types/type';
+import { KakaoUserDataResponse } from '@/types/userAPI';
 
 import { useSignUpContext } from './SignUpContext';
 
 interface UserTypeProps {
-  userData: KakaoUserDataProps;
+  userData: KakaoUserDataResponse;
 }
 
 const UserType = ({ userData }: UserTypeProps) => {

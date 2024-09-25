@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import getUserData from '@/apis/supabase/getUserData';
 import MenuBar from '@/components/MenuBar';
 import { COLORS, FONTS } from '@/styles/constants';
-import { UserDataProps } from '@/types/type';
+import { UserDataResponse } from '@/types/userAPI';
 
 import Header from '../components/Header';
 import NearbyTravel from '../components/NearbyTravel';
 import RecommendedTravel from '../components/RecommendedTravel';
 
 const MainPage = () => {
-  const [userData, setUserData] = useState<UserDataProps | null>(null);
+  const [userData, setUserData] = useState<UserDataResponse | null>(null);
 
   const isLoggedIn = sessionStorage.getItem('kakao_id');
 
