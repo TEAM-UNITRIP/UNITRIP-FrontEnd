@@ -45,6 +45,7 @@ const ImageInput = (props: ImageInputProps) => {
             />
           );
         })}
+
         {imgList.length < 10 && (
           <label css={imageSquareLabelCss}>
             <CameraIcon />

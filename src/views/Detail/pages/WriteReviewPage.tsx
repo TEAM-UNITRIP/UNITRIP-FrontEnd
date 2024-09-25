@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import postReview from '@/apis/supabase/postReview';
 import { ChevronLeftIcon } from '@/assets/icon';
@@ -66,12 +66,16 @@ const WriteReviewPage = () => {
     setImgList(filteredImgList);
   };
 
+  const [searchParams] = useSearchParams();
+  const contentId = searchParams.get('contentId');
+
   const handleOnClick = () => {
     postReview({
       rate: score,
       description: experience,
       convenience: getFilterList(filterState),
       imgs: imgList,
+      contentId,
     });
     setToast(true);
   };

@@ -1,5 +1,3 @@
-import { useLocation } from 'react-router-dom';
-
 import { unitripSupabase } from '@/utils/supabaseClient';
 
 import postImgReview from './postImgReview';
@@ -9,6 +7,7 @@ interface postReviewProps {
   description: string;
   convenience: string[];
   imgs: File[];
+  contentId: string | null;
 }
 
 const postReview = async ({
@@ -16,18 +15,15 @@ const postReview = async ({
   description,
   convenience,
   imgs,
+  contentId,
 }: postReviewProps) => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const place = queryParams.get('contentId');
-
   const writer = sessionStorage.getItem('kakao_id');
 
   const { error } = await unitripSupabase
     .from('REVIEW')
     .insert([
       {
-        place,
+        place: contentId,
         writer,
         rate,
         description,
