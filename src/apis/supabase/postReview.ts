@@ -7,7 +7,7 @@ interface postReviewProps {
   description: string;
   convenience: string[];
   imgs: File[];
-  contentId: string | null;
+  contentId: string | undefined;
 }
 
 const postReview = async ({

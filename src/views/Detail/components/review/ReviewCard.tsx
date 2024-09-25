@@ -3,17 +3,16 @@ import { useEffect, useRef, useState } from 'react';
 
 import { SmallStarIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
+import { ReviewResponse } from '@/types/api/review';
 
-interface ReviewCardProps {
-  writer: string;
-  rate: number;
-  description: string;
-  convenience: string[];
-  imgUrl: string[];
-}
-
-const ReviewCard = (props: ReviewCardProps) => {
-  const { writer, rate, description, convenience, imgUrl } = props;
+const ReviewCard = (props: ReviewResponse) => {
+  const {
+    rate,
+    description,
+    convenience,
+    imgUrls,
+    USER: { name },
+  } = props;
 
   const [showAll, setShowAll] = useState(false);
   const [isMoreButton, setIsMoreButton] = useState(false);
@@ -36,7 +35,7 @@ const ReviewCard = (props: ReviewCardProps) => {
     <li css={containerCss}>
       <div css={contentContainerCss}>
         <div css={headerCss}>
-          <span css={authorCss}>{writer}</span>
+          <span css={authorCss}>{name}</span>
           <div css={startContainerCss}>
             <SmallStarIcon /> {rate}
           </div>
@@ -59,8 +58,8 @@ const ReviewCard = (props: ReviewCardProps) => {
       </div>
 
       <div css={imgContainerCss}>
-        {imgUrl.map((imgUrl) => (
-          <img key={imgUrl} src={imgUrl} />
+        {imgUrls.map((imgUrls) => (
+          <img key={imgUrls} src={imgUrls} />
         ))}
       </div>
 

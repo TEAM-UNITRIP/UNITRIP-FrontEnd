@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import postReview from '@/apis/supabase/postReview';
 import { ChevronLeftIcon } from '@/assets/icon';
@@ -20,6 +20,7 @@ import ScoreSection from '../components/review/write/ScoreSection';
 
 const WriteReviewPage = () => {
   const navigate = useNavigate();
+  const { contentId } = useParams();
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [toast, setToast] = useState(false);
@@ -66,18 +67,20 @@ const WriteReviewPage = () => {
     setImgList(filteredImgList);
   };
 
-  const [searchParams] = useSearchParams();
-  const contentId = searchParams.get('contentId');
-
   const handleOnClick = () => {
-    postReview({
-      rate: score,
-      description: experience,
-      convenience: getFilterList(filterState),
-      imgs: imgList,
-      contentId,
-    });
-    setToast(true);
+    try {
+      postReview({
+        rate: score,
+        description: experience,
+        convenience: getFilterList(filterState),
+        imgs: imgList,
+        contentId,
+      });
+      setToast(true);
+      navigate(`/${contentId}`);
+    } finally {
+      setToast(false);
+    }
   };
 
   useEffect(() => {
