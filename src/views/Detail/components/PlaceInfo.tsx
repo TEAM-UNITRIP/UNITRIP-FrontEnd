@@ -3,24 +3,34 @@ import { css } from '@emotion/react';
 import { CallIcon, ClockIcon, MapPinIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
-function PlaceInfo() {
+interface placeInfoProps {
+  placeInfo: {
+    addr: string;
+    tel: string;
+    useTime: string;
+  };
+}
+
+const PlaceInfo = (props: placeInfoProps) => {
+  const { addr, tel, useTime } = props.placeInfo;
+
   return (
     <section css={placeInfoContainer}>
       <div css={listItem}>
         <MapPinIcon />
-        <span>대전광역시 서구 둔산대로 155</span>
+        <span>{addr}</span>
       </div>
       <div css={listItem}>
         <CallIcon />
-        <span>010-0000-0000</span>
+        <span>{tel}</span>
       </div>
       <div css={listItem}>
         <ClockIcon />
-        <span>수요일 10:00-19:00</span>
+        <span>{useTime}</span>
       </div>
     </section>
   );
-}
+};
 
 export default PlaceInfo;
 

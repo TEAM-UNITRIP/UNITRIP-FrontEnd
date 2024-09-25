@@ -1,25 +1,65 @@
 import { css } from '@emotion/react';
+import { useEffect, useState } from 'react';
 
 import { COLORS, FONTS } from '@/styles/constants';
 
-function DetailInfo() {
+import { getDetailIntroRes } from '../utils/getDetailIntro1';
+
+interface detailInfoItem {
+  restDate: string;
+  useTime?: string;
+  useTimeCulture?: string;
+  useFee: string;
+}
+
+interface detailInfoProps {
+  contentTypeId: string;
+}
+
+const DetailInfo = (props: detailInfoProps) => {
+  const { contentTypeId } = props;
+
+  const [info, setInfo] = useState<detailInfoItem>({
+    restDate: '',
+    useTime: '',
+    useTimeCulture: '',
+    useFee: '',
+  });
+
+  useEffect(() => {
+    getDetailIntro1Res();
+  }, []);
+
+  const getDetailIntro1Res = async () => {
+    const res = await getDetailIntroRes(contentTypeId);
+
+    if (res) {
+      setInfo({
+        restDate: res[0].restdate,
+        useTime: contentTypeId === '12' ? res[0].usetime : '-',
+        useTimeCulture: contentTypeId === '14' ? res[0].usetimeculture : '-',
+        useFee: contentTypeId === '14' ? res[0].usefee : '-',
+      });
+    }
+  };
+
   return (
     <section css={detailInfoContainer}>
       <div css={infoItem}>
         <span css={title}>휴무일</span>
-        <p css={content}>연중무휴</p>
+        <p css={content}>{info.restDate}</p>
       </div>
       <div css={infoItem}>
         <span css={title}>이용시간</span>
-        <p css={content}>주중 10:30~22:30 (매표마감 21:30)</p>
+        <p css={content}>{info.useTime}</p>
       </div>
       <div css={infoItem}>
         <span css={title}>이용요금</span>
-        <p css={content}>-</p>
+        <p css={content}>{info.useFee}</p>
       </div>
     </section>
   );
-}
+};
 
 export default DetailInfo;
 

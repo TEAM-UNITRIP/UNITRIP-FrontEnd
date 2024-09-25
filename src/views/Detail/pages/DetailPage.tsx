@@ -1,28 +1,112 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { BackgroundImage } from '@/assets/image';
+import { DefaultImage } from '@/assets/image';
 import { COLORS, FONTS } from '@/styles/constants';
 
 import ErrorReport from '../components/ErrorReport';
 import Header from '../components/Header';
 import PlaceInfo from '../components/PlaceInfo';
 import Tab from '../components/Tab';
+import { getDetailCommonRes } from '../utils/getDetailCommon1';
+import { getDetailIntroRes } from '../utils/getDetailIntro1';
 
-function DetailPage() {
+export interface placeInfoType {
+  title: string;
+  info: {
+    addr: string;
+    tel: string;
+    useTime: string;
+  };
+  imageUrl: string;
+}
+
+export interface detailInfoType {
+  useTime?: string;
+  useTimeCulture?: string;
+}
+
+const DetailPage = () => {
   const [selectedTab, setSelectedTab] = useState('상세정보');
+  const [placeInfo, setPlaceInfo] = useState<placeInfoType>({
+    title: '',
+    info: {
+      addr: '',
+      tel: '',
+      useTime: '',
+    },
+    imageUrl: '',
+  });
+  const [latlng, setLatLng] = useState({
+    lat: '',
+    lng: '',
+  });
+  const contentTypeId = useRef('12');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getDetailCommon1Res();
+      await getDetailIntro1Res();
+    };
+
+    fetchData();
+  }, []);
+
+  const getDetailCommon1Res = async () => {
+    const res = await getDetailCommonRes();
+
+    if (res) {
+      setPlaceInfo({
+        title: res[0].title,
+        info: {
+          addr: res[0].addr1 !== '' ? res[0].addr1 : '-',
+          tel: res[0].tel !== '' ? res[0].tel : '-',
+          useTime: '',
+        },
+        imageUrl: res[0].firstimage !== '' ? res[0].firstimage : DefaultImage,
+      });
+
+      contentTypeId.current = res[0].contenttypeid;
+
+      setLatLng({
+        lat: res[0].mapy,
+        lng: res[0].mapx,
+      });
+    }
+  };
+
+  const getDetailIntro1Res = async () => {
+    const res = await getDetailIntroRes(contentTypeId.current);
+
+    if (res) {
+      setPlaceInfo((prev) => ({
+        ...prev,
+        info: {
+          ...prev.info,
+          useTime: res[0].usetime,
+        },
+      }));
+    }
+  };
+
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
   };
+
   return (
     <div css={detailContainer}>
-      <div css={backgroundImg}>
+      <div css={backgroundImg(placeInfo.imageUrl)}>
         <Header />
-        <span css={title}>대전시립미술관</span>
+        <span css={title}>{placeInfo.title}</span>
       </div>
-      <PlaceInfo />
+      <PlaceInfo placeInfo={placeInfo.info} />
       <div css={gapLine}></div>
-      <Tab selectedTab={selectedTab} setSelectedTab={handleTabChange} />
+      <Tab
+        selectedTab={selectedTab}
+        setSelectedTab={handleTabChange}
+        contentTypeId={contentTypeId.current}
+        latlng={latlng}
+      />
       <div css={gapLine}></div>
 
       {selectedTab === '상세정보' ||
@@ -33,7 +117,7 @@ function DetailPage() {
       ) : null}
     </div>
   );
-}
+};
 
 export default DetailPage;
 
@@ -41,7 +125,7 @@ const detailContainer = css`
   width: 100dvw;
 `;
 
-const backgroundImg = css`
+const backgroundImg = (url: string) => css`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -55,7 +139,7 @@ const backgroundImg = css`
     rgb(0 0 0 / 34%) 100%
   );
   background-size: cover;
-  background-image: url(${BackgroundImage});
+  background-image: url(${url});
   background-repeat: no-repeat;
 `;
 
