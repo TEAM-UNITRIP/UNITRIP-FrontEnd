@@ -1,18 +1,25 @@
 import { css } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
 
+import postAddUser from '@/apis/supabase/postAddUser';
 import BottomButton from '@/components/BottomButton';
 import TravelerType from '@/components/TravelerType';
 import { COLORS, FONTS } from '@/styles/constants';
+import { KakaoUserDataResponse } from '@/types/userAPI';
 
 import { useSignUpContext } from './SignUpContext';
 
-const UserType = () => {
+interface UserTypeProps {
+  userData: KakaoUserDataResponse;
+}
+
+const UserType = ({ userData }: UserTypeProps) => {
   const navigate = useNavigate();
 
-  const { travelerType, setTravelerType } = useSignUpContext();
+  const { region, travelerType, setTravelerType } = useSignUpContext();
 
-  const moveNext = () => {
+  const submitSignUp = async () => {
+    await postAddUser({ userData, region, travelerType });
     navigate(`/`);
   };
 
@@ -32,7 +39,7 @@ const UserType = () => {
 
       <BottomButton
         text="확인"
-        clickedFn={moveNext}
+        clickedFn={submitSignUp}
         disabled={!travelerType.length}
       />
     </>
