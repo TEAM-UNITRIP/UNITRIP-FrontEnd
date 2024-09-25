@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 
-import useGetUserData from '@/api/supabase/useGetUserData';
+import getUserData from '@/api/supabase/useGetUserData';
 import MenuBar from '@/components/MenuBar';
 import { COLORS, FONTS } from '@/styles/constants';
 import { UserDataProps } from '@/types/type';
@@ -11,20 +11,24 @@ import NearbyTravel from '../components/NearbyTravel';
 import RecommendedTravel from '../components/RecommendedTravel';
 
 const MainPage = () => {
-  const [userData, setUserData] = useState<UserDataProps>();
+  const [userData, setUserData] = useState<UserDataProps | null>(null);
 
   const isLoggedIn = sessionStorage.getItem('kakao_id');
-  const response = isLoggedIn && useGetUserData(Number(isLoggedIn));
 
   useEffect(() => {
-    const fetchData = () => {
-      if (response) {
+    const fetchData = async () => {
+      if (!isLoggedIn) return;
+
+      try {
+        const response = await getUserData(Number(isLoggedIn));
         setUserData(response);
+      } catch (err) {
+        throw new Error('오류가 발생했습니다');
       }
     };
 
     fetchData();
-  }, [response]);
+  }, [isLoggedIn]);
 
   return (
     <>
