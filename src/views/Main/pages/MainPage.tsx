@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 
-import getUserData from '@/apis/supabase/useGetUserData';
+import getUserData from '@/apis/supabase/getUserData';
 import MenuBar from '@/components/MenuBar';
 import { COLORS, FONTS } from '@/styles/constants';
 import { UserDataProps } from '@/types/type';
