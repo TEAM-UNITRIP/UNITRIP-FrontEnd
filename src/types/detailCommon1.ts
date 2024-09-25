@@ -23,8 +23,8 @@ export interface detailCommon1ResItem {
 
 export interface detailCommon1Res {
   header: {
-    resultCode: 'string';
-    resultMsg: 'string';
+    resultCode: string;
+    resultMsg: string;
   };
   body: {
     numOfRows: number;
