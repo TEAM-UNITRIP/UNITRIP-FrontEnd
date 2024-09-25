@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 
 import { unitripSupabase } from '@/utils/supabaseClient';
 
-const getReviews = async () => {
+const useGetReviews = async () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const place = queryParams.get('contentId');
@@ -23,4 +23,4 @@ const getReviews = async () => {
   return data;
 };
 
-export default getReviews;
+export default useGetReviews;

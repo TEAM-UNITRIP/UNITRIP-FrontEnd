@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 
+import useGetReviews from '@/apis/supabase/getReviews';
 import { ReviewResponse } from '@/types/api/review';
 import { isGuideShown } from '@/utils/storageHideGuide';
 import {
@@ -46,6 +47,7 @@ const REVIEW_DATA: ReviewResponse[] = [
 ];
 
 const Review = () => {
+  // const [reviewData, setReivewData] = useState(false);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [showGuide, setShowGuide] = useState(() =>
     isGuideShown(STORAGE_KEY.hideReviewFilterGuide),
@@ -80,6 +82,9 @@ const Review = () => {
   };
 
   const selectedFilterList = getFilterList(filterState);
+
+  const data = useGetReviews();
+  console.log(data);
 
   if (REVIEW_DATA.length === 0) return <NoReview />;
 

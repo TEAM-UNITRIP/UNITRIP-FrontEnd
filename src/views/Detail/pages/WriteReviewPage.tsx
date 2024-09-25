@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import postReview from '@/apis/supabase/postReview';
 import { ChevronLeftIcon } from '@/assets/icon';
 import ToastMessage from '@/components/ToastMessage';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -26,7 +27,7 @@ const WriteReviewPage = () => {
   const [score, setScore] = useState(0);
   const [experience, setExperience] = useState('');
   const [filterState, setFilterState] = useState(INITIAL_FILTER_STATE);
-  const [imgList, setImgList] = useState<string[]>([]);
+  const [imgList, setImgList] = useState<File[]>([]);
 
   const handleScore = (score: number) => {
     setScore(score);
@@ -56,21 +57,21 @@ const WriteReviewPage = () => {
     }));
   };
 
-  const addImg = (imgUrl: string) => {
-    setImgList((prev) => [...prev, imgUrl]);
+  const addImg = (file: File) => {
+    setImgList((prev) => [...prev, file]);
   };
 
-  const removeImg = (imgUrl: string) => {
-    const filteredImgList = imgList.filter((item) => item !== imgUrl);
+  const removeImg = (name: string) => {
+    const filteredImgList = imgList.filter((item) => item.name !== name);
     setImgList(filteredImgList);
   };
 
   const handleOnClick = () => {
-    console.log({
+    postReview({
       rate: score,
       description: experience,
       convenience: getFilterList(filterState),
-      imgUrl: imgList,
+      imgs: imgList,
     });
     setToast(true);
   };
