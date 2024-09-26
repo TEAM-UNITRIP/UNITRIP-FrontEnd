@@ -4,6 +4,8 @@ import { CheckFillIcon, XMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 import { setStorageHideGuide } from '@/utils/storageHideGuide';
 
+import { STORAGE_KEY } from '../../constants/localStorageKey';
+
 interface GuideProps {
   handleSetShowGuide: (value: boolean) => void;
 }
@@ -12,7 +14,7 @@ const Guide = (props: GuideProps) => {
   const { handleSetShowGuide } = props;
 
   const hideGuideForADay = () => {
-    setStorageHideGuide();
+    setStorageHideGuide(STORAGE_KEY.hideSearchGuide);
     handleSetShowGuide(false);
   };
 

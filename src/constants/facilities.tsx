@@ -2,7 +2,7 @@ import {
   AudioGuideActiveIcon,
   AudioGuideDefaultIcon,
   AudioGuideInActiveIcon,
-  AudioGuideInSelectedIcon,
+  AudioGuideSelectedIcon,
   AuditoriumActiveIcon,
   AuditoriumDefaultIcon,
   AuditoriumInActiveIcon,
@@ -198,7 +198,7 @@ export const VISUAL_FACILITIES: Facility[] = [
     active: <AudioGuideActiveIcon />,
     inactive: <AudioGuideInActiveIcon />,
     default: <AudioGuideDefaultIcon />,
-    selected: <AudioGuideInSelectedIcon />,
+    selected: <AudioGuideSelectedIcon />,
   },
   {
     name: '큰 활자',

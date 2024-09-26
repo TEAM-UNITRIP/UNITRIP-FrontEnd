@@ -12,6 +12,7 @@ interface BottomSheetProps {
   buttonText?: string;
   noButton?: boolean;
   bottomSheetCss?: SerializedStyles;
+  sheetBackgroundCss?: SerializedStyles;
   children: ReactNode;
 }
 
@@ -22,6 +23,7 @@ interface BottomSheetProps {
  * @param noButton button 여부
  * @param bottomSheetCss 바텀시트 css 오버라이딩
  * @param onClickButton 아래 버튼 클릭 함수
+ * @param sheetBackgroundCss 바텀시트 배경 css 오버라이딩
  */
 const BottomSheet = (props: BottomSheetProps) => {
   const {
@@ -30,6 +32,7 @@ const BottomSheet = (props: BottomSheetProps) => {
     buttonText,
     noButton,
     bottomSheetCss,
+    sheetBackgroundCss,
     children,
     onClickButton,
   } = props;
@@ -45,7 +48,12 @@ const BottomSheet = (props: BottomSheetProps) => {
   };
 
   const portalContent = (
-    <div css={backgroundCss} onClick={handleOnClickBackground}>
+    <div
+      css={css`
+        ${backgroundCss}
+        ${sheetBackgroundCss}
+      `}
+      onClick={handleOnClickBackground}>
       <div
         css={css`
           ${containerCss(height)}
