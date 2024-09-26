@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import getReviews from '@/apis/supabase/getReviews';
+import getUserData from '@/apis/supabase/getUserData';
 import ToastMessage from '@/components/ToastMessage';
 import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { ReviewResponse } from '@/types/api/review';
+import { UserDataResponse } from '@/types/userAPI';
 import { isGuideShown } from '@/utils/storageHideGuide';
 import {
   getFilterList,
@@ -25,6 +27,7 @@ import TotalScore from './review/TotalScore';
 const Review = () => {
   const { contentId } = useParams();
 
+  const [userData, setUserData] = useState<UserDataResponse | null>(null);
   const [reviewData, setReviewData] = useState<ReviewResponse[]>();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [showGuide, setShowGuide] = useState(() =>
@@ -75,6 +78,11 @@ const Review = () => {
   useAsyncEffect(async () => {
     const data = await getReviews(contentId as string);
     setReviewData(data);
+
+    const kakaoId = sessionStorage.getItem('kakao_id');
+    if (!kakaoId) return;
+    const userData = await getUserData(Number(kakaoId));
+    setUserData(userData);
   }, []);
 
   if (!reviewData || reviewData.length === 0) return <NoReview />;
@@ -87,6 +95,7 @@ const Review = () => {
         filterState={filterState}
         handleFilterState={handleFilterState}
         openBottomSheet={openBottomSheet}
+        defaultCategory={userData?.universal_type}
       />
       <ul css={reviewCardContainerCss}>
         {reviewData

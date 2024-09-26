@@ -10,18 +10,19 @@ interface SelectedCategoryProps {
   openBottomSheet: () => void;
   filterState: filterState;
   handleFilterState: (category: category, facility: string) => void;
+  defaultCategory?: string[];
 }
 
 const SelectedCategory = (props: SelectedCategoryProps) => {
-  const { openBottomSheet, filterState, handleFilterState } = props;
-  const defaultCategory = 'physical';
+  const { openBottomSheet, filterState, handleFilterState, defaultCategory } =
+    props;
 
   const renderSelectedCategoryList = () => {
     const categoryList = Object.entries(filterState).filter(
       ([category, objectValue]) => {
         return (
           Object.values(objectValue).some((value) => value) ||
-          category === defaultCategory
+          defaultCategory?.includes(category)
         );
       },
     ) as [category, Record<string, boolean>][];
