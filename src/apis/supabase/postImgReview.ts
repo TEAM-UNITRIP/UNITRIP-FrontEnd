@@ -6,10 +6,10 @@ const postImgReview = async (imgs: File[]) => {
   // 각 파일을 Supabase Storage에 업로드
   for (const img of imgs) {
     const cleanedFileName = decodeURIComponent(img.name).replace(
-      /[<>:"/\\|?*]|[\u0400-\u04FF\uAC00-\uD7AF]+/g,
-      '',
+      /[<>:"/\\|?* ]|[\u0400-\u04FF\uAC00-\uD7AF\u3131-\u314E\u1100-\u1112\u1161-\u1175\u11A8-\u11C2]+/g,
+      '_',
     );
-    console.log(cleanedFileName);
+
     const { error: uploadError } = await unitripSupabase.storage
       .from('REVIEW_IMAGES')
       .upload(`${cleanedFileName}`, img);
