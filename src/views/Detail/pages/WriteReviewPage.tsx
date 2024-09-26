@@ -17,13 +17,15 @@ import ExperienceInput from '../components/review/write/ExperienceInput';
 import Facilities from '../components/review/write/Facilities';
 import ImageInput from '../components/review/write/ImageInput';
 import ScoreSection from '../components/review/write/ScoreSection';
+import { STORAGE_KEY } from '../constants/localStorageKey';
 
 const WriteReviewPage = () => {
   const navigate = useNavigate();
   const { contentId } = useParams();
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [toast, setToast] = useState(false);
+  const [errorToast, setErrorToast] = useState(false);
+  const [errorType, setErrorType] = useState<'score' | 'experience'>('score');
 
   const [score, setScore] = useState(0);
   const [experience, setExperience] = useState('');
@@ -60,6 +62,17 @@ const WriteReviewPage = () => {
   };
 
   const handleOnClick = () => {
+    if (!score) {
+      setErrorType('score');
+      setErrorToast(true);
+      return;
+    }
+    if (experience.length < 10) {
+      setErrorType('experience');
+      setErrorToast(true);
+      return;
+    }
+
     try {
       postReview({
         rate: score,
@@ -68,10 +81,13 @@ const WriteReviewPage = () => {
         imgs: imgList,
         contentId: Number(contentId),
       });
-      setToast(true);
-      navigate(`/${contentId}`);
-    } finally {
-      setToast(false);
+
+      setTimeout(() => {
+        sessionStorage.setItem(STORAGE_KEY.successToast, 'true');
+        navigate(`/${contentId}/review`);
+      }, 100);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -105,9 +121,11 @@ const WriteReviewPage = () => {
         <button css={submitCss} onClick={handleOnClick}>
           등록하기
         </button>
-        {toast && (
-          <ToastMessage setToast={setToast}>
-            리뷰가 저장되었습니다.
+        {errorToast && (
+          <ToastMessage setToast={setErrorToast}>
+            {errorType === 'score'
+              ? '별점을 남겨주세요'
+              : '느낀 점을 10자 이상 입력해주세요'}
           </ToastMessage>
         )}
         {isBottomSheetOpen && (

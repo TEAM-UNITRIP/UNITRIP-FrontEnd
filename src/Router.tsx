@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Settings from './components/Settings';
+import Review from './views/Detail/components/Review';
 import DetailPage from './views/Detail/pages/DetailPage';
 import WriteReviewPage from './views/Detail/pages/WriteReviewPage';
 import ErrorReportPage from './views/ErrorReport/pages/ErrorReportPage';
@@ -22,7 +23,11 @@ const router = createBrowserRouter([
       { path: '/sign-up', element: <SignUpPage /> },
     ],
   },
-  { path: '/:contentId', element: <DetailPage /> },
+  {
+    path: '/:contentId',
+    element: <DetailPage />,
+    children: [{ path: 'review', element: <Review /> }],
+  },
   { path: '/:contentId/review/write', element: <WriteReviewPage /> },
   {
     path: '/search',

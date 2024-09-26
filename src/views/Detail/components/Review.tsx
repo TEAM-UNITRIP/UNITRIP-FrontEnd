@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import getReviews from '@/apis/supabase/getReviews';
+import ToastMessage from '@/components/ToastMessage';
 import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { ReviewResponse } from '@/types/api/review';
 import { isGuideShown } from '@/utils/storageHideGuide';
@@ -29,6 +30,7 @@ const Review = () => {
   const [showGuide, setShowGuide] = useState(() =>
     isGuideShown(STORAGE_KEY.hideReviewFilterGuide),
   );
+  const [toast, setToast] = useState(false);
 
   const [filterState, setFilterState] = useState(INITIAL_FILTER_STATE);
 
@@ -64,6 +66,10 @@ const Review = () => {
 
   useEffect(() => {
     if (showGuide) document.body.style.overflow = 'hidden';
+    if (sessionStorage.getItem(STORAGE_KEY.successToast)) {
+      setToast(true);
+      sessionStorage.removeItem(STORAGE_KEY.successToast);
+    }
   }, []);
 
   useAsyncEffect(async () => {
@@ -99,6 +105,10 @@ const Review = () => {
           filterState={filterState}
           handleFilterState={handleFilterStateObject}
         />
+      )}
+
+      {toast && (
+        <ToastMessage setToast={setToast}>리뷰가 저장되었습니다.</ToastMessage>
       )}
     </>
   );
