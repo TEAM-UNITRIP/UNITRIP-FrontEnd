@@ -1,11 +1,13 @@
 import { css } from '@emotion/react';
-import { MutableRefObject, useRef } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import { BigInfoIcon } from '@/assets/icon';
-import FilteredPlaceCard from '@/components/FilteredPlaceCard';
+import PlaceCard from '@/components/PlaceCard';
+import { MAP_FACILITIES_API_KEY } from '@/constants/facilities';
 import { COLORS, FONTS } from '@/styles/constants';
 import { BarrierFreeItem, SearchResItem } from '@/types/search';
 
+import { getFilterList } from '../../constants/category';
 import { filterState } from '../../types/category';
 
 interface SearchResultProps {
@@ -21,14 +23,24 @@ const SearchResult = (props: SearchResultProps) => {
   const placeListRef = useRef<HTMLUListElement>(null);
   console.log(loading);
 
-  const renderPlaceList = () => {
-    // 검색 결과가 없거나, 필터링된 결과가 없을 때
-    if (
-      placeData.length === 0 ||
-      placeListRef.current?.childElementCount === 1
-    ) {
-      return (
-        <>
+  const [renderPlaceList, setRenderPlaceList] = useState<
+    (SearchResItem & BarrierFreeItem)[]
+  >([]);
+
+  useEffect(() => {
+    const filterList = getFilterList(filterState);
+    const renderPlaceList = placeData.filter((placeInfo) => {
+      return filterList.every(
+        (facility) => placeInfo[MAP_FACILITIES_API_KEY[facility]] !== '',
+      );
+    });
+    setRenderPlaceList(renderPlaceList);
+  }, [filterState, placeData]);
+
+  return (
+    <>
+      <ul css={containerCss(placeData.length)} ref={placeListRef}>
+        {renderPlaceList.length === 0 ? (
           <div css={noResultContainerCss}>
             <BigInfoIcon />
             <div css={noResultTitleCss}>검색 결과가 없어요</div>
@@ -38,55 +50,62 @@ const SearchResult = (props: SearchResultProps) => {
               다른 여행지를 검색해보세요!
             </p>
           </div>
-        </>
-      );
-    } else {
-      return placeData.map(
-        ({ contentid, title, addr1, addr2, firstimage, firstimage2 }) => {
-          return (
-            <FilteredPlaceCard
-              key={contentid}
-              filterState={filterState}
-              placeInfo={placeData.find(
-                ({ contentid: targetContentId }) =>
-                  targetContentId === contentid,
-              )}
-              contentid={contentid}
-              placeName={title}
-              address={addr1 + addr2}
-              imgSrc={firstimage || firstimage2 || ''}
-              onClickHeart={() => {}}
-              isHeart={heartList.includes(Number(contentid))}
-            />
-          );
-        },
-      );
-    }
-  };
-
-  return (
-    <>
-      <ul css={containerCss(placeData.length)} ref={placeListRef}>
-        {renderPlaceList()}
+        ) : (
+          renderPlaceList.map(
+            ({ contentid, title, addr1, addr2, firstimage, firstimage2 }) => {
+              return (
+                <li key={contentid}>
+                  <PlaceCard
+                    placeName={title}
+                    address={addr1 + addr2}
+                    imgSrc={firstimage || firstimage2 || ''}
+                    onClickHeart={() => {}}
+                    isHeart={heartList.includes(Number(contentid))}
+                  />
+                </li>
+              );
+            },
+          )
+        )}
         <div ref={targetElement} css={lastTargetCss} />
 
         {/* 로딩 ui 필요 */}
-        {/* {placeList.length >= 10 && (
+        {renderPlaceList.length >= 10 && (
           <>
             <div>
-              <PlaceCard placeName={''} address={''} imgSrc={''} />
+              <PlaceCard
+                placeName={''}
+                address={''}
+                imgSrc={''}
+                isHeart={false}
+              />
             </div>
             <div>
-              <PlaceCard placeName={''} address={''} imgSrc={''} />
+              <PlaceCard
+                placeName={''}
+                address={''}
+                imgSrc={''}
+                isHeart={false}
+              />
             </div>
             <div>
-              <PlaceCard placeName={''} address={''} imgSrc={''} />
+              <PlaceCard
+                placeName={''}
+                address={''}
+                imgSrc={''}
+                isHeart={false}
+              />
             </div>
             <div>
-              <PlaceCard placeName={''} address={''} imgSrc={''} />
+              <PlaceCard
+                placeName={''}
+                address={''}
+                imgSrc={''}
+                isHeart={false}
+              />
             </div>
           </>
-        )} */}
+        )}
       </ul>
     </>
   );
