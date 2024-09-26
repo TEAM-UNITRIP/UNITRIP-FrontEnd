@@ -34,7 +34,7 @@ const ReviewCard = (props: ReviewResponse) => {
     <li css={containerCss}>
       <div css={contentContainerCss}>
         <div css={headerCss}>
-          <span css={authorCss}>{name}</span>
+          <span css={authorCss}>{name[0] + '*' + name[2]}</span>
           <div css={startContainerCss}>
             <SmallStarIcon /> {rate}
           </div>
