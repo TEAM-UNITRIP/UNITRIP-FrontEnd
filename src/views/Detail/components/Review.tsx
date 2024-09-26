@@ -87,8 +87,8 @@ const Review = () => {
           ?.filter(({ convenience }) =>
             selectedFilterList.every((c) => convenience.includes(c)),
           )
-          .map((item, idx) => {
-            return <ReviewCard key={idx + item.writer + item.rate} {...item} />;
+          .map((item) => {
+            return <ReviewCard key={item.id} {...item} />;
           })}
       </ul>
 
