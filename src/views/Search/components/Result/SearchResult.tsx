@@ -56,6 +56,7 @@ const SearchResult = (props: SearchResultProps) => {
               return (
                 <li key={contentid}>
                   <PlaceCard
+                    contentid={contentid}
                     placeName={title}
                     address={addr1 + addr2}
                     imgSrc={firstimage || firstimage2 || ''}

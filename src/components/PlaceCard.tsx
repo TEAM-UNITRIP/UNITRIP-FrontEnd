@@ -15,6 +15,7 @@ interface PlaceCardProps {
   imgSrc: string;
   isHeart: boolean;
   onClickHeart?: () => void;
+  contentid?: string;
 }
 
 /**
@@ -23,6 +24,7 @@ interface PlaceCardProps {
  * @param imgSrc 대표 사진
  * @param isHeart 하트 여부
  * @param onClickHeart 하트 눌렀을 때 실행 함수
+ * @param contentid 컨텐츠 ID
  */
 
 const PlaceCard = (props: PlaceCardProps) => {
@@ -32,6 +34,7 @@ const PlaceCard = (props: PlaceCardProps) => {
     imgSrc,
     isHeart: isHeartData,
     onClickHeart = () => {},
+    contentid,
   } = props;
 
   const [isHeart, setIsHeart] = useState(isHeartData);
@@ -42,7 +45,9 @@ const PlaceCard = (props: PlaceCardProps) => {
   };
 
   return (
-    <Link to="" css={cardContainerCss(imgSrc, placeName)}>
+    <Link
+      to={contentid ? `/${contentid}` : ``}
+      css={cardContainerCss(imgSrc, placeName)}>
       <div css={backgroundCss}>
         <button type="button" onClick={handleOnClick} css={iconCss}>
           {isHeart ? <HeartFillMonoIcon /> : <HeartMonoIcon />}
