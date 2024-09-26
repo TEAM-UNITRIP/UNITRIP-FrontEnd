@@ -21,7 +21,7 @@ const FilterBottomSheet = (props: FilterBottomSheetProps) => {
       height={'80vh'}
       buttonText={'해당 조건 적용하기'}
       bottomSheetCss={css`
-        padding: 4.2rem 2rem 7rem 2rem;
+        padding: 4.2rem 2rem 7rem;
       `}>
       <header css={titleCss}>
         <h3>필터 상세 설정</h3>
@@ -65,5 +65,5 @@ const titleCss = css`
 `;
 
 const lineCss = css`
-  border-top: 1px solid rgba(241, 241, 241, 1);
+  border-top: 1px solid rgb(241 241 241 / 100%);
 `;

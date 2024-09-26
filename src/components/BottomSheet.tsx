@@ -8,6 +8,7 @@ interface BottomSheetProps {
   closeBottomSheet: () => void;
   height: string;
 
+  onClickButton?: () => void;
   buttonText?: string;
   noButton?: boolean;
   bottomSheetCss?: SerializedStyles;
@@ -32,6 +33,7 @@ const BottomSheet = (props: BottomSheetProps) => {
     bottomSheetCss,
     sheetBackgroundCss,
     children,
+    onClickButton,
   } = props;
 
   document.body.style.overflow = 'hidden';
@@ -62,6 +64,7 @@ const BottomSheet = (props: BottomSheetProps) => {
           <div
             css={buttonCotainerCss}
             onClick={() => {
+              onClickButton && onClickButton();
               closeBottomSheet();
               document.body.style.overflow = '';
             }}>

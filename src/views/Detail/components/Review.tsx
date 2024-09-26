@@ -10,7 +10,7 @@ import {
   getFilterList,
   INITIAL_FILTER_STATE,
 } from '@/views/Search/constants/category';
-import { category } from '@/views/Search/types/category';
+import { category, filterState } from '@/views/Search/types/category';
 
 import { STORAGE_KEY } from '../constants/localStorageKey';
 import CategoryBottomSheet from './review/CategoryBottomSheet';
@@ -56,6 +56,10 @@ const Review = () => {
     }));
   };
 
+  const handleFilterStateObject = (value: filterState) => {
+    setFilterState(value);
+  };
+
   const selectedFilterList = getFilterList(filterState);
 
   useEffect(() => {
@@ -93,7 +97,7 @@ const Review = () => {
         <CategoryBottomSheet
           closeBottomSheet={closeBottomSheet}
           filterState={filterState}
-          handleFilterState={handleFilterState}
+          handleFilterState={handleFilterStateObject}
         />
       )}
     </>

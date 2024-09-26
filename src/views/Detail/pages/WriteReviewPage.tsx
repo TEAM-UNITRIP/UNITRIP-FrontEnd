@@ -10,7 +10,7 @@ import {
   getFilterList,
   INITIAL_FILTER_STATE,
 } from '@/views/Search/constants/category';
-import { category } from '@/views/Search/types/category';
+import { filterState } from '@/views/Search/types/category';
 
 import CategoryBottomSheet from '../components/review/CategoryBottomSheet';
 import ExperienceInput from '../components/review/write/ExperienceInput';
@@ -46,16 +46,8 @@ const WriteReviewPage = () => {
     setExperience(value);
   };
 
-  const handleFilterState = (category: category, facility: string) => {
-    const categoryFacilities = filterState[category];
-
-    setFilterState((prev) => ({
-      ...prev,
-      [category]: {
-        ...categoryFacilities,
-        [facility]: !categoryFacilities[facility],
-      },
-    }));
+  const handleFilterState = (value: filterState) => {
+    setFilterState(value);
   };
 
   const addImg = (file: File) => {
