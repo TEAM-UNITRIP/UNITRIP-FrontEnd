@@ -66,11 +66,14 @@ const MAP_CATGORY: Record<string, category> = {
   영유아가족: 'infant',
 };
 
-export const createInitialFilterState = (initialCategory: string) => {
+export const createInitialFilterState = (initialCategory: string[]) => {
   const filterState = INITIAL_FILTER_STATE;
-  const category = MAP_CATGORY[initialCategory];
-  Object.keys(INITIAL_FILTER_STATE[category]).forEach((key) => {
-    filterState[category][key] = true;
+
+  initialCategory.forEach((item) => {
+    const category = MAP_CATGORY[item];
+    Object.keys(INITIAL_FILTER_STATE[category]).forEach((key) => {
+      filterState[category][key] = true;
+    });
   });
 
   return INITIAL_FILTER_STATE;

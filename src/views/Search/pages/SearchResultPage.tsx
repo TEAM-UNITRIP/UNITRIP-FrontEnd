@@ -3,13 +3,14 @@ import { MutableRefObject, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { getSearchKeyword } from '@/apis/public/search';
-import { getUserInfoSearchPage } from '@/apis/search';
+import getUserData from '@/apis/supabase/getUserData';
 import { SearchSetIcon } from '@/assets/icon';
 import MenuBar from '@/components/MenuBar';
 import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll';
 import { COLORS, FONTS } from '@/styles/constants';
 import { SearchResItem } from '@/types/search';
+import { UserDataResponse } from '@/types/userAPI';
 import { isGuideShown } from '@/utils/storageHideGuide';
 
 import Guide from '../components/Result/Guide';
@@ -28,10 +29,7 @@ const SearchResultPage = () => {
   const { word: initialWord } = useParams();
 
   const { pathname } = useLocation();
-  const [userData, setUserData] = useState<{
-    universal_type: string;
-    favorite_list: number[];
-  } | null>(null);
+  const [userData, setUserData] = useState<UserDataResponse | null>(null);
 
   const [filterState, setFilterState] =
     useState<filterState>(INITIAL_FILTER_STATE);
@@ -51,9 +49,11 @@ const SearchResultPage = () => {
   }, [pathname]);
 
   useAsyncEffect(async () => {
-    const data = await getUserInfoSearchPage();
+    const kakaoId = sessionStorage.getItem('kakao_id');
+    if (!kakaoId) return;
+    const data = await getUserData(Number(kakaoId));
     setUserData(data);
-    setFilterState(createInitialFilterState(data.universal_type));
+    setFilterState(createInitialFilterState(data?.universal_type || []));
   }, []);
 
   // 무한스크롤
