@@ -4,12 +4,12 @@ import { MutableRefObject, useRef } from 'react';
 import { BigInfoIcon } from '@/assets/icon';
 import FilteredPlaceCard from '@/components/FilteredPlaceCard';
 import { COLORS, FONTS } from '@/styles/constants';
-import { SearchResItem } from '@/types/search';
+import { BarrierFreeItem, SearchResItem } from '@/types/search';
 
 import { filterState } from '../../types/category';
 
 interface SearchResultProps {
-  placeList: SearchResItem[];
+  placeData: (SearchResItem & BarrierFreeItem)[];
   targetElement: MutableRefObject<HTMLDivElement | null>;
   loading: boolean;
   filterState: filterState;
@@ -17,14 +17,14 @@ interface SearchResultProps {
 }
 
 const SearchResult = (props: SearchResultProps) => {
-  const { placeList, targetElement, loading, filterState, heartList } = props;
+  const { placeData, targetElement, loading, filterState, heartList } = props;
   const placeListRef = useRef<HTMLUListElement>(null);
   console.log(loading);
 
   const renderPlaceList = () => {
     // 검색 결과가 없거나, 필터링된 결과가 없을 때
     if (
-      placeList.length === 0 ||
+      placeData.length === 0 ||
       placeListRef.current?.childElementCount === 1
     ) {
       return (
@@ -41,12 +41,16 @@ const SearchResult = (props: SearchResultProps) => {
         </>
       );
     } else {
-      return placeList.map(
+      return placeData.map(
         ({ contentid, title, addr1, addr2, firstimage, firstimage2 }) => {
           return (
             <FilteredPlaceCard
               key={contentid}
               filterState={filterState}
+              placeInfo={placeData.find(
+                ({ contentid: targetContentId }) =>
+                  targetContentId === contentid,
+              )}
               contentid={contentid}
               placeName={title}
               address={addr1 + addr2}
@@ -62,7 +66,7 @@ const SearchResult = (props: SearchResultProps) => {
 
   return (
     <>
-      <ul css={containerCss(placeList.length)} ref={placeListRef}>
+      <ul css={containerCss(placeData.length)} ref={placeListRef}>
         {renderPlaceList()}
         <div ref={targetElement} css={lastTargetCss} />
 

@@ -2,14 +2,14 @@ import { css } from '@emotion/react';
 import { MutableRefObject, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
-import { getSearchKeyword } from '@/apis/public/search';
+import { getBarrierFreeInfo, getSearchKeyword } from '@/apis/public/search';
 import getUserData from '@/apis/supabase/getUserData';
 import { SearchSetIcon } from '@/assets/icon';
 import MenuBar from '@/components/MenuBar';
 import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll';
 import { COLORS, FONTS } from '@/styles/constants';
-import { SearchResItem } from '@/types/search';
+import { BarrierFreeItem, SearchResItem } from '@/types/search';
 import { UserDataResponse } from '@/types/userAPI';
 import { isGuideShown } from '@/utils/storageHideGuide';
 
@@ -30,12 +30,14 @@ const SearchResultPage = () => {
 
   const { pathname } = useLocation();
   const [userData, setUserData] = useState<UserDataResponse | null>(null);
+  const [placeData, setPlaceData] = useState<
+    (SearchResItem & BarrierFreeItem)[]
+  >([]);
 
   const [filterState, setFilterState] =
     useState<filterState>(INITIAL_FILTER_STATE);
 
   // modal, bottom sheet state
-  const [placeList, setPlaceList] = useState<SearchResItem[]>([]);
   const [showGuide, setShowGuide] = useState(() =>
     isGuideShown(STORAGE_KEY.hideSearchGuide),
   );
@@ -45,15 +47,16 @@ const SearchResultPage = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setPlaceList([]);
+    setPlaceData([]);
   }, [pathname]);
 
   useAsyncEffect(async () => {
     const kakaoId = sessionStorage.getItem('kakao_id');
     if (!kakaoId) return;
+
     const data = await getUserData(Number(kakaoId));
     setUserData(data);
-    setFilterState(createInitialFilterState(data?.universal_type || []));
+    setFilterState(createInitialFilterState([]));
   }, []);
 
   // 무한스크롤
@@ -74,17 +77,36 @@ const SearchResultPage = () => {
     try {
       const items = await getSearchKeyword({
         pageNo,
-        numOfRows: 10,
+        numOfRows: 50,
         MobileOS: 'ETC',
         keyword: pathname.split('/')[2],
         contentTypeId: 12,
       });
 
       if (items === '') {
-        if (pageNo === 0) setPlaceList([]);
+        if (pageNo === 0) setPlaceData([]);
         target.current && observer.unobserve(target.current);
       } else {
-        setPlaceList((prev) => [...prev, ...items.item]);
+        const placeData: (SearchResItem & BarrierFreeItem)[] = [];
+        const promises = items.item.map(({ contentid }) =>
+          getBarrierFreeInfo({
+            MobileOS: 'ETC',
+            contentId: Number(contentid),
+          }),
+        );
+        const promiseResult = await Promise.allSettled(promises);
+        promiseResult.forEach((result) => {
+          if (result.status === 'fulfilled' && result.value !== '') {
+            const item = result.value.item as BarrierFreeItem[];
+            const targetPlace = items.item.find(
+              ({ contentid }) => contentid === item[0].contentid,
+            );
+            if (!targetPlace) return;
+            placeData.push({ ...targetPlace, ...result.value.item[0] });
+          }
+        });
+
+        setPlaceData((prev) => [...prev, ...placeData]);
         page.current++;
       }
     } finally {
@@ -135,7 +157,7 @@ const SearchResultPage = () => {
           {selectedCategory()}
         </button>
         <SearchResult
-          placeList={placeList}
+          placeData={placeData}
           targetElement={targetElement}
           loading={loading}
           filterState={filterState}
