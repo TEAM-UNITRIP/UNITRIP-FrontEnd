@@ -7,8 +7,8 @@ import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { ReviewResponse } from '@/types/api/review';
 import { isGuideShown } from '@/utils/storageHideGuide';
 import {
-  createInitialFilterState,
   getFilterList,
+  INITIAL_FILTER_STATE,
 } from '@/views/Search/constants/category';
 import { category } from '@/views/Search/types/category';
 
@@ -30,9 +30,7 @@ const Review = () => {
     isGuideShown(STORAGE_KEY.hideReviewFilterGuide),
   );
 
-  const [filterState, setFilterState] = useState(() =>
-    createInitialFilterState('physical'),
-  );
+  const [filterState, setFilterState] = useState(INITIAL_FILTER_STATE);
 
   const openBottomSheet = () => {
     setIsBottomSheetOpen(true);
@@ -83,7 +81,7 @@ const Review = () => {
       <ul css={reviewCardContainerCss}>
         {reviewData
           ?.filter(({ convenience }) =>
-            convenience.some((c) => selectedFilterList.includes(c)),
+            selectedFilterList.every((c) => convenience.includes(c)),
           )
           .map((item, idx) => {
             return <ReviewCard key={idx + item.writer + item.rate} {...item} />;

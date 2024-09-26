@@ -14,11 +14,15 @@ interface SelectedCategoryProps {
 
 const SelectedCategory = (props: SelectedCategoryProps) => {
   const { openBottomSheet, filterState, handleFilterState } = props;
+  const defaultCategory = 'physical';
 
   const renderSelectedCategoryList = () => {
     const categoryList = Object.entries(filterState).filter(
-      ([, objectValue]) => {
-        return Object.values(objectValue).some((value) => value);
+      ([category, objectValue]) => {
+        return (
+          Object.values(objectValue).some((value) => value) ||
+          category === defaultCategory
+        );
       },
     ) as [category, Record<string, boolean>][];
 
