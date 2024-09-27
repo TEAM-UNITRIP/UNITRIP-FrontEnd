@@ -23,7 +23,7 @@ const postReview = async ({
 
   const date = new Date().toLocaleDateString().replace(/\s/g, '');
 
-  const { error } = await unitripSupabase
+  const { error, status } = await unitripSupabase
     .from('REVIEW')
     .insert([
       {
@@ -41,6 +41,8 @@ const postReview = async ({
   if (error) {
     throw new Error('서버에 문제가 있습니다');
   }
+
+  return status;
 };
 
 export default postReview;

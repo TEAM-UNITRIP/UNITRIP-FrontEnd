@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import getReviews from '@/apis/supabase/getReviews';
 import getUserData from '@/apis/supabase/getUserData';
@@ -26,6 +26,7 @@ import TotalScore from './review/TotalScore';
 
 const Review = () => {
   const { contentId } = useParams();
+  const location = useLocation();
 
   const [userData, setUserData] = useState<UserDataResponse | null>(null);
   const [reviewData, setReviewData] = useState<ReviewResponse[]>();
@@ -76,6 +77,7 @@ const Review = () => {
   }, []);
 
   useAsyncEffect(async () => {
+    console.log('실행됨?');
     const data = await getReviews(contentId as string);
     setReviewData(data);
 
@@ -83,7 +85,7 @@ const Review = () => {
     if (!kakaoId) return;
     const userData = await getUserData(Number(kakaoId));
     setUserData(userData);
-  }, []);
+  }, [location.pathname]);
 
   if (!reviewData || reviewData.length === 0) return <NoReview />;
 

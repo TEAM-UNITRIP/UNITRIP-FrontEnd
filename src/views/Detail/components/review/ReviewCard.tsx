@@ -60,7 +60,7 @@ const ReviewCard = (props: ReviewResponse) => {
 
       <div css={imgContainerCss}>
         {imgUrls.map((imgUrls) => (
-          <img key={imgUrls} src={imgUrls} />
+          <img key={imgUrls} src={imgUrls} css={imgCss} />
         ))}
       </div>
 
@@ -70,6 +70,10 @@ const ReviewCard = (props: ReviewResponse) => {
 };
 
 export default ReviewCard;
+
+const imgCss = css`
+  // object-fit: cover;
+`;
 
 const containerCss = css`
   padding-bottom: 2rem;

@@ -61,7 +61,7 @@ const WriteReviewPage = () => {
     setImgList(filteredImgList);
   };
 
-  const handleOnClick = () => {
+  const handleOnClick = async () => {
     if (!score) {
       setErrorType('score');
       setErrorToast(true);
@@ -74,7 +74,7 @@ const WriteReviewPage = () => {
     }
 
     try {
-      postReview({
+      const status = await postReview({
         rate: score,
         description: experience,
         convenience: getFilterList(filterState),
@@ -82,10 +82,10 @@ const WriteReviewPage = () => {
         contentId: Number(contentId),
       });
 
-      setTimeout(() => {
+      if (status === 201) {
         sessionStorage.setItem(STORAGE_KEY.successToast, 'true');
         navigate(`/${contentId}/review`);
-      }, 100);
+      }
     } catch (e) {
       console.error(e);
     }
