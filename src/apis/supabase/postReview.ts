@@ -19,7 +19,7 @@ const postReview = async ({
 }: postReviewProps) => {
   const writer = sessionStorage.getItem('kakao_id');
 
-  const imgUrls = await postImgReview(Number(contentId), imgs);
+  const imgUrls = await postImgReview(imgs);
 
   const date = new Date().toLocaleDateString().replace(/\s/g, '');
 
