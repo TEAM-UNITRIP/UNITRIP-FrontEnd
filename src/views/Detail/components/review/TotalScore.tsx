@@ -21,7 +21,7 @@ const TotalScore = (props: TotalScoreProps) => {
       starEl.push(<StarIcon key={i} />);
     }
     for (let i = 0; i < 5 - fillStarCount; i++) {
-      starEl.push(<StarGrayIcon key={i} />);
+      starEl.push(<StarGrayIcon key={5 - i} />);
     }
     return starEl;
   };
