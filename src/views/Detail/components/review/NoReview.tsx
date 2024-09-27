@@ -41,8 +41,8 @@ const titleCss = css`
 `;
 
 const descriptionCss = css`
-  text-align: center;
   color: ${COLORS.brand1};
+  text-align: center;
   ${FONTS.Small1}
 `;
 
@@ -51,9 +51,8 @@ const buttonCss = css`
   margin: 2.4rem 0;
   border-radius: 1rem;
 
-  color: ${COLORS.white};
-
   background-color: ${COLORS.brand1};
 
+  color: ${COLORS.white};
   ${FONTS.Body3};
 `;
