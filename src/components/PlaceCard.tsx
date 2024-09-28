@@ -16,6 +16,7 @@ interface PlaceCardProps {
   isHeart: boolean;
   onClickHeart?: () => void;
   contentid?: string;
+  buttonDisabled?: boolean;
 }
 
 /**
@@ -35,6 +36,7 @@ const PlaceCard = (props: PlaceCardProps) => {
     isHeart: isHeartData,
     onClickHeart = () => {},
     contentid,
+    buttonDisabled,
   } = props;
 
   const [isHeart, setIsHeart] = useState(isHeartData);
@@ -49,8 +51,16 @@ const PlaceCard = (props: PlaceCardProps) => {
       to={contentid ? `/${contentid}` : ``}
       css={cardContainerCss(imgSrc, placeName)}>
       <div css={backgroundCss}>
-        <button type="button" onClick={handleOnClick} css={iconCss}>
-          {isHeart ? <HeartFillMonoIcon /> : <HeartMonoIcon />}
+        <button
+          type="button"
+          onClick={handleOnClick}
+          css={iconCss}
+          disabled={buttonDisabled}>
+          {isHeart ? (
+            <HeartFillMonoIcon />
+          ) : (
+            !buttonDisabled && <HeartMonoIcon />
+          )}
         </button>
         <p css={titleCss}>{placeName}</p>
         {address && (

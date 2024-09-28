@@ -62,6 +62,7 @@ const SearchResult = (props: SearchResultProps) => {
                     imgSrc={firstimage || firstimage2 || ''}
                     onClickHeart={() => {}}
                     isHeart={heartList.includes(Number(contentid))}
+                    buttonDisabled
                   />
                 </li>
               );
