@@ -1,8 +1,9 @@
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import getDummyData from '@/apis/supabase/getDummyData';
+import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { COLORS, FONTS } from '@/styles/constants';
 import { MainDummyResponse } from '@/types/api/dummy';
 
@@ -12,20 +13,10 @@ import ReviewCard from './ReviewCard';
 const RecommendedTravel = () => {
   const [placeData, setPlaceData] = useState<MainDummyResponse[]>();
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await getDummyData();
-      setPlaceData(response);
-    };
-
-    fetchData();
+  useAsyncEffect(async () => {
+    const response = await getDummyData();
+    setPlaceData(response);
   }, []);
-
-  const moveToPlace = (contentId: number) => {
-    navigate(`/${contentId}`);
-  };
 
   return (
     <section css={sectionCss}>
@@ -33,21 +24,23 @@ const RecommendedTravel = () => {
       <h2 css={title}>유니트립 추천 여행지 🏖️</h2>
       {placeData && (
         <div css={scrollContainer}>
-          <li css={cardContainer}>
+          <ul css={cardContainer}>
             {placeData.map((place) => {
               return (
-                <ReviewCard
-                  key={place.contentId + place.place}
-                  name={place.place}
-                  thumbnail={place.thumbnail}
-                  score={place.rating}
-                  content={place.overview}
-                  reviewCount={place.review_count}
-                  onClick={() => moveToPlace(place.contentId)}
-                />
+                <li key={place.contentId + place.place}>
+                  <Link to={`/${place.contentId}`}>
+                    <ReviewCard
+                      name={place.place}
+                      thumbnail={place.thumbnail}
+                      score={place.rating}
+                      content={place.overview}
+                      reviewCount={place.review_count}
+                    />
+                  </Link>
+                </li>
               );
             })}
-          </li>
+          </ul>
         </div>
       )}
     </section>
@@ -67,6 +60,7 @@ const subTitle = css`
   color: ${COLORS.gray7};
   ${FONTS.Body2};
 `;
+
 const title = css`
   margin-left: 2rem;
 

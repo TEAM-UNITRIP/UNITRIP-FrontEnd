@@ -9,7 +9,6 @@ interface ReviewCardProps {
   thumbnail: string;
   content: string;
   reviewCount: number;
-  onClick: () => void;
 }
 
 const ReviewCard = (props: ReviewCardProps) => {
