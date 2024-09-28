@@ -1,24 +1,47 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { getPlaceBasedArea } from '@/apis/public/main';
+import LoginModal from '@/components/LoginModal';
+import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { COLORS, FONTS } from '@/styles/constants';
 import { PlaceBasedAreaItem } from '@/types/main';
 
 import { cardContainer, scrollContainer } from '../styles/main';
 import TravelCard from './TravelCard';
 
-interface NearByTravelProps {
-  placeList: PlaceBasedAreaItem[];
+interface NearbyTravelProps {
+  isLoggedIn: boolean;
+  region?: string;
 }
 
-const NearbyTravel = (props: NearByTravelProps) => {
-  const { placeList } = props;
+const NearbyTravel = (props: NearbyTravelProps) => {
+  const { isLoggedIn, region } = props;
+  const [activateModal, setActivateModal] = useState(false);
+  const [placeList, setPlaceList] = useState<PlaceBasedAreaItem[]>([]);
 
-  const isLoggedIn = true;
+  const closeModal = () => {
+    setActivateModal(false);
+  };
+
+  const showModal = () => {
+    setActivateModal(true);
+  };
+
+  useAsyncEffect(async () => {
+    if (!region) return;
+    const placeList = await getPlaceBasedArea({
+      region: region || '서울',
+    });
+    setPlaceList(placeList === '' ? [] : placeList.item);
+  }, [region]);
 
   return (
     <section css={container}>
-      <h2 css={title}>{isLoggedIn && '서울'} 주변 갈 만한 여행지 🗺️</h2>
+      <h2 css={title}>
+        {isLoggedIn && (region || '서울')} 주변 갈 만한 여행지 🗺️
+      </h2>
       {isLoggedIn ? (
         <>
           <div css={scrollContainer}>
@@ -36,7 +59,7 @@ const NearbyTravel = (props: NearByTravelProps) => {
             </ul>
           </div>
           <Link to="" css={link}>
-            서울 여행지 둘러보기
+            {region || '서울'} 여행지 둘러보기
           </Link>
         </>
       ) : (
@@ -46,9 +69,12 @@ const NearbyTravel = (props: NearByTravelProps) => {
             <br />
             카카오톡 로그인이 필요해요!
           </p>
-          <button css={button}>여행지 추천받기</button>
+          <button type="button" css={button} onClick={showModal}>
+            여행지 추천받기
+          </button>
         </div>
       )}
+      {activateModal && <LoginModal onClick={closeModal} />}
     </section>
   );
 };

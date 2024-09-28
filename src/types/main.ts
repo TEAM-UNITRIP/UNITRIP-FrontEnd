@@ -21,3 +21,9 @@ export interface PlaceBasedAreaItem {
   contenttypeid: string;
   createdtime: string;
 }
+
+export interface AreaCodeItem {
+  rnum: string;
+  code: string;
+  name: string;
+}

@@ -1,39 +1,48 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 
-import { getPlaceBasedArea } from '@/apis/public/main';
+import getUserData from '@/apis/supabase/getUserData';
 import MenuBar from '@/components/MenuBar';
 import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { COLORS, FONTS } from '@/styles/constants';
-import { PlaceBasedAreaItem } from '@/types/main';
+import { UserDataResponse } from '@/types/userAPI';
 
 import Header from '../components/Header';
 import NearbyTravel from '../components/NearbyTravel';
 import RecommendedTravel from '../components/RecommendedTravel';
 
 const MainPage = () => {
-  const isLoggedIn = true;
-  const [placeList, setPlaceList] = useState<PlaceBasedAreaItem[]>([]);
+  const [userData, setUserData] = useState<UserDataResponse | null>(null);
+  const isLoggedIn = sessionStorage.getItem('kakao_id');
 
   useAsyncEffect(async () => {
-    const placeList = await getPlaceBasedArea({ MobileOS: 'ETC' });
-    setPlaceList(placeList === '' ? [] : placeList.item);
-  }, []);
+    if (!isLoggedIn) return;
+
+    try {
+      const response = await getUserData(Number(isLoggedIn));
+      setUserData(response);
+    } catch (err) {
+      throw new Error('오류가 발생했습니다');
+    }
+  }, [isLoggedIn]);
 
   return (
     <>
       <Header />
       <main css={container}>
         <h1 css={mainText}>
-          {isLoggedIn && (
+          {userData && (
             <>
-              서현님,
+              {userData.name}님,
               <br />
             </>
           )}
           오늘 어디로 떠날까요?
         </h1>
-        <NearbyTravel placeList={placeList} />
+        <NearbyTravel
+          isLoggedIn={Boolean(isLoggedIn)}
+          region={userData?.region}
+        />
 
         <div css={graySpacing} />
         <RecommendedTravel />

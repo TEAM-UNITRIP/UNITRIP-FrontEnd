@@ -3,6 +3,11 @@ module.exports = {
     browser: true,
     es2021: true,
   },
+  settings: {
+    react: {
+      version: 'detect', // 사용자가 설치한 버전을 자동으로 선택
+    },
+  },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
