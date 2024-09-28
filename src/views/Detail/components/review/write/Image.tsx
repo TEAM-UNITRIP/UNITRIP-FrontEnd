@@ -44,5 +44,7 @@ const imgBoxContainerCss = css`
 `;
 
 const imgCss = css`
+  height: 100%;
   border-radius: 1.2rem;
+  object-fit: cover;
 `;

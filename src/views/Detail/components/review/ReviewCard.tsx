@@ -72,7 +72,7 @@ const ReviewCard = (props: ReviewResponse) => {
 export default ReviewCard;
 
 const imgCss = css`
-  // object-fit: cover;
+  object-fit: cover;
 `;
 
 const containerCss = css`

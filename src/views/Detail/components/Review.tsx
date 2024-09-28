@@ -77,7 +77,6 @@ const Review = () => {
   }, []);
 
   useAsyncEffect(async () => {
-    console.log('실행됨?');
     const data = await getReviews(contentId as string);
     setReviewData(data);
 
