@@ -42,6 +42,7 @@ const MainPage = () => {
         <NearbyTravel
           isLoggedIn={Boolean(isLoggedIn)}
           region={userData?.region}
+          favoriteList={userData?.favorite_list}
         />
 
         <div css={graySpacing} />

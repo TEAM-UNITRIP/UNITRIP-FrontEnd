@@ -14,10 +14,11 @@ import TravelCard from './TravelCard';
 interface NearbyTravelProps {
   isLoggedIn: boolean;
   region?: string;
+  favoriteList?: number[];
 }
 
 const NearbyTravel = (props: NearbyTravelProps) => {
-  const { isLoggedIn, region } = props;
+  const { isLoggedIn, region, favoriteList } = props;
   const [activateModal, setActivateModal] = useState(false);
   const [placeList, setPlaceList] = useState<PlaceBasedAreaItem[]>([]);
 
@@ -53,6 +54,7 @@ const NearbyTravel = (props: NearbyTravelProps) => {
                     name={title}
                     address={`${addr1} ${addr2}`}
                     imgUrl={firstimage}
+                    isHeart={!!favoriteList?.includes(Number(contentid))}
                   />
                 ),
               )}

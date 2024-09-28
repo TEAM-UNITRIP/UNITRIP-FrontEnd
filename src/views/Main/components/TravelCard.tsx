@@ -1,23 +1,22 @@
 import { css } from '@emotion/react';
 
-import { HeartMonoIcon, PinLocationMonoIcon } from '@/assets/icon';
+import { HeartFillMonoIcon, PinLocationMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
 interface TravelCardProps {
   name: string;
   address: string;
   imgUrl: string;
+  isHeart: boolean;
 }
 
 const TravelCard = (props: TravelCardProps) => {
-  const { name, address, imgUrl } = props;
+  const { name, address, imgUrl, isHeart } = props;
 
   return (
     <li css={card(imgUrl)}>
       <div css={background}>
-        <button css={heart} onClick={() => {}}>
-          <HeartMonoIcon />
-        </button>
+        <div css={heart}>{isHeart && <HeartFillMonoIcon />}</div>
         <p css={nameCss}>{name}</p>
         <div css={addressContainer}>
           <PinLocationMonoIcon />
