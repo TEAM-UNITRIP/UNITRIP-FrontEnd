@@ -75,7 +75,11 @@ const nameCss = css`
 `;
 
 const locationCss = css`
+  overflow: hidden;
+
   color: ${COLORS.white};
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
   ${FONTS.Small2};
 `;
