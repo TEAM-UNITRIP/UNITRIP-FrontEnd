@@ -61,7 +61,7 @@ const NearbyTravel = (props: NearbyTravelProps) => {
               )}
             </ul>
           </div>
-          <Link to="" css={link}>
+          <Link to="/map" css={link}>
             {region || '서울'} 여행지 둘러보기
           </Link>
         </>
