@@ -51,6 +51,7 @@ const NearbyTravel = (props: NearbyTravelProps) => {
                 ({ title, addr1, addr2, contentid, firstimage }) => (
                   <TravelCard
                     key={contentid}
+                    contentid={contentid}
                     name={title}
                     address={`${addr1} ${addr2}`}
                     imgUrl={firstimage}

@@ -1,9 +1,11 @@
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 import { HeartFillMonoIcon, PinLocationMonoIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
 interface TravelCardProps {
+  contentid: string;
   name: string;
   address: string;
   imgUrl: string;
@@ -11,10 +13,10 @@ interface TravelCardProps {
 }
 
 const TravelCard = (props: TravelCardProps) => {
-  const { name, address, imgUrl, isHeart } = props;
+  const { contentid, name, address, imgUrl, isHeart } = props;
 
   return (
-    <li css={card(imgUrl)}>
+    <Link to={`/${contentid}`} css={card(imgUrl)}>
       <div css={background}>
         <div css={heart}>{isHeart && <HeartFillMonoIcon />}</div>
         <p css={nameCss}>{name}</p>
@@ -23,7 +25,7 @@ const TravelCard = (props: TravelCardProps) => {
           <address css={locationCss}>{address}</address>
         </div>
       </div>
-    </li>
+    </Link>
   );
 };
 
