@@ -1,11 +1,14 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 
+import getUserData from '@/apis/supabase/getUserData';
 import { HeaderBackIcon } from '@/assets/icon';
 import BottomButton from '@/components/BottomButton';
 import Header from '@/components/Header';
 import MenuBar from '@/components/MenuBar';
 import TravelerType from '@/components/TravelerType';
+import { useAsyncEffect } from '@/hooks/use-async-effect';
+import { UserDataResponse } from '@/types/userAPI';
 
 import Favorite from '../components/Favorite';
 import Main from '../components/Main';
@@ -14,7 +17,15 @@ import { MYPAGE_TAB_CONTENTS } from '../constants/text';
 
 const Mypage = () => {
   const [currentTab, setCurrentTab] = useState<string>('main');
+  const [userData, setUserData] = useState<UserDataResponse | null>(null);
   const [travelerTypes, setTravelerTypes] = useState<string[]>([]);
+
+  const kakaoId = sessionStorage.getItem('kakao_id');
+
+  useAsyncEffect(async () => {
+    const response = await getUserData(Number(kakaoId));
+    setUserData(response);
+  }, []);
 
   const backToMainTab = () => {
     setCurrentTab('main');
@@ -27,9 +38,18 @@ const Mypage = () => {
   const handleData = () => {};
 
   const renderComponent = (state: string) => {
+    if (!userData) {
+      return <div>로딩 중...</div>;
+    }
     switch (state) {
       case 'main':
-        return <Main handleSetCurrentTab={handleSetCurrentTab} />;
+        return (
+          <Main
+            name={userData.name}
+            profile={userData.profile}
+            handleSetCurrentTab={handleSetCurrentTab}
+          />
+        );
       case MYPAGE_TAB_CONTENTS.PERSONAL_INFO:
         return <PersonalInfo />;
       case MYPAGE_TAB_CONTENTS.FAVORITE_TRAVEL_LIST:

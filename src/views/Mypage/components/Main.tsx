@@ -1,23 +1,24 @@
 import { css } from '@emotion/react';
 
 import { ArrowRightIcon } from '@/assets/icon';
-import { ProfileImg } from '@/assets/image';
 import { COLORS, FONTS } from '@/styles/constants';
 
 import { MYPAGE_TAB_CONTENTS } from '../constants/text';
 
 interface MainProps {
+  name: string;
+  profile?: string;
   handleSetCurrentTab: (clicked: string) => void;
 }
 
 function Main(props: MainProps) {
-  const { handleSetCurrentTab } = props;
+  const { name, profile, handleSetCurrentTab } = props;
 
   return (
     <div>
       <section css={profileSection}>
-        <img src={ProfileImg} alt="프로필이미지_사진" css={profileImage} />
-        <span css={InfoText}>서아람</span>
+        <img src={profile} alt="프로필이미지_사진" css={profileImage} />
+        <span css={InfoText}>{name}</span>
       </section>
       <ul>
         {Object.entries(MYPAGE_TAB_CONTENTS).map(([key, name]) => (
