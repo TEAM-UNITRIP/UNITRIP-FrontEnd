@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
 
 import {
+  CloseBottomSheetIcon,
   MapFavoirteIcon,
   MapSearchActiveIcon,
   MapSearchInactiveIcon,
@@ -11,7 +12,10 @@ import MenuBar from '@/components/MenuBar';
 import { COLORS, FONTS } from '@/styles/constants';
 import { locationBasedList1Res } from '@/types/locationBasedList1';
 
-import SearchBottomSheet from '../components/SearchBottomSheet';
+import FavoriteBottomSheet from '../components/FavoriteBottomSheet';
+import PinBottomSheet from '../components/PinBottomSheet';
+import { DUMMY } from '../constants/DUMMY';
+import { createFavoritePin } from '../utils/createFavoritePin';
 import { createKakaoMap } from '../utils/createKakaoMap';
 import { createMapPin } from '../utils/createMapPin';
 import { getMapCenter } from '../utils/getMapCenter';
@@ -33,9 +37,13 @@ export type mapType = kakao.maps.Map | undefined;
 
 const MapPage = () => {
   const [map, setMap] = useState<mapType>(); // 카카오맵 관리
+
   const [markers, setMarkers] = useState<kakao.maps.Marker[]>([]); // 주변여행지 검색 시 마커 리스트
+  const [favMarkers, setFavMarkers] = useState<kakao.maps.Marker[]>([]); // 저장한 여행지 마커 리스트
+
   const [region, setRegion] = useState({ city: '', town: '' }); // 사용자 지정 지역
   const [defaultLoc, setDefaultLoc] = useState<locType>(); // 사용자 지정 지역 좌표
+
   const [getLocActive, setGetLocActive] = useState(false); // 위치 허용에 따른 아이콘 변화
 
   // 바텀시트 내용
@@ -49,8 +57,11 @@ const MapPage = () => {
   );
 
   const [isPinClicked, setIsPinClicked] = useState(false); // 핀 클릭 바텀시트
+  const [isFavClicked, setIsFavClicked] = useState(false); // 저장한 여행지 버튼
+  const [isFavPinClicked, setIsFavPinClicked] = useState(false); // 저장한 여행지 리스트 중 핀 버튼 클릭
 
   const apiRes = useRef<locationBasedList1Res[]>();
+  const favoriteList = useRef<bottomSheetType[]>([]);
 
   /** 기본 사용자의 위치에 따른 위도, 경도 값 업데이트 */
   useEffect(() => {
@@ -62,18 +73,51 @@ const MapPage = () => {
     });
   }, [region.city, region.town]);
 
-  /** '/map' 진입시, 사용자가 회원가입 할 때 등록했던 지역을 기준으로 지도 띄우기 */
+  /** 저장한 여행지 목록 버튼 클릭 */
+  const onClickFavorite = async () => {
+    if (map) {
+      clearMarker();
+      const res = await createFavoritePin(
+        DUMMY,
+        map,
+        setBottomSheetContent,
+        openPinBottomSheet,
+      );
+      if (res) {
+        favoriteList.current = res.favoriteList;
+      }
+      openFavoriteBottomSheet();
+    }
+  };
+
+  /** '/map' 진입시, 사용자가 회원가입 할 때 등록했던 지역을 기준으로 지도 띄우기
+   *  + 저장한 여행지에 있는 목록 마커 생성해서 박아놓기
+   */
   useEffect(() => {
     const kakaoMap = createKakaoMap(defaultLoc, 5);
+    if (favMarkers) {
+      favMarkers.forEach((marker) => {
+        marker.setMap(kakaoMap);
+      });
+    }
     setMap(kakaoMap);
   }, [defaultLoc]);
 
-  const openBottomSheet = () => {
-    setIsPinClicked(true);
+  const openFavoriteBottomSheet = () => {
+    setIsFavClicked(true);
   };
 
-  const closeBottomSheet = () => {
-    setIsPinClicked(false);
+  const closeFavoriteBottomSheet = () => {
+    setIsFavClicked(false);
+  };
+
+  /** 핀 클릭 시 보여지는 content 1개짜리 바텀시트 open */
+  const openPinBottomSheet = (state: string) => {
+    if (state === 'search') {
+      setIsPinClicked(true);
+    } else if (state === 'favorite') {
+      setIsFavPinClicked(true);
+    }
   };
 
   /** 사용자의 현재 위치 (위도, 경도) 받아오기 */
@@ -86,7 +130,7 @@ const MapPage = () => {
             position.coords.longitude,
           );
           if (map) {
-            clearMarker();
+            clearMarker('favorite');
             map.setCenter(latlng);
             map.setLevel(4);
           }
@@ -104,17 +148,22 @@ const MapPage = () => {
   };
 
   /** 지도에서 마커 제거, 마커 state 초기화 */
-  const clearMarker = () => {
+  const clearMarker = (pinType?: string) => {
     markers.forEach((marker) => marker.setMap(null));
     setMarkers([]);
+
+    if (pinType === 'favorite') {
+      favMarkers.forEach((marker) => marker.setMap(null));
+      setFavMarkers([]);
+    }
   };
 
-  //주변 여행지 찾기 클릭 시 지도 중심좌표 값 받아오기 & 공공api 검색 / 지도에 핀 박기
+  // 주변 여행지 찾기 클릭 시 지도 중심좌표 값 받아오기 & 공공api 검색 / 지도에 핀 생성
   const onClickSearch = async () => {
     const response = await getMapCenter(map);
 
     if (map && response && response.item) {
-      clearMarker();
+      clearMarker('favorite');
 
       apiRes.current = response.item;
 
@@ -122,7 +171,7 @@ const MapPage = () => {
         apiRes.current,
         map,
         setBottomSheetContent,
-        openBottomSheet,
+        openPinBottomSheet,
       );
 
       if (curMarkers) {
@@ -140,9 +189,13 @@ const MapPage = () => {
     <div id="map" css={MapContainer}>
       <section css={buttonSection}>
         <div css={topButtonSection}>
-          <MapFavoirteIcon />
+          {isFavClicked ? (
+            <CloseBottomSheetIcon />
+          ) : (
+            <MapFavoirteIcon onClick={onClickFavorite} />
+          )}
         </div>
-        {!isPinClicked ? (
+        {!isPinClicked && (
           <div css={bottomButtonSection}>
             <button css={searchButton} type="button" onClick={onClickSearch}>
               주변 여행지 찾아보기
@@ -156,18 +209,38 @@ const MapPage = () => {
               )}
             </button>
           </div>
-        ) : null}
+        )}
       </section>
       <div css={bottomSection}>
         {isPinClicked && (
-          <SearchBottomSheet
+          <PinBottomSheet
             title={bottomSheetContent.title}
             address={bottomSheetContent.address}
             image={bottomSheetContent.image}
             contentId={bottomSheetContent.contentId}
-            closeBottomSheet={closeBottomSheet}
+            closeBottomSheet={() => {
+              setIsPinClicked(false);
+            }}
           />
         )}
+
+        {isFavClicked && (
+          <FavoriteBottomSheet
+            favoriteList={favoriteList.current}
+            closeBottomSheet={closeFavoriteBottomSheet}
+          />
+        )}
+
+        {isFavPinClicked && (
+          <PinBottomSheet
+            title={bottomSheetContent.title}
+            address={bottomSheetContent.address}
+            image={bottomSheetContent.image}
+            contentId={bottomSheetContent.contentId}
+            closeBottomSheet={() => setIsFavPinClicked(false)}
+          />
+        )}
+
         <nav css={menuBarCss}>
           <MenuBar />
         </nav>
