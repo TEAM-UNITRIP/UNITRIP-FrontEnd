@@ -12,7 +12,7 @@ const Favorite = () => {
   return (
     <>
       {favoriteList.length === 0 ? (
-        <div>
+        <div css={messageContainer}>
           <EmptyFavList />
           <Link to="/" css={homeBtn}>
             홈으로 이동하기
@@ -27,9 +27,14 @@ const Favorite = () => {
 
 export default Favorite;
 
-// const messageContainer = css`
-//   margin-top: 15rem;
-// `;
+const messageContainer = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin-top: 15rem;
+`;
 
 const homeBtn = css`
   padding: 0.8rem 1.6rem 1rem;
