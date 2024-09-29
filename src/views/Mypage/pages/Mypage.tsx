@@ -61,7 +61,9 @@ const Mypage = () => {
       {currentTab === 'main' ? (
         <MenuBar />
       ) : (
-        <BottomButton text="저장" clickedFn={handleData} />
+        currentTab !== MYPAGE_TAB_CONTENTS.FAVORITE_TRAVEL_LIST && (
+          <BottomButton text="저장" clickedFn={handleData} />
+        )
       )}
     </>
   );
