@@ -26,6 +26,10 @@ const Mypage = () => {
   useAsyncEffect(async () => {
     const response = await getUserData(Number(kakaoId));
     setUserData(response);
+
+    if (response) {
+      setTravelerTypes(response.universal_type);
+    }
   }, []);
 
   const backToMainTab = () => {
