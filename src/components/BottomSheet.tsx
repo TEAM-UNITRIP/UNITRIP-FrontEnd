@@ -83,7 +83,9 @@ const backgroundCss = css`
   align-items: center;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
   z-index: 999;
 
   width: 100vw;
