@@ -60,7 +60,7 @@ const MapPage = () => {
   const [isFavClicked, setIsFavClicked] = useState(false); // 저장한 여행지 버튼
   const [isFavPinClicked, setIsFavPinClicked] = useState(false); // 저장한 여행지 리스트 중 핀 버튼 클릭
 
-  const apiRes = useRef<locationBasedList1Res[]>();
+  const apiRes = useRef<locationBasedList1Res[]>([]);
   const favoriteList = useRef<bottomSheetType[]>([]);
 
   /** 기본 사용자의 위치에 따른 위도, 경도 값 업데이트 */
@@ -165,7 +165,7 @@ const MapPage = () => {
     if (map && response && response.item) {
       clearMarker('favorite');
 
-      apiRes.current = response.item;
+      apiRes.current = response.item.body.items.item;
 
       const { curMarkers } = createMapPin(
         apiRes.current,

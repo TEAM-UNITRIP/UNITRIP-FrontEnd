@@ -17,7 +17,7 @@ interface locationBasedList1Params {
 export const getLocationBasedList1 = async (
   paramsInfo: locationBasedList1Params,
 ) => {
-  let params = `MobileApp=UNITRIP&_type=json&arrange=O&serviceKey=${import.meta.env.VITE_PUBLIC_DATA_SERVICE_KEY}`;
+  let params = `MobileApp=UNITRIP&_type=json&arrange=S&serviceKey=${import.meta.env.VITE_PUBLIC_DATA_SERVICE_KEY}`;
 
   for (const [key, value] of Object.entries(paramsInfo)) {
     params += `&${key}=${value}`;
@@ -32,5 +32,6 @@ export const getLocationBasedList1 = async (
   } = await publicDataClient.get<Response<getLocationBasedList1Res>>(
     `/locationBasedList1?${params}`,
   );
+
   return items;
 };

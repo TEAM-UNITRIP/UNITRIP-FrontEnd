@@ -30,11 +30,10 @@ export interface getLocationBasedList1Res {
   body: {
     pageNo: number;
     totalCount: number;
-    items:
-      | {
-          item: locationBasedList1Res[];
-        }
-      | '';
+    items: {
+      item: locationBasedList1Res[];
+    };
+
     numOfRows: number;
   };
 }
