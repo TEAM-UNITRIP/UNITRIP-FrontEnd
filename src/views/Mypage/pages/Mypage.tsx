@@ -6,6 +6,7 @@ import { HeaderBackIcon } from '@/assets/icon';
 import BottomButton from '@/components/BottomButton';
 import Header from '@/components/Header';
 import MenuBar from '@/components/MenuBar';
+import { Region } from '@/components/SelectRegion';
 import TravelerType from '@/components/TravelerType';
 import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { UserDataResponse } from '@/types/userAPI';
@@ -35,12 +36,18 @@ const Mypage = () => {
     setCurrentTab(clickedTab);
   };
 
-  const handleData = () => {};
+  const parseRegion = (regionString: string): Region => {
+    const [city, town] = regionString.split(' ');
+    return { city, town };
+  };
 
   const renderComponent = (state: string) => {
     if (!userData) {
       return <div>로딩 중...</div>;
     }
+
+    const userRegion = parseRegion(userData.region);
+
     switch (state) {
       case 'main':
         return (
@@ -51,7 +58,7 @@ const Mypage = () => {
           />
         );
       case MYPAGE_TAB_CONTENTS.PERSONAL_INFO:
-        return <PersonalInfo />;
+        return <PersonalInfo name={userData.name} region={userRegion} />;
       case MYPAGE_TAB_CONTENTS.FAVORITE_TRAVEL_LIST:
         return <Favorite />;
       case MYPAGE_TAB_CONTENTS.TRAVELER_TYPE:
@@ -81,7 +88,7 @@ const Mypage = () => {
       {currentTab === 'main' ? (
         <MenuBar />
       ) : (
-        <BottomButton text="저장" clickedFn={handleData} />
+        <BottomButton text="저장" clickedFn={backToMainTab} />
       )}
     </>
   );

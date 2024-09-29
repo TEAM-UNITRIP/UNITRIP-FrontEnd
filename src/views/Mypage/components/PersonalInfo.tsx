@@ -4,8 +4,16 @@ import { useState } from 'react';
 import SelectRegion, { Region } from '@/components/SelectRegion';
 import { COLORS, FONTS } from '@/styles/constants';
 
-const PersonalInfo = () => {
-  const [region, setRegion] = useState<Region>({ city: '', town: '' });
+interface PersonalInfoProps {
+  name: string;
+  region: Region;
+}
+
+const PersonalInfo = ({ name, region }: PersonalInfoProps) => {
+  const [selectedRegion, setSelectedRegion] = useState<Region>({
+    city: region.city,
+    town: region.town,
+  });
 
   return (
     <>
@@ -14,7 +22,7 @@ const PersonalInfo = () => {
           <li css={formItem}>
             <span css={title}>이름*</span>
 
-            <input type="text" css={input} value="이돌이" disabled />
+            <input type="text" css={input} value={name} disabled />
           </li>
 
           <li css={formItem}>
@@ -27,7 +35,7 @@ const PersonalInfo = () => {
             </div>
           </li>
 
-          <SelectRegion region={region} setRegion={setRegion} />
+          <SelectRegion region={selectedRegion} setRegion={setSelectedRegion} />
         </ul>
       </form>
     </>
