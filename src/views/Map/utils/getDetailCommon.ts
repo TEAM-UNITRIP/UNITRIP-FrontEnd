@@ -30,12 +30,12 @@ export const getDetailCommonRes = async (
 
     if (response) {
       favoriteList.push({
-        title: response.item.body.items.item[0].title,
-        address: response.item.body.items.item[0].addr1,
-        image: response.item.body.items.item[0].firstimage,
-        mapX: response.item.body.items.item[0].mapx,
-        mapY: response.item.body.items.item[0].mapy,
-        contentId: response.item.body.items.item[0].contentid,
+        title: response.item[0].title,
+        address: response.item[0].addr1,
+        image: response.item[0].firstimage,
+        mapX: response.item[0].mapx,
+        mapY: response.item[0].mapy,
+        contentId: response.item[0].contentid,
       });
     }
   });

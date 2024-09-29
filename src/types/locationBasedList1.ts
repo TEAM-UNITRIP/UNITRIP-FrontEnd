@@ -22,18 +22,18 @@ export interface locationBasedList1Res {
   cat3: string;
 }
 
-export interface getLocationBasedList1Res {
-  header: {
-    resultMsg: string;
-    resultCode: string;
-  };
-  body: {
-    pageNo: number;
-    totalCount: number;
-    items: {
-      item: locationBasedList1Res[];
-    };
+// export interface getLocationBasedList1Res {
+//   header: {
+//     resultMsg: string;
+//     resultCode: string;
+//   };
+//   body: {
+//     pageNo: number;
+//     totalCount: number;
+//     items: {
+//       item: locationBasedList1Res[];
+//     };
 
-    numOfRows: number;
-  };
-}
+//     numOfRows: number;
+//   };
+// }

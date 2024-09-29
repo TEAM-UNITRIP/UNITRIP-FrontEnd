@@ -165,7 +165,7 @@ const MapPage = () => {
     if (map && response && response.item) {
       clearMarker('favorite');
 
-      apiRes.current = response.item.body.items.item;
+      apiRes.current = response.item;
 
       const { curMarkers } = createMapPin(
         apiRes.current,

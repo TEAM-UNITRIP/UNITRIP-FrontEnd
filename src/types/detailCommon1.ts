@@ -21,17 +21,17 @@ export interface detailCommon1ResItem {
   firstimage: string;
 }
 
-export interface detailCommon1Res {
-  header: {
-    resultCode: string;
-    resultMsg: string;
-  };
-  body: {
-    numOfRows: number;
-    pageNo: number;
-    totalCount: number;
-    items: {
-      item: detailCommon1ResItem[];
-    };
-  };
-}
+// export interface detailCommon1Res {
+//   header: {
+//     resultCode: string;
+//     resultMsg: string;
+//   };
+//   body: {
+//     numOfRows: number;
+//     pageNo: number;
+//     totalCount: number;
+//     items: {
+//       item: detailCommon1ResItem[];
+//     };
+//   };
+// }
