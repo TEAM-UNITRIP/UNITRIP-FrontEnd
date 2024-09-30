@@ -18,6 +18,13 @@ export const MAP_CATEGORY_FACILITIES: Record<
   infant: { categoryName: '영유아 가족', iconList: INFANT_FACILITIES },
 };
 
+export const MAP_UNIVERSAL_TYPE: Record<category, string> = {
+  physical: '지체장애인',
+  visual: '시각장애인',
+  infant: '영유아가족',
+  hearing: '청각장애인',
+};
+
 export const INITIAL_FILTER_STATE: filterState = {
   physical: {
     주차장: false,
@@ -59,21 +66,19 @@ export const getFilterList = (filterState: filterState) => {
   );
 };
 
-const MAP_CATGORY: Record<string, category> = {
-  시각장애인: 'visual',
-  청각장애인: 'hearing',
-  지체장애인: 'physical',
-  영유아가족: 'infant',
-};
-
 export const createInitialFilterState = (initialCategory: string[]) => {
-  const filterState = INITIAL_FILTER_STATE;
+  initialCategory.forEach((categoryItem) => {
+    const targetCategory = Object.keys(MAP_UNIVERSAL_TYPE).find(
+      (key) => MAP_UNIVERSAL_TYPE[key as category] === categoryItem,
+    );
 
-  initialCategory.forEach((item) => {
-    const category = MAP_CATGORY[item];
-    Object.keys(INITIAL_FILTER_STATE[category]).forEach((key) => {
-      filterState[category][key] = true;
-    });
+    if (targetCategory) {
+      Object.keys(INITIAL_FILTER_STATE[targetCategory as category]).forEach(
+        (key) => {
+          INITIAL_FILTER_STATE[targetCategory as category][key] = true;
+        },
+      );
+    }
   });
 
   return INITIAL_FILTER_STATE;

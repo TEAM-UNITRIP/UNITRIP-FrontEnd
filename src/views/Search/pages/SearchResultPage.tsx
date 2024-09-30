@@ -54,9 +54,9 @@ const SearchResultPage = () => {
     const kakaoId = sessionStorage.getItem('kakao_id');
     if (!kakaoId) return;
 
-    const data = await getUserData(Number(kakaoId));
-    setUserData(data);
-    setFilterState(createInitialFilterState([]));
+    const userData = await getUserData(Number(kakaoId));
+    setUserData(userData);
+    setFilterState(createInitialFilterState(userData?.universal_type || []));
   }, []);
 
   // 무한스크롤
