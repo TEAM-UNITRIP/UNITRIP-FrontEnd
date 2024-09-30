@@ -5,13 +5,13 @@ import { BigInfoIcon } from '@/assets/icon';
 import PlaceCard from '@/components/PlaceCard';
 import { MAP_FACILITIES_API_KEY } from '@/constants/facilities';
 import { COLORS, FONTS } from '@/styles/constants';
-import { BarrierFreeItem, SearchResItem } from '@/types/search';
+import { BarrierFreeItem, SearchItem } from '@/types/search';
 
 import { getFilterList } from '../../constants/category';
 import { filterState } from '../../types/category';
 
 interface SearchResultProps {
-  placeData: (SearchResItem & BarrierFreeItem)[];
+  placeData: (SearchItem & BarrierFreeItem)[];
   targetElement: MutableRefObject<HTMLDivElement | null>;
   loading: boolean;
   filterState: filterState;
@@ -24,7 +24,7 @@ const SearchResult = (props: SearchResultProps) => {
   console.log(loading);
 
   const [renderPlaceList, setRenderPlaceList] = useState<
-    (SearchResItem & BarrierFreeItem)[]
+    (SearchItem & BarrierFreeItem)[]
   >([]);
 
   useEffect(() => {

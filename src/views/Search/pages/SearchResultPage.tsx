@@ -9,7 +9,7 @@ import MenuBar from '@/components/MenuBar';
 import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll';
 import { COLORS, FONTS } from '@/styles/constants';
-import { BarrierFreeItem, SearchResItem } from '@/types/search';
+import { BarrierFreeItem, SearchItem } from '@/types/search';
 import { UserDataResponse } from '@/types/userAPI';
 import { isGuideShown } from '@/utils/storageHideGuide';
 
@@ -30,9 +30,9 @@ const SearchResultPage = () => {
 
   const { pathname } = useLocation();
   const [userData, setUserData] = useState<UserDataResponse | null>(null);
-  const [placeData, setPlaceData] = useState<
-    (SearchResItem & BarrierFreeItem)[]
-  >([]);
+  const [placeData, setPlaceData] = useState<(SearchItem & BarrierFreeItem)[]>(
+    [],
+  );
 
   const [filterState, setFilterState] =
     useState<filterState>(INITIAL_FILTER_STATE);
@@ -87,7 +87,7 @@ const SearchResultPage = () => {
         if (pageNo === 0) setPlaceData([]);
         target.current && observer.unobserve(target.current);
       } else {
-        const placeData: (SearchResItem & BarrierFreeItem)[] = [];
+        const placeData: (SearchItem & BarrierFreeItem)[] = [];
         const promises = items.item.map(({ contentid }) =>
           getBarrierFreeInfo({
             MobileOS: 'ETC',
@@ -97,7 +97,7 @@ const SearchResultPage = () => {
         const promiseResult = await Promise.allSettled(promises);
         promiseResult.forEach((result) => {
           if (result.status === 'fulfilled' && result.value !== '') {
-            const item = result.value.item as BarrierFreeItem[];
+            const item = result.value.item;
             const targetPlace = items.item.find(
               ({ contentid }) => contentid === item[0].contentid,
             );

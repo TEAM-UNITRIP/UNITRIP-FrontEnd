@@ -1,7 +1,7 @@
 // 검색 관련 공공 데이터 API
 
 import { Response } from '@/types/public';
-import { BarrierFree, SearchWord } from '@/types/search';
+import { BarrierFreeItem, SearchItem } from '@/types/search';
 
 import { publicDataClient } from '..';
 
@@ -31,7 +31,7 @@ export const getSearchKeyword = async (paramsInfo: searchKeywordParams) => {
         body: { items },
       },
     },
-  } = await publicDataClient.get<Response<SearchWord>>(
+  } = await publicDataClient.get<Response<SearchItem[]>>(
     `/searchKeyword1?${params}`,
   );
   return items;
@@ -50,7 +50,7 @@ export const getBarrierFreeInfo = async (paramsInfo: BarrierFreeInfoParams) => {
         body: { items },
       },
     },
-  } = await publicDataClient.get<Response<BarrierFree>>(
+  } = await publicDataClient.get<Response<BarrierFreeItem[]>>(
     `/detailWithTour1?${params}`,
   );
   return items;
