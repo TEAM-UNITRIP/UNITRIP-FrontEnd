@@ -82,9 +82,9 @@ const containerCss = (placeLength: number) => css`
   flex-direction: column;
 
   height: ${placeLength > 0 ? 'calc(100vh - 11rem)' : 'fit-content'};
-  overflow-y: scroll;
-
   padding: 1.6rem 2rem 0;
+  margin-bottom: 7rem;
+  overflow-y: scroll;
 `;
 
 const lastTargetCss = css`
