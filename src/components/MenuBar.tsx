@@ -30,7 +30,6 @@ const MenuBar = () => {
   const [activateModal, setActivateModal] = useState(false);
 
   const handleNavigation = (url: string) => {
-    console.log(url);
     if (url === '/mypage') {
       if (isLoggedIn) {
         navigate(url);

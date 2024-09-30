@@ -7,6 +7,7 @@ import {
   MapSearchInactiveIcon,
   RefreshMonoIcon,
 } from '@/assets/icon';
+import LoginModal from '@/components/LoginModal';
 import MenuBar from '@/components/MenuBar';
 import { COLORS, FONTS } from '@/styles/constants';
 import { locationBasedList1Res } from '@/types/locationBasedList1';
@@ -37,6 +38,9 @@ const MapPage = () => {
   const [region, setRegion] = useState({ city: '', town: '' }); // 사용자 지정 지역
   const [defaultLoc, setDefaultLoc] = useState<locType>(); // 사용자 지정 지역 좌표
   const [getLocActive, setGetLocActive] = useState(false); // 위치 허용에 따른 아이콘 변화
+  const [activateModal, setActivateModal] = useState(false);
+
+  const isLoggedIn = sessionStorage.getItem('kako_id');
 
   // 바텀시트 내용
   const [bottomSheetContent, setBottomSheetContent] = useState<bottomSheetType>(
@@ -136,43 +140,58 @@ const MapPage = () => {
     }
   };
 
+  const showFavList = () => {
+    if (isLoggedIn) {
+      console.log('즐찾 리스트');
+    } else {
+      setActivateModal(true);
+    }
+  };
+
+  const closeModal = () => {
+    setActivateModal(false);
+  };
+
   return (
-    <div id="map" css={MapContainer}>
-      <section css={buttonSection}>
-        <div css={topButtonSection}>
-          <MapFavoirteIcon />
-        </div>
-        {!isPinClicked ? (
-          <div css={bottomButtonSection}>
-            <button css={searchButton} type="button" onClick={onClickSearch}>
-              주변 여행지 찾아보기
-              <RefreshMonoIcon />
-            </button>
-            <button css={rightButton} onClick={getCurrentLoc} type="button">
-              {getLocActive ? (
-                <MapSearchActiveIcon />
-              ) : (
-                <MapSearchInactiveIcon />
-              )}
-            </button>
+    <>
+      <div id="map" css={MapContainer}>
+        <section css={buttonSection}>
+          <div css={topButtonSection}>
+            <MapFavoirteIcon onClick={showFavList} />
           </div>
-        ) : null}
-      </section>
-      <div css={bottomSection}>
-        {isPinClicked && (
-          <SearchBottomSheet
-            title={bottomSheetContent.title}
-            address={bottomSheetContent.address}
-            image={bottomSheetContent.image}
-            contentId={bottomSheetContent.contentId}
-            closeBottomSheet={closeBottomSheet}
-          />
-        )}
-        <nav css={menuBarCss}>
-          <MenuBar />
-        </nav>
+          {!isPinClicked ? (
+            <div css={bottomButtonSection}>
+              <button css={searchButton} type="button" onClick={onClickSearch}>
+                주변 여행지 찾아보기
+                <RefreshMonoIcon />
+              </button>
+              <button css={rightButton} onClick={getCurrentLoc} type="button">
+                {getLocActive ? (
+                  <MapSearchActiveIcon />
+                ) : (
+                  <MapSearchInactiveIcon />
+                )}
+              </button>
+            </div>
+          ) : null}
+        </section>
+        <div css={bottomSection}>
+          {isPinClicked && (
+            <SearchBottomSheet
+              title={bottomSheetContent.title}
+              address={bottomSheetContent.address}
+              image={bottomSheetContent.image}
+              contentId={bottomSheetContent.contentId}
+              closeBottomSheet={closeBottomSheet}
+            />
+          )}
+          <nav css={menuBarCss}>
+            <MenuBar />
+          </nav>
+        </div>
       </div>
-    </div>
+      {activateModal && <LoginModal onClick={closeModal} />}
+    </>
   );
 };
 
