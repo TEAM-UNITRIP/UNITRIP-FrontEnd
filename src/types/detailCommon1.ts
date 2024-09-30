@@ -1,4 +1,4 @@
-export interface detailCommon1ResItem {
+export interface detailCommon1Res {
   cat2: string;
   cat3: string;
   tel: string;
@@ -20,18 +20,3 @@ export interface detailCommon1ResItem {
   createdtime: string;
   firstimage: string;
 }
-
-// export interface detailCommon1Res {
-//   header: {
-//     resultCode: string;
-//     resultMsg: string;
-//   };
-//   body: {
-//     numOfRows: number;
-//     pageNo: number;
-//     totalCount: number;
-//     items: {
-//       item: detailCommon1ResItem[];
-//     };
-//   };
-// }
