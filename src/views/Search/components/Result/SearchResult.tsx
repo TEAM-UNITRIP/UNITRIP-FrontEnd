@@ -83,7 +83,7 @@ const containerCss = (placeLength: number) => css`
 
   height: ${placeLength > 0 ? 'calc(100vh - 11rem)' : 'fit-content'};
   padding: 1.6rem 2rem 0;
-  margin-bottom: 7rem;
+  padding-bottom: 7rem;
   overflow-y: scroll;
 `;
 
