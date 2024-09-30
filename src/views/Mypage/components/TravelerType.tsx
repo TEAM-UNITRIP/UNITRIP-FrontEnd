@@ -7,12 +7,14 @@ import BottomButton from '@/components/BottomButton';
 import SelectTravelerType from '@/components/SelectTravelerType';
 import ToastMessage from '@/components/ToastMessage';
 import { COLORS, FONTS } from '@/styles/constants';
+import { UserDataResponse } from '@/types/userAPI';
 
 interface TravelerTypeProps {
   travelerType: string[];
+  setUserData: React.Dispatch<React.SetStateAction<UserDataResponse>>;
 }
 
-const TravelerType = ({ travelerType }: TravelerTypeProps) => {
+const TravelerType = ({ travelerType, setUserData }: TravelerTypeProps) => {
   const [userType, setUserType] = useState<string[]>(travelerType);
   const [toast, setToast] = useState(false);
 
@@ -23,13 +25,21 @@ const TravelerType = ({ travelerType }: TravelerTypeProps) => {
 
         if (status === 204) {
           setToast(true);
+          setUserData((prev) => {
+            return {
+              ...prev,
+              universal_type: userType,
+            };
+          });
         }
       } catch (e) {
         throw new Error('오류가 발생했습니다');
       }
     };
 
-    fetchData();
+    if (travelerType !== userType) {
+      fetchData();
+    }
   };
 
   return (

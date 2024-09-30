@@ -6,13 +6,15 @@ import BottomButton from '@/components/BottomButton';
 import SelectRegion, { Region } from '@/components/SelectRegion';
 import ToastMessage from '@/components/ToastMessage';
 import { COLORS, FONTS } from '@/styles/constants';
+import { UserDataResponse } from '@/types/userAPI';
 
 interface PersonalInfoProps {
   name: string;
   region: Region;
+  setUserData: React.Dispatch<React.SetStateAction<UserDataResponse>>;
 }
 
-const PersonalInfo = ({ name, region }: PersonalInfoProps) => {
+const PersonalInfo = ({ name, region, setUserData }: PersonalInfoProps) => {
   const [selectedRegion, setSelectedRegion] = useState<Region>({
     city: region.city,
     town: region.town,
@@ -26,13 +28,23 @@ const PersonalInfo = ({ name, region }: PersonalInfoProps) => {
 
         if (status === 204) {
           setToast(true);
+          setUserData((prev) => {
+            return {
+              ...prev,
+              region: `${selectedRegion.city} ${selectedRegion.town}`,
+            };
+          });
         }
       } catch (e) {
         throw new Error('오류가 발생했습니다');
       }
     };
-
-    fetchData();
+    if (
+      region.city !== selectedRegion.city ||
+      region.town !== selectedRegion.town
+    ) {
+      fetchData();
+    }
   };
 
   return (

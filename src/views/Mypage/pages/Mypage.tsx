@@ -17,13 +17,19 @@ import { MYPAGE_TAB_CONTENTS } from '../constants/text';
 
 const Mypage = () => {
   const [currentTab, setCurrentTab] = useState<string>('main');
-  const [userData, setUserData] = useState<UserDataResponse | null>(null);
+  const [userData, setUserData] = useState<UserDataResponse>({
+    name: '',
+    profile: '',
+    region: '',
+    universal_type: [],
+    favorite_list: [],
+  });
 
   const kakaoId = sessionStorage.getItem('kakao_id');
 
   useAsyncEffect(async () => {
     const response = await getUserData(Number(kakaoId));
-    setUserData(response);
+    if (response) setUserData(response);
   }, []);
 
   const backToMainTab = () => {
@@ -56,11 +62,22 @@ const Mypage = () => {
           />
         );
       case MYPAGE_TAB_CONTENTS.PERSONAL_INFO:
-        return <PersonalInfo name={userData.name} region={userRegion} />;
+        return (
+          <PersonalInfo
+            name={userData.name}
+            region={userRegion}
+            setUserData={setUserData}
+          />
+        );
       case MYPAGE_TAB_CONTENTS.FAVORITE_TRAVEL_LIST:
         return <Favorite />;
       case MYPAGE_TAB_CONTENTS.TRAVELER_TYPE:
-        return <TravelerType travelerType={userData.universal_type} />;
+        return (
+          <TravelerType
+            travelerType={userData.universal_type}
+            setUserData={setUserData}
+          />
+        );
     }
   };
 
