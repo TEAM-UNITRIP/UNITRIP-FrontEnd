@@ -13,7 +13,6 @@ import RecommendedTravel from '../components/RecommendedTravel';
 
 const MainPage = () => {
   const [userData, setUserData] = useState<UserDataResponse | null>(null);
-  const [error, setError] = useState<string | null>(null); // 에러 상태 추가
   const isLoggedIn = sessionStorage.getItem('kakao_id');
 
   useAsyncEffect(async () => {
@@ -23,13 +22,9 @@ const MainPage = () => {
       const response = await getUserData(Number(isLoggedIn));
       setUserData(response);
     } catch (err) {
-      setError('오류가 발생했습니다'); // 에러 상태 업데이트
+      console.log(err);
     }
   }, [isLoggedIn]);
-
-  if (error) {
-    throw new Error(error); // 에러를 다시 던져서 ErrorBoundary가 처리하도록 함
-  }
 
   return (
     <>
