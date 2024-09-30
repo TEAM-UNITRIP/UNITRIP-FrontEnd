@@ -18,6 +18,13 @@ export const MAP_CATEGORY_FACILITIES: Record<
   infant: { categoryName: '영유아 가족', iconList: INFANT_FACILITIES },
 };
 
+export const MAP_UNIVERSAL_TYPE: Record<category, string> = {
+  physical: '지체장애인',
+  visual: '시각장애인',
+  infant: '영유아가족',
+  hearing: '청각장애인',
+};
+
 export const INITIAL_FILTER_STATE: filterState = {
   physical: {
     주차장: false,
