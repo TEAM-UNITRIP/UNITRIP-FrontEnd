@@ -20,6 +20,7 @@ const PersonalInfo = ({ name, region, setUserData }: PersonalInfoProps) => {
     town: region.town,
   });
   const [toast, setToast] = useState(false);
+  const [warning, setWarning] = useState(false);
 
   const saveFn = () => {
     const fetchData = async () => {
@@ -39,11 +40,16 @@ const PersonalInfo = ({ name, region, setUserData }: PersonalInfoProps) => {
         throw new Error('오류가 발생했습니다');
       }
     };
-    if (
-      region.city !== selectedRegion.city ||
-      region.town !== selectedRegion.town
-    ) {
-      fetchData();
+
+    if (!selectedRegion.city || !selectedRegion.town) {
+      setWarning(true);
+    } else {
+      if (
+        region.city !== selectedRegion.city ||
+        region.town !== selectedRegion.town
+      ) {
+        fetchData();
+      }
     }
   };
 
@@ -70,6 +76,9 @@ const PersonalInfo = ({ name, region, setUserData }: PersonalInfoProps) => {
           <SelectRegion region={selectedRegion} setRegion={setSelectedRegion} />
         </ul>
       </form>
+      {warning && (
+        <ToastMessage setToast={setToast}>항목을 모두 채워주세요.</ToastMessage>
+      )}
       {toast && (
         <ToastMessage setToast={setToast}>
           변경 사항이 반영되었습니다.

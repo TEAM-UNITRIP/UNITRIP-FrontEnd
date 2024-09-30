@@ -17,6 +17,7 @@ interface TravelerTypeProps {
 const TravelerType = ({ travelerType, setUserData }: TravelerTypeProps) => {
   const [userType, setUserType] = useState<string[]>(travelerType);
   const [toast, setToast] = useState(false);
+  const [warning, setWarning] = useState(false);
 
   const saveFn = () => {
     const fetchData = async () => {
@@ -36,9 +37,12 @@ const TravelerType = ({ travelerType, setUserData }: TravelerTypeProps) => {
         throw new Error('오류가 발생했습니다');
       }
     };
-
-    if (travelerType !== userType) {
-      fetchData();
+    if (!userType.length) {
+      setWarning(true);
+    } else {
+      if (travelerType !== userType) {
+        fetchData();
+      }
     }
   };
 
@@ -58,6 +62,9 @@ const TravelerType = ({ travelerType, setUserData }: TravelerTypeProps) => {
           <p>여행자 유형은 장소 추천과 리뷰 필터링에 반영돼요!</p>
         </div>
       </div>
+      {warning && (
+        <ToastMessage setToast={setToast}>항목을 모두 채워주세요.</ToastMessage>
+      )}
       {toast && (
         <ToastMessage setToast={setToast}>
           변경 사항이 반영되었습니다.
