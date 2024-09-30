@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 import { ArrowRightIcon } from '@/assets/icon';
 import { ProfileImg } from '@/assets/image';
@@ -14,6 +15,14 @@ interface MainProps {
 
 function Main(props: MainProps) {
   const { name, profile, handleSetCurrentTab } = props;
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    window.Kakao.Auth.logout();
+    sessionStorage.removeItem('kakao_id');
+    navigate(`/`);
+  };
 
   return (
     <div>
@@ -36,7 +45,7 @@ function Main(props: MainProps) {
           </li>
         ))}
       </ul>
-      <button type="button" css={tabItem('logout')}>
+      <button type="button" css={tabItem('logout')} onClick={logout}>
         로그아웃
       </button>
     </div>
