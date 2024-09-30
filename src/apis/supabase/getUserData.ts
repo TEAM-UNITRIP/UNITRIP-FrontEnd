@@ -3,7 +3,7 @@ import { unitripSupabase } from '@/utils/supabaseClient';
 
 const getUserData = async (kakaoId: number) => {
   const { data, error } = await unitripSupabase
-    .from('USER')
+    .from('USE')
     .select('*')
     .eq('kakao_id', kakaoId);
 
