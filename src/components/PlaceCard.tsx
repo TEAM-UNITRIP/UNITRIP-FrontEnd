@@ -128,7 +128,12 @@ const addressCss = css`
   ${FONTS.Small1};
 
   & > span {
+    overflow: hidden;
+
     padding-top: 0.1rem;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 `;
 
