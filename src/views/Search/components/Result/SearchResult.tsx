@@ -60,7 +60,6 @@ const SearchResult = (props: SearchResultProps) => {
                     placeName={title}
                     address={addr1 + addr2}
                     imgSrc={firstimage || firstimage2 || ''}
-                    onClickHeart={() => {}}
                     isHeart={heartList.includes(Number(contentid))}
                     buttonDisabled
                   />
@@ -70,44 +69,6 @@ const SearchResult = (props: SearchResultProps) => {
           )
         )}
         <div ref={targetElement} css={lastTargetCss} />
-
-        {/* 로딩 ui 필요 */}
-        {renderPlaceList.length >= 10 && (
-          <>
-            <div>
-              <PlaceCard
-                placeName={''}
-                address={''}
-                imgSrc={''}
-                isHeart={false}
-              />
-            </div>
-            <div>
-              <PlaceCard
-                placeName={''}
-                address={''}
-                imgSrc={''}
-                isHeart={false}
-              />
-            </div>
-            <div>
-              <PlaceCard
-                placeName={''}
-                address={''}
-                imgSrc={''}
-                isHeart={false}
-              />
-            </div>
-            <div>
-              <PlaceCard
-                placeName={''}
-                address={''}
-                imgSrc={''}
-                isHeart={false}
-              />
-            </div>
-          </>
-        )}
       </ul>
     </>
   );

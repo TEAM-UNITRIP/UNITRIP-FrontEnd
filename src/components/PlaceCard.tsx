@@ -15,7 +15,7 @@ interface PlaceCardProps {
   imgSrc: string;
   isHeart: boolean;
   onClickHeart?: () => void;
-  contentid?: string;
+  contentid: string;
   buttonDisabled?: boolean;
 }
 
@@ -47,9 +47,7 @@ const PlaceCard = (props: PlaceCardProps) => {
   };
 
   return (
-    <Link
-      to={contentid ? `/${contentid}` : ``}
-      css={cardContainerCss(imgSrc, placeName)}>
+    <Link to={`/${contentid}`} css={cardContainerCss(imgSrc, placeName)}>
       <div css={backgroundCss}>
         <button
           type="button"
