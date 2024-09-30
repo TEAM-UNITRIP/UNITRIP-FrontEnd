@@ -3,33 +3,27 @@ import { useState } from 'react';
 
 import getUserData from '@/apis/supabase/getUserData';
 import { HeaderBackIcon } from '@/assets/icon';
-import BottomButton from '@/components/BottomButton';
 import Header from '@/components/Header';
 import MenuBar from '@/components/MenuBar';
 import { Region } from '@/components/SelectRegion';
-import TravelerType from '@/components/TravelerType';
 import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { UserDataResponse } from '@/types/userAPI';
 
 import Favorite from '../components/Favorite';
 import Main from '../components/Main';
 import PersonalInfo from '../components/PersonalInfo';
+import TravelerType from '../components/TravelerType';
 import { MYPAGE_TAB_CONTENTS } from '../constants/text';
 
 const Mypage = () => {
   const [currentTab, setCurrentTab] = useState<string>('main');
   const [userData, setUserData] = useState<UserDataResponse | null>(null);
-  const [travelerTypes, setTravelerTypes] = useState<string[]>([]);
 
   const kakaoId = sessionStorage.getItem('kakao_id');
 
   useAsyncEffect(async () => {
     const response = await getUserData(Number(kakaoId));
     setUserData(response);
-
-    if (response) {
-      setTravelerTypes(response.universal_type);
-    }
   }, []);
 
   const backToMainTab = () => {
@@ -66,14 +60,7 @@ const Mypage = () => {
       case MYPAGE_TAB_CONTENTS.FAVORITE_TRAVEL_LIST:
         return <Favorite />;
       case MYPAGE_TAB_CONTENTS.TRAVELER_TYPE:
-        return (
-          <TravelerType
-            travelerType={travelerTypes}
-            setTravelerType={setTravelerTypes}
-          />
-        );
-      default:
-        return null;
+        return <TravelerType travelerType={userData.universal_type} />;
     }
   };
 
@@ -89,11 +76,7 @@ const Mypage = () => {
         />
       )}
       <div css={mypageContainer}>{renderComponent(currentTab)}</div>
-      {currentTab === 'main' ? (
-        <MenuBar />
-      ) : (
-        <BottomButton text="저장" clickedFn={backToMainTab} />
-      )}
+      {currentTab === 'main' && <MenuBar />}
     </>
   );
 };
@@ -106,7 +89,6 @@ const mypageContainer = css`
 
   width: 100dvw;
   height: calc(100dvh - 8rem - 4.8rem);
-  padding: 0 2rem;
 
   background-color: white;
 `;

@@ -1,7 +1,10 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 
+import updateUserInfo from '@/apis/supabase/updateUserInfo';
+import BottomButton from '@/components/BottomButton';
 import SelectRegion, { Region } from '@/components/SelectRegion';
+import ToastMessage from '@/components/ToastMessage';
 import { COLORS, FONTS } from '@/styles/constants';
 
 interface PersonalInfoProps {
@@ -14,6 +17,23 @@ const PersonalInfo = ({ name, region }: PersonalInfoProps) => {
     city: region.city,
     town: region.town,
   });
+  const [toast, setToast] = useState(false);
+
+  const saveFn = () => {
+    const fetchData = async () => {
+      try {
+        const status = await updateUserInfo(selectedRegion);
+
+        if (status === 204) {
+          setToast(true);
+        }
+      } catch (e) {
+        throw new Error('오류가 발생했습니다');
+      }
+    };
+
+    fetchData();
+  };
 
   return (
     <>
@@ -38,6 +58,13 @@ const PersonalInfo = ({ name, region }: PersonalInfoProps) => {
           <SelectRegion region={selectedRegion} setRegion={setSelectedRegion} />
         </ul>
       </form>
+      {toast && (
+        <ToastMessage setToast={setToast}>
+          변경 사항이 반영되었습니다.
+        </ToastMessage>
+      )}
+
+      <BottomButton text="저장" clickedFn={saveFn} />
     </>
   );
 };
@@ -52,6 +79,7 @@ const PersonalInfoContainter = css`
 
   width: 100%;
   height: calc(100dvh - 6.2rem);
+  padding: 0 2rem;
   overflow-y: hidden;
 `;
 

@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 
 import { MapMonoGrayIcon } from '@/assets/icon';
 import SelectTravelerType from '@/components/SelectTravelerType';
@@ -6,17 +7,18 @@ import { COLORS, FONTS } from '@/styles/constants';
 
 interface TravelerTypeProps {
   travelerType: string[];
-  setTravelerType: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const TravelerType = ({ travelerType, setTravelerType }: TravelerTypeProps) => {
+const TravelerType = ({ travelerType }: TravelerTypeProps) => {
+  const [userType, setUserType] = useState<string[]>(travelerType);
+
   return (
     <div css={contentContainer}>
       <div>
         <p css={subText}>다중선택 가능</p>
         <SelectTravelerType
-          currentTravelerType={travelerType}
-          setTravelerType={setTravelerType}
+          currentTravelerType={userType}
+          setTravelerType={setUserType}
         />
       </div>
 

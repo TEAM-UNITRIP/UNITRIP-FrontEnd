@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 
 import { ArrowRightIcon } from '@/assets/icon';
+import { ProfileImg } from '@/assets/image';
 import { COLORS, FONTS } from '@/styles/constants';
 
 import { MYPAGE_TAB_CONTENTS } from '../constants/text';
@@ -17,7 +18,11 @@ function Main(props: MainProps) {
   return (
     <div>
       <section css={profileSection}>
-        <img src={profile} alt="프로필이미지_사진" css={profileImage} />
+        <img
+          src={profile || ProfileImg}
+          alt="프로필이미지_사진"
+          css={profileImage}
+        />
         <span css={InfoText}>{name}</span>
       </section>
       <ul>
@@ -68,7 +73,7 @@ const tabItem = (variant: string) => css`
   align-items: center;
 
   width: 100%;
-  padding: 1.85rem 0;
+  padding: 1.85rem 2rem;
   border-bottom: 1px solid ${COLORS.gray0};
 
   color: ${COLORS.brand1};
