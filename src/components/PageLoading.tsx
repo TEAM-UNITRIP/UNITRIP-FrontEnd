@@ -30,7 +30,6 @@ const dataContainer = css`
   flex-direction: column;
   position: absolute;
   top: 0;
-  overflow: hidden;
   z-index: 999;
 
   width: 100dvw;
