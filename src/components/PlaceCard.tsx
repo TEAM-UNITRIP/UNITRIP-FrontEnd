@@ -13,20 +13,33 @@ interface PlaceCardProps {
   placeName: string;
   address: string;
   imgSrc: string;
+  isHeart: boolean;
   onClickHeart?: () => void;
+  contentid: string;
+  buttonDisabled?: boolean;
 }
 
 /**
  * @param placeName 장소 이름
  * @param address 주소
  * @param imgSrc 대표 사진
+ * @param isHeart 하트 여부
  * @param onClickHeart 하트 눌렀을 때 실행 함수
+ * @param contentid 컨텐츠 ID
  */
 
 const PlaceCard = (props: PlaceCardProps) => {
-  const { placeName, address, imgSrc, onClickHeart = () => {} } = props;
+  const {
+    placeName,
+    address,
+    imgSrc,
+    isHeart: isHeartData,
+    onClickHeart = () => {},
+    contentid,
+    buttonDisabled,
+  } = props;
 
-  const [isHeart, setIsHeart] = useState(false);
+  const [isHeart, setIsHeart] = useState(isHeartData);
 
   const handleOnClick = () => {
     setIsHeart((prev) => !prev);
@@ -34,10 +47,18 @@ const PlaceCard = (props: PlaceCardProps) => {
   };
 
   return (
-    <Link to="" css={cardContainerCss(imgSrc, placeName)}>
+    <Link to={`/${contentid}`} css={cardContainerCss(imgSrc, placeName)}>
       <div css={backgroundCss}>
-        <button type="button" onClick={handleOnClick} css={iconCss}>
-          {isHeart ? <HeartFillMonoIcon /> : <HeartMonoIcon />}
+        <button
+          type="button"
+          onClick={handleOnClick}
+          css={iconCss}
+          disabled={buttonDisabled}>
+          {isHeart ? (
+            <HeartFillMonoIcon />
+          ) : (
+            !buttonDisabled && <HeartMonoIcon />
+          )}
         </button>
         <p css={titleCss}>{placeName}</p>
         {address && (
@@ -61,10 +82,10 @@ const cardContainerCss = (imgSrc: string, placeName: string) => css`
   height: 16.8rem;
   border-radius: 1.2rem;
 
-  background-image: url(${imgSrc});
-  background-size: cover;
-  background-position: center center;
   background-color: ${placeName ? COLORS.gray4 : COLORS.gray2};
+  background-position: center center;
+  background-size: cover;
+  background-image: url(${imgSrc});
 `;
 
 const backgroundCss = css`
@@ -76,24 +97,25 @@ const backgroundCss = css`
   height: 16.8rem;
   border-radius: 1.2rem;
 
-  color: ${COLORS.white};
-
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.34) 100%
+    rgb(0 0 0 / 0%) 0%,
+    rgb(0 0 0 / 34%) 100%
   );
+
+  color: ${COLORS.white};
 `;
 
 const titleCss = css`
-  margin: 9.4rem 0 0 1.6rem;
-  ${FONTS.H3};
+  overflow: hidden;
 
   width: calc(100% - 1.6rem);
+  margin: 9.4rem 0 0 1.6rem;
+
   text-align: left;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  ${FONTS.H3};
 `;
 
 const addressCss = css`
@@ -106,7 +128,12 @@ const addressCss = css`
   ${FONTS.Small1};
 
   & > span {
+    overflow: hidden;
+
     padding-top: 0.1rem;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 `;
 

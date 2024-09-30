@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 
 import { COLORS, FONTS } from '@/styles/constants';
+import { MAP_UNIVERSAL_TYPE } from '@/views/Search/constants/category';
 import { category, filterState } from '@/views/Search/types/category';
 
 import { categoryButtonCss } from '../../styles/review';
@@ -22,7 +23,7 @@ const SelectedCategory = (props: SelectedCategoryProps) => {
       ([category, objectValue]) => {
         return (
           Object.values(objectValue).some((value) => value) ||
-          defaultCategory?.includes(category)
+          defaultCategory?.includes(MAP_UNIVERSAL_TYPE[category as category])
         );
       },
     ) as [category, Record<string, boolean>][];
