@@ -1,4 +1,4 @@
-export interface SearchResItem {
+export interface SearchItem {
   cat2: string;
   cat3: string;
   tel: string;
@@ -64,7 +64,7 @@ export interface SearchWord {
     totalCount: number;
     items:
       | {
-          item: SearchResItem[];
+          item: SearchItem[];
         }
       | '';
   };
