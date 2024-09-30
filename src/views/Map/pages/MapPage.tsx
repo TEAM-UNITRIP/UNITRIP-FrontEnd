@@ -60,11 +60,12 @@ const MapPage = () => {
   const [isFavClicked, setIsFavClicked] = useState(false); // 저장한 여행지 버튼
   const [isFavPinClicked, setIsFavPinClicked] = useState(false); // 저장한 여행지 리스트 중 핀 버튼 클릭
 
-  const apiRes = useRef<locationBasedList1Res[]>([]);
-  const favoriteList = useRef<bottomSheetType[]>([]);
+  const apiRes = useRef<locationBasedList1Res[]>([]); // 주변 여행지 검색 플로우 결과 저장
+  const favoriteList = useRef<bottomSheetType[]>([]); // 저장한 여행지(공통정보api) 플로우 결과 저장
 
   /** 기본 사용자의 위치에 따른 위도, 경도 값 업데이트 */
   useEffect(() => {
+    // 서버에서 사용자 위치 받아와 저장하는 set하는 로직 필요
     setRegion({ city: '서울특별시', town: '광진구' });
     const currentTown = setDefaultLocation(region.city, region.town);
     setDefaultLoc({
@@ -73,35 +74,32 @@ const MapPage = () => {
     });
   }, [region.city, region.town]);
 
+  /** '/map' 진입시, 사용자가 회원가입 할 때 등록했던 지역을 기준으로 지도 띄우기 */
+  useEffect(() => {
+    const kakaoMap = createKakaoMap(defaultLoc, 5);
+    setMap(kakaoMap);
+  }, [defaultLoc]);
+
   /** 저장한 여행지 목록 버튼 클릭 */
   const onClickFavorite = async () => {
     if (map) {
       clearMarker();
+
       const res = await createFavoritePin(
-        DUMMY,
+        DUMMY, // 서버에서 받아온 contentId list로 대체 필요
         map,
         setBottomSheetContent,
         openPinBottomSheet,
       );
+
       if (res) {
         favoriteList.current = res.favoriteList;
+        setFavMarkers(res.defaultMarker);
       }
+
       openFavoriteBottomSheet();
     }
   };
-
-  /** '/map' 진입시, 사용자가 회원가입 할 때 등록했던 지역을 기준으로 지도 띄우기
-   *  + 저장한 여행지에 있는 목록 마커 생성해서 박아놓기
-   */
-  useEffect(() => {
-    const kakaoMap = createKakaoMap(defaultLoc, 5);
-    if (favMarkers) {
-      favMarkers.forEach((marker) => {
-        marker.setMap(kakaoMap);
-      });
-    }
-    setMap(kakaoMap);
-  }, [defaultLoc]);
 
   const openFavoriteBottomSheet = () => {
     setIsFavClicked(true);
@@ -130,7 +128,8 @@ const MapPage = () => {
             position.coords.longitude,
           );
           if (map) {
-            clearMarker('favorite');
+            clearMarker();
+            clearFavMarkers();
             map.setCenter(latlng);
             map.setLevel(4);
           }
@@ -148,22 +147,24 @@ const MapPage = () => {
   };
 
   /** 지도에서 마커 제거, 마커 state 초기화 */
-  const clearMarker = (pinType?: string) => {
+  const clearMarker = () => {
     markers.forEach((marker) => marker.setMap(null));
     setMarkers([]);
-
-    if (pinType === 'favorite') {
-      favMarkers.forEach((marker) => marker.setMap(null));
-      setFavMarkers([]);
-    }
   };
 
-  // 주변 여행지 찾기 클릭 시 지도 중심좌표 값 받아오기 & 공공api 검색 / 지도에 핀 생성
+  /** 지도에서 하트 마커 제거, 하트 마커 state 초기화 */
+  const clearFavMarkers = () => {
+    favMarkers.forEach((marker) => marker.setMap(null));
+    setFavMarkers([]);
+  };
+
+  /** 주변 여행지 찾기 클릭 시 지도 중심좌표 값 받아오기 & 공공api 검색 / 지도에 핀 생성 */
   const onClickSearch = async () => {
     const response = await getMapCenter(map);
 
     if (map && response && response.item) {
-      clearMarker('favorite');
+      clearMarker();
+      clearFavMarkers();
 
       apiRes.current = response.item;
 
