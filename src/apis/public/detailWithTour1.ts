@@ -1,5 +1,5 @@
 /** 무장애정보 조회 API */
-import { detailWithTour11Res } from '@/types/detailWithTour1';
+import { detailWithTour1ResItem } from '@/types/detailWithTour1';
 import { Response } from '@/types/public';
 
 import { publicDataClient } from '..';
@@ -24,7 +24,7 @@ export const getDetailWithTour1 = async (paramsInfo: detailWithTour1Params) => {
         body: { items },
       },
     },
-  } = await publicDataClient.get<Response<detailWithTour11Res>>(
+  } = await publicDataClient.get<Response<detailWithTour1ResItem[]>>(
     `/detailWithTour1?${params}`,
   );
 

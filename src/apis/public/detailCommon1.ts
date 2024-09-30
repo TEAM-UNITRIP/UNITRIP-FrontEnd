@@ -1,5 +1,5 @@
 /** 공통정보 조회 API */
-import { detailCommon1Res } from '@/types/detailCommon1';
+import { detailCommon1ResItem } from '@/types/detailCommon1';
 import { Response } from '@/types/public';
 
 import { publicDataClient } from '..';
@@ -28,7 +28,7 @@ export const getDetailCommon1 = async (paramsInfo: detailCommon1Params) => {
         body: { items },
       },
     },
-  } = await publicDataClient.get<Response<detailCommon1Res>>(
+  } = await publicDataClient.get<Response<detailCommon1ResItem[]>>(
     `/detailCommon1?${params}`,
   );
 

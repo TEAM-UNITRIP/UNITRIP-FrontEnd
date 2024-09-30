@@ -1,5 +1,6 @@
 /** 소개정보 조회 API */
-import { detailIntro11Res } from '@/types/detailIntro1';
+
+import { detailIntro1ResItem } from '@/types/detailIntro1';
 import { Response } from '@/types/public';
 
 import { publicDataClient } from '..';
@@ -25,7 +26,7 @@ export const getdetailIntro1 = async (paramsInfo: detailIntro1Params) => {
         body: { items },
       },
     },
-  } = await publicDataClient.get<Response<detailIntro11Res>>(
+  } = await publicDataClient.get<Response<detailIntro1ResItem[]>>(
     `/detailIntro1?${params}`,
   );
 

@@ -1,5 +1,6 @@
 /** 이미지정보 조회 API */
-import { detailImage1Res } from '@/types/detailImage1';
+
+import { detailImage1ResItem } from '@/types/detailImage1';
 import { Response } from '@/types/public';
 
 import { publicDataClient } from '..';
@@ -26,7 +27,7 @@ export const getDetailImage1 = async (paramsInfo: detailImage1Params) => {
         body: { items },
       },
     },
-  } = await publicDataClient.get<Response<detailImage1Res>>(
+  } = await publicDataClient.get<Response<detailImage1ResItem[]>>(
     `/detailImage1?${params}`,
   );
 

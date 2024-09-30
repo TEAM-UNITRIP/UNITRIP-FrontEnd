@@ -28,7 +28,7 @@ interface facilityListType {
 
 function FacilityIconList(props: FacilityIConListProps) {
   const { title, facilities } = props;
-  const [facilityList, setFacilityList] = useState<facilityListType[]>([]);
+  const [facilityList, setFacilityList] = useState<facilityListType[]>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,12 +63,13 @@ function FacilityIconList(props: FacilityIConListProps) {
       </div>
 
       <ul css={iconList}>
-        {facilityList.map((item: facilityListType) => (
-          <li key={item.apiKey} css={iconWrapper}>
-            {item.icon}
-            <span css={iconName(item.name, item.isActive)}>{item.name}</span>
-          </li>
-        ))}
+        {facilityList &&
+          facilityList.map((item: facilityListType) => (
+            <li key={item.apiKey} css={iconWrapper}>
+              {item.icon}
+              <span css={iconName(item.name, item.isActive)}>{item.name}</span>
+            </li>
+          ))}
       </ul>
     </div>
   );
