@@ -66,10 +66,19 @@ export const getFilterList = (filterState: filterState) => {
   );
 };
 
-export const createInitialFilterState = (initialCategory: category) => {
-  const filterState = INITIAL_FILTER_STATE;
-  Object.keys(INITIAL_FILTER_STATE[initialCategory]).forEach((key) => {
-    filterState[initialCategory][key] = true;
+export const createInitialFilterState = (initialCategory: string[]) => {
+  initialCategory.forEach((categoryItem) => {
+    const targetCategory = Object.keys(MAP_UNIVERSAL_TYPE).find(
+      (key) => MAP_UNIVERSAL_TYPE[key as category] === categoryItem,
+    );
+
+    if (targetCategory) {
+      Object.keys(INITIAL_FILTER_STATE[targetCategory as category]).forEach(
+        (key) => {
+          INITIAL_FILTER_STATE[targetCategory as category][key] = true;
+        },
+      );
+    }
   });
 
   return INITIAL_FILTER_STATE;

@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 
 import BottomSheet from '@/components/BottomSheet';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -9,15 +10,30 @@ import FacilitiesAccordian from './FacilitiesAccordian';
 interface FilterBottomSheetProps {
   closeBottomSheet: () => void;
   filterState: filterState;
-  handleFilterState: (category: category, facility: string) => void;
+  handleFilterState: (value: filterState) => void;
 }
 
 const FilterBottomSheet = (props: FilterBottomSheetProps) => {
   const { closeBottomSheet, filterState, handleFilterState } = props;
+  const [selectedFilterState, setSelectedFilterState] =
+    useState<filterState>(filterState);
+
+  const handleSelectedFilterState = (category: category, facility: string) => {
+    const categoryFacilities = selectedFilterState[category];
+
+    setSelectedFilterState((prev) => ({
+      ...prev,
+      [category]: {
+        ...categoryFacilities,
+        [facility]: !categoryFacilities[facility],
+      },
+    }));
+  };
 
   return (
     <BottomSheet
       closeBottomSheet={closeBottomSheet}
+      onClickButton={() => handleFilterState(selectedFilterState)}
       height={'80vh'}
       buttonText={'해당 조건 적용하기'}
       bottomSheetCss={css`
@@ -29,26 +45,26 @@ const FilterBottomSheet = (props: FilterBottomSheetProps) => {
       <ul>
         <FacilitiesAccordian
           category={'physical'}
-          filterState={filterState}
-          handleFilterState={handleFilterState}
+          filterState={selectedFilterState}
+          handleFilterState={handleSelectedFilterState}
         />
         <hr css={lineCss} />
         <FacilitiesAccordian
           category={'visual'}
-          filterState={filterState}
-          handleFilterState={handleFilterState}
+          filterState={selectedFilterState}
+          handleFilterState={handleSelectedFilterState}
         />
         <hr css={lineCss} />
         <FacilitiesAccordian
           category={'hearing'}
-          filterState={filterState}
-          handleFilterState={handleFilterState}
+          filterState={selectedFilterState}
+          handleFilterState={handleSelectedFilterState}
         />
         <hr css={lineCss} />
         <FacilitiesAccordian
           category={'infant'}
-          filterState={filterState}
-          handleFilterState={handleFilterState}
+          filterState={selectedFilterState}
+          handleFilterState={handleSelectedFilterState}
         />
       </ul>
     </BottomSheet>
