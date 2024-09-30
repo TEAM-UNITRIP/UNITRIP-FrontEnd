@@ -44,26 +44,14 @@ const CategoryBottomSheet = (props: CategoryBottomSheetProps) => {
         <h3>리뷰 필터</h3>
       </header>
       <ul>
-        <CategoryList
-          category={'physical'}
-          filterState={selectedFilterState}
-          handleFilterState={handleSelectedFilterState}
-        />
-        <CategoryList
-          category={'visual'}
-          filterState={selectedFilterState}
-          handleFilterState={handleSelectedFilterState}
-        />
-        <CategoryList
-          category={'hearing'}
-          filterState={selectedFilterState}
-          handleFilterState={handleSelectedFilterState}
-        />
-        <CategoryList
-          category={'infant'}
-          filterState={selectedFilterState}
-          handleFilterState={handleSelectedFilterState}
-        />
+        {['physical', 'visual', 'hearing', 'infant'].map((category) => (
+          <CategoryList
+            key={category}
+            category={category as category}
+            filterState={selectedFilterState}
+            handleFilterState={handleSelectedFilterState}
+          />
+        ))}
       </ul>
     </BottomSheet>
   );
