@@ -125,18 +125,3 @@ export interface detailIntro1ResItem {
   bookingplace: string;
   playtime: string;
 }
-
-export interface detailIntro11Res {
-  header: {
-    resultCode: string;
-    resultMsg: string;
-  };
-  body: {
-    numOfRows: number;
-    pageNo: number;
-    totalCount: number;
-    items: {
-      item: detailIntro1ResItem[];
-    };
-  };
-}

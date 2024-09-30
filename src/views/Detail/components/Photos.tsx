@@ -13,7 +13,8 @@ const Photos = () => {
     const fetchData = async () => {
       const res = await getDetailImage1Res();
       if (res) {
-        setImageList(res);
+        const { item } = res;
+        setImageList(item);
       }
     };
 

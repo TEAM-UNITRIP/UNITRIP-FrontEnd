@@ -34,21 +34,23 @@ const DetailInfo = (props: detailInfoProps) => {
     const res = await getDetailIntroRes(contentTypeId);
 
     if (res) {
+      const { item } = res;
+
       setInfo({
-        restDate: res[0].restdate !== '' ? res[0].restdate : '-',
+        restDate: item[0].restdate !== '' ? item[0].restdate : '-',
         useTime:
           contentTypeId === '12'
-            ? res[0].usetime !== ''
-              ? res[0].usetime
+            ? item[0].usetime !== ''
+              ? item[0].usetime
               : '-'
             : '-',
         useTimeCulture:
           contentTypeId === '14'
-            ? res[0].usetimeculture !== ''
-              ? res[0].usetimeculture
+            ? item[0].usetimeculture !== ''
+              ? item[0].usetimeculture
               : '-'
             : '-',
-        useFee: contentTypeId === '14' ? res[0].usefee : '-',
+        useFee: contentTypeId === '14' ? item[0].usefee : '-',
       });
     }
   };

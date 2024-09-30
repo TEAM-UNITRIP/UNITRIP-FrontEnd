@@ -25,14 +25,12 @@ export const getDetailCommon1 = async (paramsInfo: detailCommon1Params) => {
   const {
     data: {
       response: {
-        body: {
-          items: { item },
-        },
+        body: { items },
       },
     },
   } = await publicDataClient.get<Response<detailCommon1Res>>(
     `/detailCommon1?${params}`,
   );
 
-  return item;
+  return items;
 };

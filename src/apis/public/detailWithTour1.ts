@@ -21,14 +21,12 @@ export const getDetailWithTour1 = async (paramsInfo: detailWithTour1Params) => {
   const {
     data: {
       response: {
-        body: {
-          items: { item },
-        },
+        body: { items },
       },
     },
   } = await publicDataClient.get<Response<detailWithTour11Res>>(
     `/detailWithTour1?${params}`,
   );
 
-  return item;
+  return items;
 };

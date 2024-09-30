@@ -34,7 +34,8 @@ function FacilityIconList(props: FacilityIConListProps) {
     const fetchData = async () => {
       const res = await getDetailWithTourRes();
       if (res) {
-        filterFacility(res);
+        const { item } = res;
+        filterFacility(item);
       }
     };
     fetchData();

@@ -22,14 +22,12 @@ export const getdetailIntro1 = async (paramsInfo: detailIntro1Params) => {
   const {
     data: {
       response: {
-        body: {
-          items: { item },
-        },
+        body: { items },
       },
     },
   } = await publicDataClient.get<Response<detailIntro11Res>>(
     `/detailIntro1?${params}`,
   );
 
-  return item;
+  return items;
 };

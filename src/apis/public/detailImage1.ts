@@ -23,14 +23,12 @@ export const getDetailImage1 = async (paramsInfo: detailImage1Params) => {
   const {
     data: {
       response: {
-        body: {
-          items: { item },
-        },
+        body: { items },
       },
     },
   } = await publicDataClient.get<Response<detailImage1Res>>(
     `/detailImage1?${params}`,
   );
 
-  return item;
+  return items;
 };

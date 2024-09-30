@@ -29,18 +29,3 @@ export interface detailWithTour1ResItem {
   ticketoffice: string;
   promotion: string;
 }
-
-export interface detailWithTour11Res {
-  header: {
-    resultCode: string;
-    resultMsg: string;
-  };
-  body: {
-    numOfRows: number;
-    pageNo: number;
-    totalCount: number;
-    items: {
-      item: detailWithTour1ResItem[];
-    };
-  };
-}

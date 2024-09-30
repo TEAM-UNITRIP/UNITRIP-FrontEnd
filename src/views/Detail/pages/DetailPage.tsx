@@ -56,21 +56,22 @@ const DetailPage = () => {
     const res = await getDetailCommonRes();
 
     if (res) {
+      const { item } = res;
       setPlaceInfo({
-        title: res[0].title,
+        title: item[0].title,
         info: {
-          addr: res[0].addr1 !== '' ? res[0].addr1 : '-',
-          tel: res[0].tel !== '' ? res[0].tel : '-',
+          addr: item[0].addr1 !== '' ? item[0].addr1 : '-',
+          tel: item[0].tel !== '' ? item[0].tel : '-',
           useTime: '',
         },
-        imageUrl: res[0].firstimage !== '' ? res[0].firstimage : DefaultImage,
+        imageUrl: item[0].firstimage !== '' ? item[0].firstimage : DefaultImage,
       });
 
-      contentTypeId.current = res[0].contenttypeid;
+      contentTypeId.current = item[0].contenttypeid;
 
       setLatLng({
-        lat: res[0].mapy,
-        lng: res[0].mapx,
+        lat: item[0].mapy,
+        lng: item[0].mapx,
       });
     }
   };
@@ -79,11 +80,12 @@ const DetailPage = () => {
     const res = await getDetailIntroRes(contentTypeId.current);
 
     if (res) {
+      const { item } = res;
       setPlaceInfo((prev) => ({
         ...prev,
         info: {
           ...prev.info,
-          useTime: res[0].usetime !== '' ? res[0].usetime : '-',
+          useTime: item[0].usetime !== '' ? item[0].usetime : '-',
         },
       }));
     }
