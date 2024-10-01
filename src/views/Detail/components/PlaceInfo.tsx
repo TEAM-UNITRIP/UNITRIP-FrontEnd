@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { CallIcon, ClockIcon, MapPinIcon } from '@/assets/icon';
+import { ArrowDownIcon, CallIcon, ClockIcon, MapPinIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
 interface placeInfoProps {
@@ -19,6 +19,10 @@ const PlaceInfo = (props: placeInfoProps) => {
   const telRef = useRef<HTMLDivElement>(null);
   const useTimeRef = useRef<HTMLDivElement>(null);
 
+  const lineCnt = useTime.split('<br>').length;
+
+  const [isClose, setIsClose] = useState(true);
+
   useEffect(() => {
     if (useTimeRef.current && addressRef.current && telRef.current) {
       useTimeRef.current.innerHTML = useTime;
@@ -26,6 +30,10 @@ const PlaceInfo = (props: placeInfoProps) => {
       telRef.current.innerHTML = tel;
     }
   }, [useTime]);
+
+  const handleToggle = () => {
+    setIsClose(false);
+  };
 
   return (
     <section css={placeInfoContainer}>
@@ -37,9 +45,10 @@ const PlaceInfo = (props: placeInfoProps) => {
         <CallIcon />
         <div ref={telRef} />
       </div>
-      <div css={listItem}>
+      <div css={mapListItem(isClose)}>
         <ClockIcon />
-        <div ref={useTimeRef} css={contentCss} />
+        <div ref={useTimeRef} css={contentCss(isClose)} />
+        {lineCnt > 1 && isClose && <ArrowDownIcon onClick={handleToggle} />}
       </div>
     </section>
   );
@@ -59,14 +68,21 @@ const placeInfoContainer = css`
 const listItem = css`
   display: flex;
   gap: 0.8rem;
-
-  /* align-items: center; */
+  align-items: center;
 
   color: ${COLORS.gray9};
 
   ${FONTS.Body4};
 `;
 
-const contentCss = css`
+const mapListItem = (isClose: boolean) => css`
+  ${listItem};
+  align-items: ${isClose ? 'center' : 'flex-start'};
+`;
+
+const contentCss = (isClose: boolean) => css`
+  overflow: hidden;
+
   width: 100%;
+  max-height: ${isClose ? '2.2rem' : 'none'};
 `;
