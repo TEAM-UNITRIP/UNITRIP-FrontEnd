@@ -15,7 +15,7 @@ export const createMapPin = (
   apiRes: locationBasedList1Res[] | undefined,
   kakaoMap: mapType | undefined,
   setBottomSheet: React.Dispatch<React.SetStateAction<bottomSheetType>>,
-  openBottomSheet: () => void,
+  openPinBottomSheet: (state: string) => void,
 ) => {
   if (!apiRes || apiRes.length === 0) {
     console.log('검색 결과가 없습니다.');
@@ -60,7 +60,7 @@ export const createMapPin = (
         image: item.image,
         contentId: item.contentId,
       });
-      openBottomSheet();
+      openPinBottomSheet('search');
     });
 
     markers.push(marker);

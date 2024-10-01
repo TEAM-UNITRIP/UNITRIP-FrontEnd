@@ -1,4 +1,4 @@
-export interface detailCommon1ResItem {
+export interface detailCommon1Res {
   cat2: string;
   cat3: string;
   tel: string;
