@@ -1,12 +1,12 @@
 import { getDetailCommon1 } from '@/apis/public/detailCommon1';
 
-export const getDetailCommonRes = async () => {
+export const getDetailCommonRes = async (contentId: number) => {
   try {
     const response = await getDetailCommon1({
       numOfRows: 20,
       pageNo: 1,
       MobileOS: 'ETC',
-      contentId: 126078,
+      contentId: contentId,
       defaultYN: 'Y',
       firstImageYN: 'Y',
       addrinfoYN: 'Y',

@@ -1,12 +1,12 @@
 import { getDetailWithTour1 } from '@/apis/public/detailWithTour1';
 
-export const getDetailWithTourRes = async () => {
+export const getDetailWithTourRes = async (contentId: number) => {
   try {
     const response = await getDetailWithTour1({
       numOfRows: 20,
       pageNo: 1,
       MobileOS: 'ETC',
-      contentId: 126078,
+      contentId: contentId,
     });
 
     return response;

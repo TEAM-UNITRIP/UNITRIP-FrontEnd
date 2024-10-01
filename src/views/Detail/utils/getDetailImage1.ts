@@ -1,12 +1,12 @@
 import { getDetailImage1 } from '@/apis/public/detailImage1';
 
-export const getDetailImage1Res = async () => {
+export const getDetailImage1Res = async (contentId: number) => {
   try {
     const response = await getDetailImage1({
       numOfRows: 20,
       pageNo: 1,
       MobileOS: 'ETC',
-      contentId: 126078,
+      contentId: contentId,
       imageYN: 'Y',
       subImageYN: 'Y',
     });
