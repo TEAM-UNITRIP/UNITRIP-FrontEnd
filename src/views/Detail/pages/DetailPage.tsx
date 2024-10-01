@@ -2,7 +2,9 @@ import { css } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import getUserData from '@/apis/supabase/getUserData';
 import { DefaultImage } from '@/assets/image';
+import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { COLORS, FONTS } from '@/styles/constants';
 
 import ErrorReport from '../components/ErrorReport';
@@ -58,7 +60,11 @@ const DetailPage = () => {
     useFee: '',
   });
 
+  const [isFavorite, setIsFavorite] = useState(false);
+
   const contentTypeId = useRef('12');
+  const contentIdList = useRef<number[]>([]); //서버에서 받아온 contentnId List
+  const kakaoId = sessionStorage.getItem('kakao_id');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,6 +74,20 @@ const DetailPage = () => {
 
     fetchData();
   }, []);
+
+  /** 서버 통신 -> favorite_list 받아오기 */
+  useAsyncEffect(async () => {
+    if (!kakaoId) return;
+
+    const userData = await getUserData(Number(kakaoId));
+    if (userData) {
+      contentIdList.current = userData.favorite_list;
+
+      contentIdList.current.includes(Number(contentId))
+        ? setIsFavorite(true)
+        : setIsFavorite(false);
+    }
+  }, [isFavorite]);
 
   const getDetailCommon1Res = async () => {
     const res = await getDetailCommonRes(Number(contentId));
@@ -140,7 +160,7 @@ const DetailPage = () => {
   return (
     <div css={detailContainer}>
       <div css={backgroundImg(placeInfo.imageUrl)}>
-        <Header />
+        <Header isFavorite={isFavorite} setIsFavorite={setIsFavorite} />
         <span css={title}>{placeInfo.title}</span>
       </div>
       <PlaceInfo placeInfo={placeInfo.info} />
