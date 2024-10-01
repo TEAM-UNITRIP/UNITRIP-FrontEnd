@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { PencilMonoIcon } from '@/assets/icon';
 import LoginModal from '@/components/LoginModal';
@@ -12,6 +12,7 @@ interface TotalReviewProps {
 
 const TotalReview = (props: TotalReviewProps) => {
   const { reviewCount } = props;
+  const { contentId } = useParams();
   const navigate = useNavigate();
   const [activateModal, setActivateModal] = useState(false);
 
@@ -19,7 +20,7 @@ const TotalReview = (props: TotalReviewProps) => {
 
   const writeReviewFn = () => {
     if (isLoggedIn) {
-      navigate('review/write');
+      navigate(`/${contentId}/review/write`);
     } else {
       setActivateModal(true);
     }
