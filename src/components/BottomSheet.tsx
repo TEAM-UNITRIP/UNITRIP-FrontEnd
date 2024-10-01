@@ -112,7 +112,7 @@ const containerCss = (height: string) => css`
 `;
 
 const buttonCotainerCss = css`
-  position: absolute;
+  position: fixed;
   bottom: 1.2rem;
   left: 0;
 
