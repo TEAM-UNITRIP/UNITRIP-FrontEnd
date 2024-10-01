@@ -1,7 +1,5 @@
 import { css } from '@emotion/react';
 
-import PlaceCard from '@/components/PlaceCard';
-
 const FAVORITE_SAMPLE = [
   { name: '대전시립미술관', address: '대전 서구 둔산대로 155' },
   {
@@ -20,12 +18,12 @@ function FavoritePlaceList() {
     <ul css={listContainer}>
       {FAVORITE_SAMPLE.map((item) => (
         <li key={item.name} css={itemContainer}>
-          <PlaceCard
+          {/* <PlaceCard
             placeName={item.name}
             address={item.address}
             imgSrc={''}
             onClickHeart={() => console.log('click')}
-          />
+          /> */}
         </li>
       ))}
     </ul>

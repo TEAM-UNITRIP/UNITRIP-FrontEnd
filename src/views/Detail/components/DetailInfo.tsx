@@ -1,73 +1,35 @@
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
 
 import { COLORS, FONTS } from '@/styles/constants';
 
-import { getDetailIntroRes } from '../utils/getDetailIntro1';
-
-interface detailInfoItem {
-  restDate: string;
-  useTime?: string;
-  useTimeCulture?: string;
-  useFee: string;
-}
+import { detailInfoType } from '../pages/DetailPage';
 
 interface detailInfoProps {
-  contentTypeId: string;
+  detailInfo: detailInfoType;
 }
 
 const DetailInfo = (props: detailInfoProps) => {
-  const { contentTypeId } = props;
-
-  const [info, setInfo] = useState<detailInfoItem>({
-    restDate: '-',
-    useTime: '-',
-    useTimeCulture: '-',
-    useFee: '-',
-  });
-
-  useEffect(() => {
-    getDetailIntro1Res();
-  }, []);
-
-  const getDetailIntro1Res = async () => {
-    const res = await getDetailIntroRes(contentTypeId);
-
-    if (res) {
-      const { item } = res;
-
-      setInfo({
-        restDate: item[0].restdate !== '' ? item[0].restdate : '-',
-        useTime:
-          contentTypeId === '12'
-            ? item[0].usetime !== ''
-              ? item[0].usetime
-              : '-'
-            : '-',
-        useTimeCulture:
-          contentTypeId === '14'
-            ? item[0].usetimeculture !== ''
-              ? item[0].usetimeculture
-              : '-'
-            : '-',
-        useFee: contentTypeId === '14' ? item[0].usefee : '-',
-      });
-    }
-  };
+  const { detailInfo } = props;
 
   return (
     <section css={detailInfoContainer}>
       <div css={infoItem}>
         <span css={title}>휴무일</span>
-        <p css={content}>{info.restDate}</p>
+        <span
+          css={content}
+          dangerouslySetInnerHTML={{ __html: detailInfo.restDate }}></span>
       </div>
       <div css={infoItem}>
         <span css={title}>이용시간</span>
-        <p css={content}>{info.useTime}</p>
+        <span
+          dangerouslySetInnerHTML={{ __html: detailInfo.useTime }}
+          css={content}></span>
       </div>
       <div css={infoItem}>
         <span css={title}>이용요금</span>
-        <p css={content}>{info.useFee}</p>
+        <span
+          dangerouslySetInnerHTML={{ __html: detailInfo.useFee }}
+          css={content}></span>
       </div>
     </section>
   );

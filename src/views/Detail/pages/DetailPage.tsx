@@ -23,8 +23,9 @@ export interface placeInfoType {
 }
 
 export interface detailInfoType {
-  useTime?: string;
-  useTimeCulture?: string;
+  restDate: string;
+  useTime: string;
+  useFee: string;
 }
 
 const DetailPage = () => {
@@ -51,6 +52,12 @@ const DetailPage = () => {
     lng: '',
   });
 
+  const [detailInfo, setDetailInfo] = useState({
+    restDate: '',
+    useTime: '',
+    useFee: '',
+  });
+
   const contentTypeId = useRef('12');
 
   useEffect(() => {
@@ -63,7 +70,7 @@ const DetailPage = () => {
   }, []);
 
   const getDetailCommon1Res = async () => {
-    const res = await getDetailCommonRes();
+    const res = await getDetailCommonRes(Number(contentId));
 
     if (res) {
       const { item } = res;
@@ -87,10 +94,14 @@ const DetailPage = () => {
   };
 
   const getDetailIntro1Res = async () => {
-    const res = await getDetailIntroRes(contentTypeId.current);
+    const res = await getDetailIntroRes(
+      Number(contentId),
+      contentTypeId.current,
+    );
 
     if (res) {
       const { item } = res;
+
       setPlaceInfo((prev) => ({
         ...prev,
         info: {
@@ -98,6 +109,21 @@ const DetailPage = () => {
           useTime: item[0].usetime !== '' ? item[0].usetime : '-',
         },
       }));
+
+      setDetailInfo({
+        restDate: item[0].restdate !== '' ? item[0].restdate : '-',
+        useTime:
+          contentTypeId.current === '12'
+            ? item[0].usetime && item[0].usetime !== ''
+              ? item[0].usetime
+              : '-'
+            : contentTypeId.current === '14'
+              ? item[0].usetimeculture && item[0].usetimeculture !== ''
+                ? item[0].usetimeculture
+                : '-'
+              : '-',
+        useFee: item[0].usefee !== '' ? item[0].usefee : '-',
+      });
     }
   };
 
@@ -118,8 +144,8 @@ const DetailPage = () => {
       <Tab
         selectedTab={selectedTab}
         setSelectedTab={handleTabChange}
-        contentTypeId={contentTypeId.current}
         latlng={latlng}
+        detailInfo={detailInfo}
       />
       <div css={gapLine}></div>
 

@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { useEffect, useRef } from 'react';
 
 import { CallIcon, ClockIcon, MapPinIcon } from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -14,19 +15,31 @@ interface placeInfoProps {
 const PlaceInfo = (props: placeInfoProps) => {
   const { addr, tel, useTime } = props.placeInfo;
 
+  const addressRef = useRef<HTMLDivElement>(null);
+  const telRef = useRef<HTMLDivElement>(null);
+  const useTimeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (useTimeRef.current && addressRef.current && telRef.current) {
+      useTimeRef.current.innerHTML = useTime;
+      addressRef.current.innerHTML = addr;
+      telRef.current.innerHTML = tel;
+    }
+  }, [useTime]);
+
   return (
     <section css={placeInfoContainer}>
       <div css={listItem}>
         <MapPinIcon />
-        <span>{addr}</span>
+        <div ref={addressRef} />
       </div>
       <div css={listItem}>
         <CallIcon />
-        <span>{tel}</span>
+        <div ref={telRef} />
       </div>
       <div css={listItem}>
         <ClockIcon />
-        <span>{useTime}</span>
+        <div ref={useTimeRef} css={contentCss} />
       </div>
     </section>
   );
@@ -46,9 +59,14 @@ const placeInfoContainer = css`
 const listItem = css`
   display: flex;
   gap: 0.8rem;
-  align-items: center;
+
+  /* align-items: center; */
 
   color: ${COLORS.gray9};
 
   ${FONTS.Body4};
+`;
+
+const contentCss = css`
+  width: 100%;
 `;

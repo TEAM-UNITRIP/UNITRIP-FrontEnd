@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import { COLORS, FONTS } from '@/styles/constants';
 
+import { detailInfoType } from '../pages/DetailPage';
 import DetailInfo from './DetailInfo';
 import Map from './Map';
 import Photos from './Photos';
@@ -13,15 +14,15 @@ const TAB_MENU = ['상세정보', '유니버설', '지도', '사진', '리뷰'];
 interface TabProps {
   selectedTab: string;
   setSelectedTab: (tab: string) => void;
-  contentTypeId: string;
   latlng: {
     lat: string;
     lng: string;
   };
+  detailInfo: detailInfoType;
 }
 
 function Tab(props: TabProps) {
-  const { selectedTab, setSelectedTab, contentTypeId, latlng } = props;
+  const { selectedTab, setSelectedTab, latlng, detailInfo } = props;
 
   const tabOnClick = (item: string) => {
     setSelectedTab(item);
@@ -41,9 +42,7 @@ function Tab(props: TabProps) {
       </ul>
 
       <Outlet />
-      {selectedTab === '상세정보' && (
-        <DetailInfo contentTypeId={contentTypeId} />
-      )}
+      {selectedTab === '상세정보' && <DetailInfo detailInfo={detailInfo} />}
       {selectedTab === '사진' && <Photos />}
       {selectedTab === '지도' && <Map latlng={latlng} />}
       {selectedTab === '유니버설' && <Universal />}

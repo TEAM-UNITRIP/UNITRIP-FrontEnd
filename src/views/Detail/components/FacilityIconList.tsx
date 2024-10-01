@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { MAP_FACILITIES_API_KEY } from '@/constants/facilities';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -27,12 +28,13 @@ interface facilityListType {
 }
 
 function FacilityIconList(props: FacilityIConListProps) {
+  const { contentId } = useParams();
   const { title, facilities } = props;
   const [facilityList, setFacilityList] = useState<facilityListType[]>();
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getDetailWithTourRes();
+      const res = await getDetailWithTourRes(Number(contentId));
       if (res) {
         const { item } = res;
         filterFacility(item);

@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { detailImage1ResItem } from '@/types/detailImage1';
 
@@ -7,11 +8,12 @@ import { getDetailImage1Res } from '../utils/getDetailImage1';
 import EmptyPhoto from './EmptyPhoto';
 
 const Photos = () => {
+  const { contentId } = useParams();
   const [imageList, setImageList] = useState<detailImage1ResItem[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getDetailImage1Res();
+      const res = await getDetailImage1Res(Number(contentId));
       if (res) {
         const { item } = res;
         setImageList(item);
