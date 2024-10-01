@@ -65,7 +65,10 @@ const LoginModal = (props: LoginModalProps) => {
     </div>
   );
 
-  return createPortal(portalContent, document.body);
+  return createPortal(
+    portalContent,
+    document.getElementById('root') as HTMLElement,
+  );
 };
 
 export default LoginModal;
