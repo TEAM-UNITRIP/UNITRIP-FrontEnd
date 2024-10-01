@@ -34,6 +34,7 @@ export { default as SearchSetIcon } from './icon-search-set.svg?react';
 export { default as ResetXIcon } from './reset-x.svg?react';
 export { default as ToggleXIcon } from './toggle-x.svg?react';
 
+export { default as ErrorIcon } from './error_icon.svg?react';
 export { default as ArrowRightIcon } from './icon-arrow-right.svg?react';
 export { default as HeaderBackIcon } from './icon_header_back.svg?react';
 export { default as MypageHeartIcon } from './icon_mypage_heart.svg?react';
@@ -134,6 +135,7 @@ export { default as GuideSystemSelectedIcon } from './guidesystem_selected.svg?r
 export { default as HelpDogDefaultIcon } from './helpdog_default.svg?react';
 export { default as HelpDogSelectedIcon } from './helpdog_selected.svg?react';
 export { default as CameraIcon } from './icon-camera.svg?react';
+export { default as StarGrayIcon } from './icon-star-gray.svg?react';
 export { default as LactationRoomDefaultIcon } from './lactationroom_default.svg?react';
 export { default as LactationRoomSelectedIcon } from './lactationroom_selected.svg?react';
 export { default as NoReviewIcon } from './no_reveiw_image.svg?react';
