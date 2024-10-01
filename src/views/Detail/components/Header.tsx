@@ -1,14 +1,16 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { ArrowLeftIcon, HeartFilledIcon, HeartGrayIcon } from '@/assets/icon';
 import LoginModal from '@/components/LoginModal';
 
-function Header() {
+const Header = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [activateModal, setActivateModal] = useState(false);
 
   const isLoggedIn = sessionStorage.getItem('kakao_id');
+  const navigate = useNavigate();
 
   const favoriteOnClick = () => {
     if (isLoggedIn) {
@@ -25,7 +27,7 @@ function Header() {
   return (
     <>
       <header css={headerContainer}>
-        <button type="button">
+        <button type="button" onClick={() => navigate('/')}>
           <ArrowLeftIcon />
         </button>
         <button type="button" onClick={favoriteOnClick}>
@@ -35,7 +37,7 @@ function Header() {
       {activateModal && <LoginModal onClick={closeModal} />}
     </>
   );
-}
+};
 
 export default Header;
 
