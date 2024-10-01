@@ -122,7 +122,11 @@ const DetailPage = () => {
                 ? item[0].usetimeculture
                 : '-'
               : '-',
-        useFee: item[0].usefee !== '' ? item[0].usefee : '-',
+        useFee: item[0].usefee
+          ? item[0].usefee !== ''
+            ? item[0].usefee
+            : '-'
+          : '-',
       });
     }
   };

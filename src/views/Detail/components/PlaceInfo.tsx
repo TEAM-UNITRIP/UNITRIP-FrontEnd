@@ -13,7 +13,8 @@ interface placeInfoProps {
 }
 
 const PlaceInfo = (props: placeInfoProps) => {
-  const { addr, tel, useTime } = props.placeInfo;
+  const { placeInfo } = props;
+  const { addr, tel, useTime } = placeInfo;
 
   const addressRef = useRef<HTMLDivElement>(null);
   const telRef = useRef<HTMLDivElement>(null);
@@ -29,7 +30,7 @@ const PlaceInfo = (props: placeInfoProps) => {
       addressRef.current.innerHTML = addr;
       telRef.current.innerHTML = tel;
     }
-  }, [useTime]);
+  }, [placeInfo]);
 
   const handleToggle = () => {
     setIsClose(false);
