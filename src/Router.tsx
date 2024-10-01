@@ -19,7 +19,6 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <MainPage /> },
       { path: '/auth/callback', element: <LoginCallBack /> },
-      { path: '/detail', element: <DetailPage /> },
       { path: '/sign-up', element: <SignUpPage /> },
     ],
   },
