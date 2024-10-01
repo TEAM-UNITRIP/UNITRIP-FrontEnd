@@ -52,20 +52,3 @@ export interface BarrierFreeItem {
   ticketoffice: string;
   promotion: string;
 }
-
-export interface SearchWord {
-  header: {
-    resultCode: string;
-    resultMsg: string;
-  };
-  body: {
-    numOfRows: number;
-    pageNo: number;
-    totalCount: number;
-    items:
-      | {
-          item: SearchItem[];
-        }
-      | '';
-  };
-}

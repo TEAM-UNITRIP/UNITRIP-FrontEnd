@@ -1,11 +1,11 @@
 import { css } from '@emotion/react';
+import { Outlet } from 'react-router-dom';
 
 import { COLORS, FONTS } from '@/styles/constants';
 
 import DetailInfo from './DetailInfo';
 import Map from './Map';
 import Photos from './Photos';
-import Review from './Review';
 import Universal from './Universal';
 
 const TAB_MENU = ['상세정보', '유니버설', '지도', '사진', '리뷰'];
@@ -39,13 +39,14 @@ function Tab(props: TabProps) {
           </li>
         ))}
       </ul>
+
+      <Outlet />
       {selectedTab === '상세정보' && (
         <DetailInfo contentTypeId={contentTypeId} />
       )}
       {selectedTab === '사진' && <Photos />}
       {selectedTab === '지도' && <Map latlng={latlng} />}
       {selectedTab === '유니버설' && <Universal />}
-      {selectedTab === '리뷰' && <Review />}
     </div>
   );
 }

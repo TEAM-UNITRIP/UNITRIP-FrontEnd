@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { DefaultImage } from '@/assets/image';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -27,7 +28,14 @@ export interface detailInfoType {
 }
 
 const DetailPage = () => {
-  const [selectedTab, setSelectedTab] = useState('상세정보');
+  const { pathname } = useLocation();
+  const { contentId } = useParams();
+  const navigate = useNavigate();
+
+  const [selectedTab, setSelectedTab] = useState(
+    pathname.endsWith('review') ? '리뷰' : '상세정보',
+  );
+
   const [placeInfo, setPlaceInfo] = useState<placeInfoType>({
     title: '',
     info: {
@@ -37,10 +45,12 @@ const DetailPage = () => {
     },
     imageUrl: '',
   });
+
   const [latlng, setLatLng] = useState({
     lat: '',
     lng: '',
   });
+
   const contentTypeId = useRef('12');
 
   useEffect(() => {
@@ -92,6 +102,8 @@ const DetailPage = () => {
   };
 
   const handleTabChange = (tab: string) => {
+    if (tab === '리뷰') navigate(`/${contentId}/review`);
+    else navigate(`/${contentId}`);
     setSelectedTab(tab);
   };
 
