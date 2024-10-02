@@ -139,7 +139,7 @@ const MapPage = () => {
         setFavMarkers(res.defaultMarker);
       }
 
-      openFavoriteBottomSheet();
+      kakaoId && openFavoriteBottomSheet();
     }
   };
 
