@@ -1,7 +1,13 @@
 import { css } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
 
-import { ArrowDownIcon, CallIcon, ClockIcon, MapPinIcon } from '@/assets/icon';
+import {
+  ArrowToggleClosed,
+  ArrowToggleOpen,
+  CallIcon,
+  ClockIcon,
+  MapPinIcon,
+} from '@/assets/icon';
 import { COLORS, FONTS } from '@/styles/constants';
 
 interface placeInfoProps {
@@ -33,7 +39,7 @@ const PlaceInfo = (props: placeInfoProps) => {
   }, [placeInfo]);
 
   const handleToggle = () => {
-    setIsClose(false);
+    setIsClose((prev) => !prev);
   };
 
   return (
@@ -47,9 +53,14 @@ const PlaceInfo = (props: placeInfoProps) => {
         <div ref={telRef} />
       </div>
       <div css={mapListItem(isClose)}>
-        <ClockIcon />
+        <ClockIcon css={clockIconCss} />
         <div ref={useTimeRef} css={contentCss(isClose)} />
-        {lineCnt > 1 && isClose && <ArrowDownIcon onClick={handleToggle} />}
+        {lineCnt > 1 &&
+          (isClose ? (
+            <ArrowToggleClosed onClick={handleToggle} />
+          ) : (
+            <ArrowToggleOpen onClick={handleToggle} />
+          ))}
       </div>
     </section>
   );
@@ -86,4 +97,8 @@ const contentCss = (isClose: boolean) => css`
 
   width: 100%;
   max-height: ${isClose ? '2.2rem' : 'none'};
+`;
+
+const clockIconCss = css`
+  margin-top: 0.3rem;
 `;
