@@ -99,7 +99,7 @@ const DetailPage = () => {
         info: {
           addr: item[0].addr1 !== '' ? item[0].addr1 : '-',
           tel: item[0].tel !== '' ? item[0].tel : '-',
-          useTime: '',
+          useTime: '-',
         },
         imageUrl: item[0].firstimage !== '' ? item[0].firstimage : DefaultImage,
       });
@@ -126,12 +126,25 @@ const DetailPage = () => {
         ...prev,
         info: {
           ...prev.info,
-          useTime: item[0].usetime !== '' ? item[0].usetime : '-',
+          useTime:
+            contentTypeId.current === '12'
+              ? item[0].usetime && item[0].usetime !== ''
+                ? item[0].usetime
+                : '-'
+              : contentTypeId.current === '14'
+                ? item[0].usetimeculture && item[0].usetimeculture !== ''
+                  ? item[0].usetimeculture
+                  : '-'
+                : '-',
         },
       }));
 
       setDetailInfo({
-        restDate: item[0].restdate !== '' ? item[0].restdate : '-',
+        restDate: item[0].restdate
+          ? item[0].restdate !== ''
+            ? item[0].restdate
+            : '-'
+          : '-',
         useTime:
           contentTypeId.current === '12'
             ? item[0].usetime && item[0].usetime !== ''

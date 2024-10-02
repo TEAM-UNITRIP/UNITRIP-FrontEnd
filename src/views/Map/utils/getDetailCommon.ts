@@ -1,7 +1,5 @@
 import { getDetailCommon1 } from '@/apis/public/detailCommon1';
 
-import { contentIdListType } from './createFavoritePin';
-
 export interface favoriteListType {
   title: string;
   address: string;
@@ -11,9 +9,7 @@ export interface favoriteListType {
   contentId: string;
 }
 
-export const getDetailCommonRes = async (
-  contentIdList: contentIdListType[],
-) => {
+export const getDetailCommonRes = async (contentIdList: number[]) => {
   const favoriteList: favoriteListType[] = [];
 
   const promises = contentIdList.map(async (id) => {
@@ -21,7 +17,7 @@ export const getDetailCommonRes = async (
       numOfRows: 20,
       pageNo: 1,
       MobileOS: 'ETC',
-      contentId: Number(id.contentId),
+      contentId: Number(id),
       defaultYN: 'Y',
       firstImageYN: 'Y',
       addrinfoYN: 'Y',
