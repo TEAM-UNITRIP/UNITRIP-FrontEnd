@@ -19,9 +19,8 @@ interface SearchResultProps {
 }
 
 const SearchResult = (props: SearchResultProps) => {
-  const { placeData, targetElement, loading, filterState, heartList } = props;
+  const { placeData, targetElement, filterState, heartList } = props;
   const placeListRef = useRef<HTMLUListElement>(null);
-  console.log(loading);
 
   const [renderPlaceList, setRenderPlaceList] = useState<
     (SearchItem & BarrierFreeItem)[]
