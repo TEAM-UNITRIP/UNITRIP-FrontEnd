@@ -53,13 +53,13 @@ const PlaceInfo = (props: placeInfoProps) => {
         <div ref={telRef} />
       </div>
       <div css={mapListItem(isClose)}>
-        <ClockIcon css={clockIconCss} />
+        <ClockIcon css={iconCss} />
         <div ref={useTimeRef} css={contentCss(isClose)} />
         {lineCnt > 1 &&
           (isClose ? (
-            <ArrowToggleClosed onClick={handleToggle} />
+            <ArrowToggleClosed onClick={handleToggle} css={iconCss} />
           ) : (
-            <ArrowToggleOpen onClick={handleToggle} />
+            <ArrowToggleOpen onClick={handleToggle} css={iconCss} />
           ))}
       </div>
     </section>
@@ -95,10 +95,9 @@ const mapListItem = (isClose: boolean) => css`
 const contentCss = (isClose: boolean) => css`
   overflow: hidden;
 
-  width: 100%;
   max-height: ${isClose ? '2.2rem' : 'none'};
 `;
 
-const clockIconCss = css`
+const iconCss = css`
   margin-top: 0.3rem;
 `;
