@@ -99,6 +99,11 @@ const MapPage = () => {
           town: response.region.split(' ')[1],
         });
       }
+    } else {
+      setRegion({
+        city: '서울특별시',
+        town: '중구',
+      });
     }
   };
 
