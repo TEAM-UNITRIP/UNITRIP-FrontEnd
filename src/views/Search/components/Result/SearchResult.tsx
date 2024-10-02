@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import { BigInfoIcon } from '@/assets/icon';
+import Loading from '@/components/Loading';
 import PlaceCard from '@/components/PlaceCard';
 import { MAP_FACILITIES_API_KEY } from '@/constants/facilities';
 import { COLORS, FONTS } from '@/styles/constants';
@@ -19,7 +20,7 @@ interface SearchResultProps {
 }
 
 const SearchResult = (props: SearchResultProps) => {
-  const { placeData, targetElement, filterState, heartList } = props;
+  const { placeData, targetElement, loading, filterState, heartList } = props;
   const placeListRef = useRef<HTMLUListElement>(null);
 
   const [renderPlaceList, setRenderPlaceList] = useState<
@@ -39,7 +40,7 @@ const SearchResult = (props: SearchResultProps) => {
   return (
     <>
       <ul css={containerCss(placeData.length)} ref={placeListRef}>
-        {renderPlaceList.length === 0 ? (
+        {!loading && renderPlaceList.length === 0 ? (
           <div css={noResultContainerCss}>
             <BigInfoIcon />
             <div css={noResultTitleCss}>검색 결과가 없어요</div>
@@ -68,6 +69,7 @@ const SearchResult = (props: SearchResultProps) => {
           )
         )}
         <div ref={targetElement} css={lastTargetCss} />
+        {loading && placeData.length > 0 && <Loading />}
       </ul>
     </>
   );
