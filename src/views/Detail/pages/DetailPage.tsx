@@ -226,6 +226,7 @@ const backgroundImg = (url: string) => css`
     rgb(0 0 0 / 0%) 0%,
     rgb(0 0 0 / 34%) 100%
   );
+  background-position: center;
   background-size: cover;
   background-image: url(${url});
   background-repeat: no-repeat;
