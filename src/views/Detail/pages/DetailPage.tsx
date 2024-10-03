@@ -180,12 +180,14 @@ const DetailPage = () => {
   return (
     <div css={detailContainer}>
       <div css={backgroundImg(placeInfo.imageUrl)}>
-        <DetailHeader
-          isFavorite={isFavorite}
-          setIsFavorite={setIsFavorite}
-          changeCnt={changeCnt.current}
-        />
-        <span css={title}>{placeInfo.title}</span>
+        <div css={backgroundCss}>
+          <DetailHeader
+            isFavorite={isFavorite}
+            setIsFavorite={setIsFavorite}
+            changeCnt={changeCnt.current}
+          />
+          <span css={title}>{placeInfo.title}</span>
+        </div>
       </div>
       <PlaceInfo placeInfo={placeInfo.info} />
       <div css={gapLine}></div>
@@ -196,7 +198,6 @@ const DetailPage = () => {
         detailInfo={detailInfo}
       />
       <div css={gapLine}></div>
-
       {selectedTab === '상세정보' ||
       selectedTab === '유니버설' ||
       selectedTab === '지도' ||
@@ -214,11 +215,19 @@ const detailContainer = css`
 `;
 
 const backgroundImg = (url: string) => css`
+  width: auto;
+
+  background-position: center center;
+  background-size: cover;
+  background-image: url(${url});
+  background-repeat: no-repeat;
+`;
+
+const backgroundCss = css`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
 
-  width: auto;
   height: 26.3rem;
 
   background: linear-gradient(
@@ -226,10 +235,6 @@ const backgroundImg = (url: string) => css`
     rgb(0 0 0 / 0%) 0%,
     rgb(0 0 0 / 34%) 100%
   );
-  background-position: center;
-  background-size: cover;
-  background-image: url(${url});
-  background-repeat: no-repeat;
 `;
 
 const title = css`
