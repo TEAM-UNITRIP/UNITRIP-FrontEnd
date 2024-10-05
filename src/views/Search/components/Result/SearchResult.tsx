@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useRef } from 'react';
 
 import { BigInfoIcon } from '@/assets/icon';
 import Loading from '@/components/Loading';
@@ -23,19 +23,12 @@ const SearchResult = (props: SearchResultProps) => {
   const { placeData, targetElement, loading, filterState, heartList } = props;
   const placeListRef = useRef<HTMLUListElement>(null);
 
-  const [renderPlaceList, setRenderPlaceList] = useState<
-    (SearchItem & BarrierFreeItem)[]
-  >([]);
-
-  useEffect(() => {
-    const filterList = getFilterList(filterState);
-    const renderPlaceList = placeData.filter((placeInfo) => {
-      return filterList.every(
-        (facility) => placeInfo[MAP_FACILITIES_API_KEY[facility]] !== '',
-      );
-    });
-    setRenderPlaceList(renderPlaceList);
-  }, [filterState, placeData]);
+  const filterList = getFilterList(filterState);
+  const renderPlaceList = placeData.filter((placeInfo) => {
+    return filterList.every(
+      (facility) => placeInfo[MAP_FACILITIES_API_KEY[facility]] !== '',
+    );
+  });
 
   return (
     <>
