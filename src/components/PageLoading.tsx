@@ -1,18 +1,9 @@
 import { css } from '@emotion/react';
-import { useEffect } from 'react';
 
 import { WhiteSpinnerGIF } from '@/assets/image';
 import { COLORS, FONTS } from '@/styles/constants';
 
 const PageLoading = () => {
-  useEffect(() => {
-    // 스크롤 방지
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
   return (
     <div css={dataContainer}>
       <img css={img} src={WhiteSpinnerGIF} alt="spinner" />
