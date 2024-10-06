@@ -32,10 +32,10 @@ const dataContainer = css`
   top: 0;
   z-index: 999;
 
-  width: 100dvw;
   width: 100%;
-  height: 100dvh;
+  width: 100dvw;
   height: 100%;
+  height: 100dvh;
 
   background-color: rgb(82 82 82 / 72%);
 `;
