@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import getUserData from '@/apis/supabase/getUserData';
 import { DefaultImage } from '@/assets/image';
+import PageLoading from '@/components/PageLoading';
 import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { COLORS, FONTS } from '@/styles/constants';
 
@@ -61,19 +62,21 @@ const DetailPage = () => {
   });
 
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const contentTypeId = useRef('12');
   const contentIdList = useRef<number[]>([]); //서버에서 받아온 contentnId List
   const kakaoId = sessionStorage.getItem('kakao_id');
   const changeCnt = useRef(1);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  useAsyncEffect(async () => {
+    setIsLoading(true);
+    try {
       await getDetailCommon1Res();
       await getDetailIntro1Res();
-    };
-
-    fetchData();
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -177,7 +180,9 @@ const DetailPage = () => {
     setSelectedTab(tab);
   };
 
-  return (
+  return isLoading ? (
+    <PageLoading />
+  ) : (
     <div css={detailContainer}>
       <div css={backgroundImg(placeInfo.imageUrl)}>
         <DetailHeader
