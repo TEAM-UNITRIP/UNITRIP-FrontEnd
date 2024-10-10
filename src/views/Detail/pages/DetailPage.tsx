@@ -4,7 +4,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import getUserData from '@/apis/supabase/getUserData';
 import { DefaultImage } from '@/assets/image';
-import PageLoading from '@/components/PageLoading';
 import { useAsyncEffect } from '@/hooks/use-async-effect';
 import { COLORS, FONTS } from '@/styles/constants';
 
@@ -62,7 +61,6 @@ const DetailPage = () => {
   });
 
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const contentTypeId = useRef('12');
   const contentIdList = useRef<number[]>([]); //서버에서 받아온 contentnId List
@@ -70,13 +68,8 @@ const DetailPage = () => {
   const changeCnt = useRef(1);
 
   useAsyncEffect(async () => {
-    setIsLoading(true);
-    try {
-      await getDetailCommon1Res();
-      await getDetailIntro1Res();
-    } finally {
-      setIsLoading(false);
-    }
+    await getDetailCommon1Res();
+    await getDetailIntro1Res();
   }, []);
 
   useEffect(() => {
@@ -180,9 +173,7 @@ const DetailPage = () => {
     setSelectedTab(tab);
   };
 
-  return isLoading ? (
-    <PageLoading />
-  ) : (
+  return (
     <div css={detailContainer}>
       <div css={backgroundImg(placeInfo.imageUrl)}>
         <div css={backgroundCss}>
@@ -191,7 +182,7 @@ const DetailPage = () => {
             setIsFavorite={setIsFavorite}
             changeCnt={changeCnt.current}
           />
-          <span css={title}>{placeInfo.title}</span>
+          <span css={title}>{placeInfo.title || '-'}</span>
         </div>
       </div>
       <PlaceInfo placeInfo={placeInfo.info} />
@@ -227,7 +218,7 @@ const backgroundImg = (url: string) => css`
 
   background-position: center center;
   background-size: cover;
-  background-image: url(${url});
+  background-image: url(${url || DefaultImage});
   background-repeat: no-repeat;
 `;
 
