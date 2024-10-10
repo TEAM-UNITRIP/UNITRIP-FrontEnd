@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import { BigInfoIcon } from '@/assets/icon';
+import { DefaultImage } from '@/assets/image';
 import Loading from '@/components/Loading';
 import PlaceCard from '@/components/PlaceCard';
 import { MAP_FACILITIES_API_KEY } from '@/constants/facilities';
