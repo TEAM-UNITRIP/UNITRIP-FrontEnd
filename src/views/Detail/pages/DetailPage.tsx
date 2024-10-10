@@ -202,7 +202,10 @@ const DetailPage = () => {
       selectedTab === '유니버설' ||
       selectedTab === '지도' ||
       selectedTab === '사진' ? (
-        <ErrorReport />
+        <>
+          <div css={gapLine}></div>
+          <ErrorReport />
+        </>
       ) : null}
     </div>
   );
