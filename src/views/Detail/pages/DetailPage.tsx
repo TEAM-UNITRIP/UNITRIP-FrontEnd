@@ -78,7 +78,7 @@ const DetailPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [selectedTab]);
+  });
 
   /** 서버 통신 -> favorite_list 받아오기 */
   useAsyncEffect(async () => {
