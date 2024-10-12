@@ -3,6 +3,7 @@ import { MutableRefObject, useRef, useState } from 'react';
 
 import { getBarrierFreeInfo, getSearchKeyword } from '@/apis/public/search';
 import { BigInfoIcon } from '@/assets/icon';
+import { DefaultImage } from '@/assets/image';
 import Loading from '@/components/Loading';
 import PageLoading from '@/components/PageLoading';
 import PlaceCard from '@/components/PlaceCard';
@@ -121,7 +122,7 @@ const SearchResult = (props: SearchResultProps) => {
                     contentid={contentid}
                     placeName={title}
                     address={addr1 + addr2}
-                    imgSrc={firstimage || firstimage2 || ''}
+                    imgSrc={firstimage || firstimage2 || DefaultImage}
                     isHeart={heartList.includes(Number(contentid))}
                     buttonDisabled
                   />
