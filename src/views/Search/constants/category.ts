@@ -58,6 +58,37 @@ export const INITIAL_FILTER_STATE: filterState = {
   },
 };
 
+export const INITIAL_FILTER_INDEX_INFO = {
+  wheelchair: [],
+  exit: [],
+  elevator: [],
+  restroom: [],
+  guidesystem: [],
+  blindhandicapetc: [],
+  signguide: [],
+  videoguide: [],
+  hearingroom: [],
+  hearinghandicapetc: [],
+  stroller: [],
+  lactationroom: [],
+  babysparechair: [],
+  infantsfamilyetc: [],
+  auditorium: [],
+  room: [],
+  handicapetc: [],
+  braileblock: [],
+  helpdog: [],
+  guidehuman: [],
+  audioguide: [],
+  bigprint: [],
+  brailepromotion: [],
+  parking: [],
+  route: [],
+  publictransport: [],
+  ticketoffice: [],
+  promotion: [],
+};
+
 export const getFilterList = (filterState: filterState) => {
   return Object.values(filterState).flatMap((obj) =>
     Object.entries(obj)

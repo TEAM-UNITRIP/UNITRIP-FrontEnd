@@ -10,10 +10,13 @@ import PlaceCard from '@/components/PlaceCard';
 import { MAP_FACILITIES_API_KEY } from '@/constants/facilities';
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll';
 import { COLORS, FONTS } from '@/styles/constants';
-import { BarrierFreeItem, SearchItem } from '@/types/search';
+import { SearchItem } from '@/types/search';
 
-import { getFilterList } from '../../constants/category';
-import { filterState } from '../../types/category';
+import {
+  getFilterList,
+  INITIAL_FILTER_INDEX_INFO,
+} from '../../constants/category';
+import { FilterFacilities, filterState } from '../../types/category';
 
 interface SearchResultProps {
   searchWord: string;
@@ -25,9 +28,12 @@ const SearchResult = (props: SearchResultProps) => {
   const { searchWord, filterState, heartList } = props;
 
   const [loading, setLoading] = useState(false);
-  const [placeData, setPlaceData] = useState<(SearchItem & BarrierFreeItem)[]>(
-    [],
-  );
+
+  const [placeList, setPlaceList] = useState<Record<string, SearchItem>>({});
+
+  const [filterIndexInfo, setFilterIndexInfo] = useState<
+    Record<FilterFacilities, string[]>
+  >(INITIAL_FILTER_INDEX_INFO);
 
   // 무한스크롤
   const options = {
@@ -54,29 +60,42 @@ const SearchResult = (props: SearchResultProps) => {
       });
 
       if (items === '') {
-        if (pageNo === 0) setPlaceData([]);
+        if (pageNo === 0) setPlaceList({});
         target.current && observer.unobserve(target.current);
       } else {
-        const placeData: (SearchItem & BarrierFreeItem)[] = [];
+        const newPlaceList = items.item.reduce(
+          (acc, item) => {
+            acc[item.contentid] = item;
+            return acc;
+          },
+          {} as Record<string, SearchItem>,
+        );
+
+        setPlaceList((prev) => ({ ...prev, ...newPlaceList }));
+
         const promises = items.item.map(({ contentid }) =>
           getBarrierFreeInfo({
             MobileOS: 'ETC',
             contentId: Number(contentid),
           }),
         );
+
         const promiseResult = await Promise.allSettled(promises);
+
         promiseResult.forEach((result) => {
           if (result.status === 'fulfilled' && result.value !== '') {
             const item = result.value.item;
-            const targetPlace = items.item.find(
-              ({ contentid }) => contentid === item[0].contentid,
-            );
-            if (!targetPlace) return;
-            placeData.push({ ...targetPlace, ...result.value.item[0] });
+            const contentid = item[0].contentid;
+            Object.entries(item[0]).forEach(([facility, value]) => {
+              if (facility === 'contentid' || value === '') return;
+
+              setFilterIndexInfo((prev) => ({
+                ...prev,
+                [facility]: [...prev[facility as FilterFacilities], contentid],
+              }));
+            });
           }
         });
-
-        setPlaceData((prev) => [...prev, ...placeData]);
         page.current++;
       }
     } finally {
@@ -93,50 +112,69 @@ const SearchResult = (props: SearchResultProps) => {
   const placeListRef = useRef<HTMLUListElement>(null);
 
   const filterList = getFilterList(filterState);
-  const renderPlaceList = placeData.filter((placeInfo) => {
-    return filterList.every(
-      (facility) => placeInfo[MAP_FACILITIES_API_KEY[facility]] !== '',
-    );
-  });
+
+  const renderPlaceList =
+    filterList.length > 0
+      ? Array.from(
+          filterList.reduce((acc, filter, idx) => {
+            if (idx === 0) return acc;
+            const curSet = new Set(
+              filterIndexInfo[MAP_FACILITIES_API_KEY[filter]],
+            );
+            // console.log(acc, curSet);
+            return acc.intersection(curSet);
+          }, new Set(filterIndexInfo[MAP_FACILITIES_API_KEY[filterList[0]]])),
+        )
+      : Object.keys(placeList);
 
   return (
     <>
-      {loading && placeData.length === 0 && <PageLoading />}
-      <ul css={containerCss(placeData.length)} ref={placeListRef}>
+      {/* 최초 로딩 */}
+      {loading && Object.keys(placeList).length === 0 && <PageLoading />}
+
+      <ul css={containerCss(Object.keys(placeList).length)} ref={placeListRef}>
         {!loading && renderPlaceList.length === 0 ? (
-          <div css={noResultContainerCss}>
-            <BigInfoIcon />
-            <div css={noResultTitleCss}>검색 결과가 없어요</div>
-            <p css={noResultInfoCss}>
-              검색 필터를 바꾸거나
-              <br />
-              다른 여행지를 검색해보세요!
-            </p>
-          </div>
+          <NoResultView />
         ) : (
-          renderPlaceList.map(
-            ({ contentid, title, addr1, addr2, firstimage, firstimage2 }) => {
-              return (
-                <li key={contentid}>
-                  <PlaceCard
-                    contentid={contentid}
-                    placeName={title}
-                    address={addr1 + addr2}
-                    imgSrc={firstimage || firstimage2 || DefaultImage}
-                    isHeart={heartList.includes(Number(contentid))}
-                    buttonDisabled
-                  />
-                </li>
-              );
-            },
-          )
+          renderPlaceList.map((contentid) => {
+            const { title, addr1, addr2, firstimage, firstimage2 } =
+              placeList[contentid];
+            return (
+              <li key={contentid}>
+                <PlaceCard
+                  contentid={contentid}
+                  placeName={title}
+                  address={addr1 + addr2}
+                  imgSrc={firstimage || firstimage2 || DefaultImage}
+                  isHeart={heartList.includes(Number(contentid))}
+                  buttonDisabled
+                />
+              </li>
+            );
+          })
         )}
-        <div ref={targetElement} css={lastTargetCss} />
-        {loading && placeData.length > 0 && <Loading />}
+        <div ref={targetElement} css={lastTargetCss(loading)} />
+
+        {/* 무한스크롤 로딩 */}
+        {loading && Object.keys(placeList).length > 0 && <Loading />}
       </ul>
     </>
   );
 };
+
+const NoResultView = () => (
+  <div css={noResultContainerCss}>
+    <BigInfoIcon />
+    <div css={noResultTitleCss}>검색 결과가 없어요</div>
+    <p css={noResultInfoCss}>
+      검색 필터를 바꾸거나
+      <br />
+      다른 여행지를 검색해보세요!
+    </p>
+  </div>
+);
+
+SearchResult.displayName = 'SearchResult';
 
 export default SearchResult;
 
@@ -151,7 +189,10 @@ const containerCss = (placeLength: number) => css`
   overflow-y: scroll;
 `;
 
-const lastTargetCss = css`
+const lastTargetCss = (loading: boolean) => css`
+  position: ${loading ? 'fixed' : 'static'};
+  bottom: ${loading ? '-10px' : ''};
+
   width: 100%;
   height: 1px;
 `;
