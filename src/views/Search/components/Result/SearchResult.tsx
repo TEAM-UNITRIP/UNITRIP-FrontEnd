@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { MutableRefObject, useRef, useState } from 'react';
+import { memo, MutableRefObject, useRef, useState } from 'react';
 
 import { getBarrierFreeInfo, getSearchKeyword } from '@/apis/public/search';
 import { BigInfoIcon } from '@/assets/icon';
@@ -24,7 +24,7 @@ interface SearchResultProps {
   heartList: number[];
 }
 
-const SearchResult = (props: SearchResultProps) => {
+const SearchResult = memo((props: SearchResultProps) => {
   const { searchWord, filterState, heartList } = props;
 
   const [loading, setLoading] = useState(false);
@@ -71,8 +71,6 @@ const SearchResult = (props: SearchResultProps) => {
           {} as Record<string, SearchItem>,
         );
 
-        setPlaceList((prev) => ({ ...prev, ...newPlaceList }));
-
         const promises = items.item.map(({ contentid }) =>
           getBarrierFreeInfo({
             MobileOS: 'ETC',
@@ -96,6 +94,8 @@ const SearchResult = (props: SearchResultProps) => {
             });
           }
         });
+
+        setPlaceList((prev) => ({ ...prev, ...newPlaceList }));
         page.current++;
       }
     } finally {
@@ -160,7 +160,7 @@ const SearchResult = (props: SearchResultProps) => {
       </ul>
     </>
   );
-};
+});
 
 const NoResultView = () => (
   <div css={noResultContainerCss}>

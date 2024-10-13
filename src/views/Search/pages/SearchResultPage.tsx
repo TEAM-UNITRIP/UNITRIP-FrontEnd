@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import getUserData from '@/apis/supabase/getUserData';
@@ -27,8 +27,9 @@ const SearchResultPage = () => {
 
   const [userData, setUserData] = useState<UserDataResponse | null>(null);
 
-  const [filterState, setFilterState] =
-    useState<filterState>(INITIAL_FILTER_STATE);
+  const [filterState, setFilterState] = useState<filterState>({
+    ...INITIAL_FILTER_STATE,
+  });
 
   // modal, bottom sheet state
   const [showGuide, setShowGuide] = useState(() =>
@@ -46,9 +47,9 @@ const SearchResultPage = () => {
   }, []);
 
   // 검색 가이드
-  const handleSetShowGuide = (value: boolean) => {
+  const handleSetShowGuide = useCallback((value: boolean) => {
     setShowGuide(value);
-  };
+  }, []);
 
   const openFilter = () => {
     setIsFilterOpen(true);
@@ -63,7 +64,7 @@ const SearchResultPage = () => {
   };
 
   // render
-  const selectedCategory = () => {
+  const selectedCategory = useMemo(() => {
     const category: string[] = [];
 
     Object.entries(filterState).forEach(([key, entries]) => {
@@ -72,7 +73,7 @@ const SearchResultPage = () => {
     });
 
     return category.join(', ');
-  };
+  }, [filterState]);
 
   return (
     <>
@@ -80,7 +81,7 @@ const SearchResultPage = () => {
         <SearchBarContainer initialWord={searchWord}>
           <button type="button" css={buttonCss} onClick={openFilter}>
             <SearchSetIcon />
-            {selectedCategory()}
+            {selectedCategory}
           </button>
           <SearchResult
             key={searchWord}
