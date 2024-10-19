@@ -77,23 +77,25 @@ const SearchResult = memo((props: SearchResultProps) => {
             contentId: Number(contentid),
           }),
         );
-
         const promiseResult = await Promise.allSettled(promises);
+
+        const updatedFilterIndexInfo = { ...filterIndexInfo };
 
         promiseResult.forEach((result) => {
           if (result.status === 'fulfilled' && result.value !== '') {
-            const item = result.value.item;
-            const contentid = item[0].contentid;
-            Object.entries(item[0]).forEach(([facility, value]) => {
-              if (facility === 'contentid' || value === '') return;
+            const item = result.value.item[0];
+            const contentid = item.contentid;
 
-              setFilterIndexInfo((prev) => ({
-                ...prev,
-                [facility]: [...prev[facility as FilterFacilities], contentid],
-              }));
+            Object.entries(item).forEach(([facility, value]) => {
+              if (facility !== 'contentid' && value !== '') {
+                updatedFilterIndexInfo[facility as FilterFacilities].push(
+                  contentid,
+                );
+              }
             });
           }
         });
+        setFilterIndexInfo(updatedFilterIndexInfo);
 
         setPlaceList((prev) => ({ ...prev, ...newPlaceList }));
         page.current++;
@@ -121,7 +123,6 @@ const SearchResult = memo((props: SearchResultProps) => {
             const curSet = new Set(
               filterIndexInfo[MAP_FACILITIES_API_KEY[filter]],
             );
-            // console.log(acc, curSet);
             return acc.intersection(curSet);
           }, new Set(filterIndexInfo[MAP_FACILITIES_API_KEY[filterList[0]]])),
         )
