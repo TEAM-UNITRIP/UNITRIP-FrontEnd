@@ -77,6 +77,7 @@ const navCss = css`
   display: flex;
   position: fixed;
   bottom: 1.6rem;
+  z-index: 999;
 
   width: 100vw;
 `;

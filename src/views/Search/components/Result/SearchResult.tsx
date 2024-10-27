@@ -137,12 +137,13 @@ const SearchResult = memo((props: SearchResultProps) => {
         {!loading && renderPlaceList.length === 0 ? (
           <NoResultView />
         ) : (
-          renderPlaceList.map((contentid) => {
+          renderPlaceList.map((contentid, idx) => {
             const { title, addr1, addr2, firstimage, firstimage2 } =
               placeList[contentid];
             return (
               <li key={contentid}>
                 <PlaceCard
+                  idx={idx}
                   contentid={contentid}
                   placeName={title}
                   address={addr1 + addr2}
