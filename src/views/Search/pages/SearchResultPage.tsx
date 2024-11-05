@@ -11,7 +11,7 @@ import { UserDataResponse } from '@/types/userAPI';
 import { isGuideShown } from '@/utils/storageHideGuide';
 
 import Guide from '../components/Result/Guide';
-import SearchResult from '../components/Result/SearchResult';
+import ResultContainer from '../components/Result/ResultContainer';
 import FilterBottomSheet from '../components/Search/FilterBottomSheet';
 import SearchBarContainer from '../components/SearchBar/SearchBarContainer';
 import {
@@ -83,7 +83,7 @@ const SearchResultPage = () => {
             <SearchSetIcon />
             {selectedCategory}
           </button>
-          <SearchResult
+          <ResultContainer
             key={searchWord}
             searchWord={searchWord || ''}
             filterState={filterState}
