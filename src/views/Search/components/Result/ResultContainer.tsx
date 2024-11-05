@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import _ from 'lodash';
 import { memo, MutableRefObject, useRef, useState } from 'react';
 
 import { getBarrierFreeInfo, getSearchKeyword } from '@/apis/public/search';
@@ -25,7 +26,7 @@ const ResultContainer = memo((props: ResultContainerProps) => {
   const [placeList, setPlaceList] = useState<Record<string, SearchItem>>({});
   const [filterIndexInfo, setFilterIndexInfo] = useState<
     Record<FilterFacilities, string[]>
-  >(INITIAL_FILTER_INDEX_INFO);
+  >(_.cloneDeep(INITIAL_FILTER_INDEX_INFO));
 
   const placeListRef = useRef<HTMLUListElement>(null);
 

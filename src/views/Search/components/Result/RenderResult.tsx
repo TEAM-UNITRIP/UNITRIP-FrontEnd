@@ -42,7 +42,7 @@ const RenderResult = (props: RenderResultProps) => {
             const curSet = new Set(
               filterIndexInfo[MAP_FACILITIES_API_KEY[filter]],
             );
-            return acc.intersection(curSet);
+            return new Set([...acc].filter((item) => curSet.has(item)));
           }, new Set(filterIndexInfo[MAP_FACILITIES_API_KEY[filterList[0]]])),
         )
       : Object.keys(placeList);
